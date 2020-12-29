@@ -37,7 +37,7 @@ async function shutdown(e) {
     console.log('Shutting down');
     try {
         console.log('Closing web server module');
-        await webServer.close();
+        await httpServer.close();
     } catch (e) {
         console.log('Encountered error', e);
         err = err || e;
