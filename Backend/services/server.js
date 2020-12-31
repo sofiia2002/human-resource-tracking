@@ -2,6 +2,7 @@ const http = require('http');
 const express = require('express');
 const morgan = require('morgan');
 const serverConfig = require('../config/server.js');
+const database = require('./database.js');
 let httpServer;
 
 function initialize() {
@@ -9,8 +10,11 @@ function initialize() {
         const app = express();
         httpServer = http.createServer(app);
         app.use(morgan('combined'));
-        app.get('/', (req, res) => {
-            res.end('Hello World!');
+        app.get('/', async (req, res) => {
+            const result = await database.simpleExecute('select user, systimestamp from dual');
+            const user = result.rows[0].USER;
+            const date = result.rows[0].SYSTIMESTAMP;
+            res.send(`<h1>API Running on the port ${serverConfig.port}</h1><h5>DB user: ${user} <br> Date: ${date}</h5>`);
         });
         httpServer.listen(serverConfig.port).on('listening', () => {
             console.log(`Web server listening on localhost:${serverConfig.port}`);
@@ -32,36 +36,6 @@ function close() {
         });
     });
 }
-async function shutdown(e) {
-    let err = e;
-    console.log('Shutting down');
-    try {
-        console.log('Closing web server module');
-        await httpServer.close();
-    } catch (e) {
-        console.log('Encountered error', e);
-        err = err || e;
-    }
-    console.log('Exiting process');
-    if (err) {
-        process.exit(1); // Non-zero failure code
-    } else {
-        process.exit(0);
-    }
-}
-process.on('SIGTERM', () => {
-    console.log('Received SIGTERM');
-    shutdown();
-});
-process.on('SIGINT', () => {
-    console.log('Received SIGINT');
-    shutdown();
-});
-process.on('uncaughtException', err => {
-    console.log('Uncaught exception');
-    console.error(err);
-    shutdown(err);
-});
 
 module.exports.close = close;
 module.exports.initialize = initialize;
