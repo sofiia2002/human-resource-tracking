@@ -1,0 +1,47 @@
+.box{
+    margin: 3rem;
+}
+
+.box > h1{
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.container{
+    display: flex;
+}
+
+.container-left{
+    width: 400px;
+    background-color: #ff8c003e;
+    border-radius: 1rem;
+    padding: 1rem 3rem 3rem 3rem;
+    margin-right: 4rem;
+}
+
+.container-right{
+    padding: 1rem;
+    width: calc(100% - 400px);
+}
+
+.container-right h2{
+    margin-bottom: 3rem;
+}
+
+.wydarzenia{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.wydarzenie{
+    margin-bottom: 3rem;
+    margin-right: 3rem;
+    padding: 1rem 3rem;
+    border-radius: .5rem;
+    box-shadow: .2rem .2rem 1rem #0000001d;
+}
+
+select{
+    cursor: pointer;
+    padding: .5rem;
+}

@@ -16,6 +16,7 @@ const baseQuery =
 async function find(context) {
     let query = baseQuery;
     const binds = {};
+    
 
     if(context.dom_kultury){
         binds.id_domu_kultury = context.dom_kultury;
