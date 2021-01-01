@@ -11,6 +11,8 @@ const kategorie_zasobu = require('../controllers/kategorie_zasobu.js');
 const organizacja_wydarzen = require('../controllers/organizacja_wydarzen.js');
 const sala_zasoby = require('../controllers/sala_zasoby.js');
 const uczestnicy_wydarzenia = require('../controllers/uczestnicy_wydarzenia.js');
+const warsztaty = require('../controllers/warsztaty.js');
+const wystawy = require('../controllers/wystawy.js');
 
 
 router.route('/')
@@ -48,6 +50,20 @@ router.route('/zasoby')
 // Przyklad: /api/wydarzenia?id=1&dom_kultury=1&typ=wystawa
 router.route('/wydarzenia') 
       .get(wydarzenia.get); 
+
+// Sonya: Tu wykorzystuje query:
+// Parametr 'dom_kultury' oznacza id domu kultury
+// Parametr 'id' oznacza id warsztatu (wydarzenia)
+// Przyklad: /api/wydarzenia?id=1&dom_kultury=1
+router.route('/warsztaty') 
+      .get(warsztaty.get); 
+
+// Sonya: Tu wykorzystuje query:
+// Parametr 'dom_kultury' oznacza id domu kultury
+// Parametr 'id' oznacza id warsztatu (wystawy)
+// Przyklad: /api/wydarzenia?id=1&dom_kultury=1
+router.route('/wystawy') 
+      .get(wystawy.get); 
       
 // Sonya: Tu wykorzystuje query:
 // Parametr 'dom_kultury' oznacza id domu kultury
