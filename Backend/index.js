@@ -40,12 +40,12 @@ async function shutdown(e) {
       console.log('Closing database module');
       await database.close();
   } catch (err) {
-    console.log('Encpuntered error', e);
+    console.log('Encountered error', e);
     err = err || e;
   }
   console.log('Exiting process');
   if (err) {
-      process.exit(1); // Non-zero failure code
+      process.exit(1); 
   } else {
       process.exit(0);
   }

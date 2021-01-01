@@ -3,7 +3,7 @@ const oracledb = require('oracledb');
 const dbConfig = require('../config/database.js');
 
 async function initialize() {
-    oracledb.initOracleClient({libDir: "/Users/levchenkosofiia/Documents/instantclient_19_8"});
+    oracledb.initOracleClient({libDir: process.env.DB_DIR});
     const pool = await oracledb.createPool(dbConfig.hrPool);
 }
 
