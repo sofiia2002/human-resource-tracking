@@ -9,7 +9,7 @@ function BasicPage() {
 
   useEffect(() => {
     async function fetchData() {
-      const result = await axios("http://localhost:3080/api/domy_kultury/");
+      const result = await axios("/api/domy_kultury/");
       setDomyKultury(result.data);
     }
     fetchData();
@@ -18,7 +18,7 @@ function BasicPage() {
   useEffect(() => {
     async function fetchData() {
       const result = await axios(
-        "http://localhost:3080/api/wydarzenia?dom_kultury=" + selectedDomKultury
+        "/api/wydarzenia?dom_kultury=" + selectedDomKultury
       );
       setWydarzenia(result.data);
     }

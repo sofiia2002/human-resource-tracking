@@ -1,0 +1,67 @@
+.nav{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 6rem;
+    background-color: white;
+    padding: .5rem 3rem;
+}
+
+.nav > .logo{
+    display: flex;
+    align-items: center;
+    width: 13rem;
+}
+
+.nav > .links{
+    width: calc(100% - 23rem);
+    max-width: 30rem;
+    margin-right: 0;
+    margin-left: auto;
+    display: flex;
+    justify-content: space-around;
+}
+
+.nav > .links > *,
+.nav > .user > :last-child{
+    padding-bottom: .3rem;
+    border-bottom: 3px solid transparent;
+    transition: border-bottom .2s;
+}
+
+.nav > .links > *:hover,
+.nav > .user > :last-child:hover{
+    border-bottom: 3px solid black;
+}
+
+.nav > .user{
+    margin-left: 5rem;
+    width: 10rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav > .user > .login-name{
+    color: rgba(0, 0, 0, 0.531);
+}
+
+.nav > *:not(.login-name){
+    cursor: pointer;
+}
+
+.nav > .logo > .las{
+    font-size: 5rem;
+    margin-right: .5rem;
+}
+
+.nav > .logo > .logo-text{
+    display: flex;
+    flex-direction: column;
+    letter-spacing: .2rem;
+    font-size: .8rem;
+    line-height: .9rem;
+    font-weight: 500;
+}
