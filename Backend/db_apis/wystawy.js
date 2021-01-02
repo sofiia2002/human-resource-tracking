@@ -6,7 +6,7 @@ const baseQuery =
         typ_wystawy "typ_wystawy",
         imie_wystawiajacego "imie_wystawiajacego",
         nazwisko_wystawiajacego "nazwisko_wystawiajacego",
-        temat "temat"
+        temat "temat",
         opis "opis"
     from wystawy
     where 1 = 1    

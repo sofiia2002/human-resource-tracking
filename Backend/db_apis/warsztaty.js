@@ -6,7 +6,7 @@ const baseQuery =
         temat "temat",
         nazwisko_wykladowcy "nazwisko_wykladowcy",
         imie_wykladowcy "imie_wykladowcy",
-        email "email"
+        email "email",
         telefon "telefon"
     from warsztaty
     where 1 = 1    

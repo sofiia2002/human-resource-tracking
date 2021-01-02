@@ -24,7 +24,7 @@
 
 .nav > .links{
     width: calc(100% - 23rem);
-    max-width: 40rem;
+    max-width: 50rem;
     margin-right: 0;
     margin-left: auto;
     display: flex;

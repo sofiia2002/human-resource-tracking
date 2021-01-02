@@ -1,0 +1,35 @@
+.wystawy{
+    display: flex;
+    flex-direction: column;
+}
+
+.wystawa{
+    width: 90%;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 2rem;
+    margin-bottom: 1rem;
+    border-radius: .5rem;
+    background-color: white;
+    box-shadow: .2rem .2rem .5rem #0000004e;
+}
+
+.wystawa > h2{
+    margin-bottom: .75rem;
+    width: 100%;
+}
+
+.wystawa > :nth-child(2){
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.wystawa > .las{
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin: 0 auto;
+    width: 3rem;
+}
