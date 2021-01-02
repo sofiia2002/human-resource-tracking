@@ -33,9 +33,9 @@ function Login() {
           onChange={(event) => setUserType(event.target.value)}
         >
           <option value="guest">Guest</option>
-          <option value="developer">Developer/Admin</option>
+          <option value="developer">Developer/Administrator</option>
           <option value="organizator">Employee</option>
-          <option value="developer">Student</option>
+          <option value="student">Student</option>
         </select>
         <button onClick={login}>Zaloguj</button>
       </div>

@@ -23,7 +23,7 @@ function Home() {
       <div className="wrapper-domy-kultury">
         <i
           className="las la-angle-left"
-          onClick={() => (page > 1 ? setPage(page - 1) : null)}
+          onClick={() => (page > 1 ? setPage(page - 1) : setPage(domyKultury.length))}
         />
         <div className="domy-kultury">
           {/* {domyKultury.map((element, index) => (
@@ -34,7 +34,7 @@ function Home() {
         <i
           className="las la-angle-right"
           onClick={() =>
-            page < 2 && domyKultury.length > page ? setPage(page + 1) : null
+            page < 2 && domyKultury.length > page ? setPage(page + 1) : setPage(1)
           }
         />
       </div> : ""

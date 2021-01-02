@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { HashRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import { GeneralData } from "./Context";
 import BasicPage from "./components/BasicPage.js";
 import Navbar from "./components/Navbar.js";
@@ -9,7 +9,7 @@ function App() {
   const [userData, setUserData] = useState({
     isLoggedIn: false,
     userType: "",
-    name: "",
+    name: ""
   });
 
   return (

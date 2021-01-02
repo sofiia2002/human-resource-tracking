@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
 import { Route, Switch } from "react-router-dom";
 import Events from "./Events";
+import Employees from "./Employees";
+import Participants from './Participants'
 import Home from "./Home";
 
 function BasicPage() {
@@ -18,10 +19,10 @@ function BasicPage() {
           <Events />
         </Route>
         <Route path="/participants">
-           <div>participants</div>
+           <Participants />
         </Route>
         <Route path="/employees">
-          <div>employees</div>
+          <Employees />
         </Route>
         <Route path="/myprofile">
           <div>my profile</div>

@@ -40,7 +40,11 @@ function Navbar() {
         ) : (
           ""
         )}
-        <Link to="/myprofile">Moj profil</Link>
+        {userData.userType&&userData.userType!=="guest" ? (
+          <Link to="/myprofile">Moj profil</Link>
+        ) : (
+          ""
+        )}
       </div>
       <div className="user">
         {userData.name ? (

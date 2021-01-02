@@ -21,7 +21,7 @@ router.route('/')
 router.route('/domy_kultury/:id?')
       .get(domy_kultury.get);
 
-router.route('/uczestnicy_wydarzenia/:id')
+router.route('/uczestnicy_wydarzenia/:id?')
       .get(uczestnicy_wydarzenia.get);  
 
 router.route('/stanowiska/:id?')

@@ -61,7 +61,7 @@
     align-items: center;
 }
 
-.dom-kultury > .disabled{
+.domy-kultury > .disabled{
    color: #00000047;
    cursor: default;
 }

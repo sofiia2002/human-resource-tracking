@@ -3,11 +3,11 @@ import { GeneralData } from "../Context";
 import axios from "axios";
 import "../styles/Events.css";
 
-function Events() {
+function Employees() {
   const { userData } = useContext(GeneralData);
   const [selectedDomKultury, setSelectedDomKultury] = useState(1);
   const [domyKultury, setDomyKultury] = useState([]);
-  const [wydarzenia, setWydarzenia] = useState([]);
+  const [pracownicy, setPracownicy] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -20,9 +20,9 @@ function Events() {
   useEffect(() => {
     async function fetchData() {
       const result = await axios(
-        "/api/wydarzenia?dom_kultury=" + selectedDomKultury
+        "/api/pracownicy?dom_kultury=" + selectedDomKultury
       );
-      setWydarzenia(result.data);
+      setPracownicy(result.data);
     }
     fetchData();
   }, [selectedDomKultury]);
@@ -45,14 +45,14 @@ function Events() {
           <DomKultury domKultury={domyKultury[selectedDomKultury - 1]} />
         </div>
         <div className="container-right">
-          <h2>Wydarzenia w domie Kultury numer {selectedDomKultury}:</h2>
+          <h2>Pracownicy w domie Kultury numer {selectedDomKultury}:</h2>
           <div className="wydarzenia">
-            {wydarzenia.length !== 0 ? (
-              wydarzenia.map((element, index) => (
-                <Wydarzenie key={index} index={index} wydarzenie={element}/>
+            {pracownicy.length !== 0 ? (
+                pracownicy.map((element, index) => (
+                <Pracownik key={index} index={index} pracownik={element}/>
               ))
             ) : (
-              <h4>Niestety nie znalezlismy zadnych wydarzen</h4>
+              <h4>Niestety nie znalezlismy zadnych pracownikow</h4>
             )}
           </div>
         </div>
@@ -87,24 +87,23 @@ function DomKultury({ domKultury }) {
   );
 }
 
-function Wydarzenie({ wydarzenie }) {
+function Pracownik({ pracownik }) {
   return (
     <div className="wydarzenie">
-      <h5>{wydarzenie ? "Typ: " + wydarzenie.typ : ""}</h5>
-      <h5>{wydarzenie ? "Data: " + wydarzenie.data.slice(0, 10) : ""}</h5>
+      <h5>{pracownik ? "Imie: " + pracownik.imie : ""}</h5>
       <h5>
-        {wydarzenie
-          ? "Od: " + wydarzenie.data.slice(11, 16)
+        {pracownik
+          ? "Nazwisko: " + pracownik.nazwisko
           : ""}
       </h5>
-      <h5>
-        {wydarzenie
-          ? "Do: " + (parseInt(wydarzenie.data.slice(11, 13))+wydarzenie.czas_trwania).toString()+wydarzenie.data.slice(13, 16)
-          : ""}
-      </h5>
-      <h5>{wydarzenie ? "Sala: " + wydarzenie.numer_sali : ""}</h5>
+      <h5>{pracownik ? "Plec: " + (pracownik.plec==="K" ? "Kobieta" : "Mężczyzna") : ""}</h5>
+      <h5>{pracownik ? "Data urodzenia: " + pracownik.data_urodzenia.slice(0, 10) : ""}</h5>
+      <h5>{pracownik ? "Pesel: " + pracownik.pesel : ""}</h5>
+      <h5>{pracownik ? "Telefon: " + pracownik.telefon : ""}</h5>
+      <h5>{pracownik ? "Stanowisko: " + pracownik.stanowisko : ""}</h5>
+      <h5>{pracownik ? "Pensja: " + pracownik.pensja : ""}</h5>
     </div>
   );
 }
 
-export default Events;
+export default Employees;
