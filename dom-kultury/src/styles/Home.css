@@ -1,0 +1,90 @@
+.home {
+    width: 100%;
+}
+
+.home > img{
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    width: 1800px;
+    z-index: -1;
+}
+
+.wrapper-domy-kultury{
+    position: relative;
+    top: 50rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    width: 100%;
+    min-width:100%;
+    margin: 0 auto;
+}
+
+.wrapper-domy-kultury > :first-child{
+    cursor: pointer;
+    margin: 0 1rem 0 auto;
+    font-size: 2rem;
+}
+
+.wrapper-domy-kultury > :last-child{
+    cursor: pointer;
+    margin: 0 auto 0 1rem;
+    font-size: 2rem;
+}
+
+.domy-kultury{
+    display: flex;
+    border-radius: 1rem;
+    background-color: white;
+    margin: 1rem;
+    width: 50%;
+    overflow: hidden;
+}
+
+.dom-kultury{
+    display: flex;
+    text-align: center;
+    justify-content: space-evenly;
+    min-width: 100%;
+    font-size: 1.3rem;
+}
+
+.dom-kultury > :last-child{
+    margin: 2rem 0;
+    width: 12rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.dom-kultury > .disabled{
+   color: #00000047;
+   cursor: default;
+}
+
+.dom-kultury > :last-child > *{
+    margin: .75rem;
+}
+
+.domy-kultury-text{
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 1.4rem;
+    color: black;
+    background-color: #ffffffcc;
+    width: 100%;
+    min-width: 100%;
+    padding: 2rem 0;
+    margin: 0 auto;
+    position: relative;
+    top: 50rem;
+}
+
+.dom-kultury > :first-child{
+    text-align: center;
+}

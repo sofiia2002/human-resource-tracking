@@ -15,8 +15,8 @@ function Login() {
     });
   };
   return (
-    <div class="login-container">
-      <div class="login-box">
+    <div className="login-container">
+      <div className="login-box">
         <h5>Zaloguj sie do aplikacji</h5>
         <h4>Zarzadzania Domami Kultury FLEX</h4>
         <div>Twoje imie:</div>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { GeneralData } from "../Context";
+import { Link } from "react-router-dom";
 import "../styles/Navbar.css";
 
 function Navbar() {
@@ -14,29 +15,46 @@ function Navbar() {
   };
 
   return (
-    <div class="nav">
-      <div className="logo">
-        <i class="las la-university"></i>
-        <div class="logo-text">
+    <div className="nav">
+      <Link to="/" className="logo">
+        <i className="las la-university"></i>
+        <div className="logo-text">
           <span>Warszwskie</span>
           <span>Domy</span>
           <span>Kultury</span>
           <span>FLEX</span>
         </div>
-      </div>
+      </Link>
       <div className="links">
-        <span>Glowna</span>
-        <span>Kalendarz</span>
-        <span>Wydarzenia</span>
-        <span>Moj profil</span>
-      </div>
-      <div class="user">
-        {userData.name ? (
-          <span class="login-name">Witaj, {userData.name}!</span>
+        <Link to="/">Glowna</Link>
+        <Link to="/calendar">Kalendarz</Link>
+        <Link to="/events">Wydarzenia</Link>
+        {userData.userType === "developer" ||
+        userData.userType === "organizator" ? (
+          <Link to="/participants">Uczestnicy</Link>
         ) : (
           ""
         )}
-        {userData.isLoggedIn ? <span onClick={logout}>Exit</span> : ""}
+        {userData.userType === "developer" ? (
+          <Link to="/employees">Pracownicy</Link>
+        ) : (
+          ""
+        )}
+        <Link to="/myprofile">Moj profil</Link>
+      </div>
+      <div className="user">
+        {userData.name ? (
+          <span className="login-name">Witaj, {userData.name}!</span>
+        ) : (
+          ""
+        )}
+        {userData.isLoggedIn ? (
+          <Link to="/">
+            <span onClick={logout}>Exit</span>
+          </Link>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

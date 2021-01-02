@@ -1,13 +1,19 @@
 .nav{
-    position: absolute;
+    position: relative;
     display: flex;
     align-items: center;
     top: 0;
     right: 0;
     left: 0;
     height: 6rem;
-    background-color: white;
+    background-color: transparent;
     padding: .5rem 3rem;
+}
+
+.nav a{
+    color: black;
+    outline: none;
+    text-decoration: none;
 }
 
 .nav > .logo{
@@ -18,7 +24,7 @@
 
 .nav > .links{
     width: calc(100% - 23rem);
-    max-width: 30rem;
+    max-width: 40rem;
     margin-right: 0;
     margin-left: auto;
     display: flex;
