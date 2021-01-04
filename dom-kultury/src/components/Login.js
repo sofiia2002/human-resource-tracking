@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { useHistory } from "react-router-dom";
 import { GeneralData } from "../Context";
 import "../styles/Login.css";
 
@@ -6,13 +7,14 @@ function Login() {
   const { setUserData } = useContext(GeneralData);
   const [name, setName] = useState("Guest");
   const [userType, setUserType] = useState("guest");
-
+  const history = useHistory();
   const login = () => {
     setUserData({
       isLoggedIn: true,
       userType: userType,
       name: name,
     });
+    history.push("/");
   };
   return (
     <div className="login-container">

@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import { GeneralData } from "../Context";
-import { Link } from "react-router-dom";
+import { Link, Router, useHistory } from "react-router-dom";
 import "../styles/Navbar.css";
 
 function Navbar() {
   const { setUserData, userData } = useContext(GeneralData);
-
+  const history = useHistory();
   const logout = () => {
     setUserData({
       isLoggedIn: false,
@@ -41,15 +41,25 @@ function Navbar() {
         ) : (
           ""
         )}
-        {userData.userType&&userData.userType!=="guest" ? (
+        {userData.userType && userData.userType !== "guest" ? (
           <Link to="/myprofile">Moj profil</Link>
         ) : (
           ""
         )}
       </div>
       <div className="user">
+        {!userData.isLoggedIn ? (
+          <Link className="login-as" to="/login">
+            Zaloguj się
+          </Link>
+        ) : (
+          ""
+        )}
+
         {userData.name ? (
-          <span className="login-name">Witaj, {userData.name}!</span>
+          <span className="login-name" onClick={() => history.push("/")}>
+            Witaj, {userData.name}!
+          </span>
         ) : (
           ""
         )}

@@ -9,7 +9,7 @@ function App() {
   const [userData, setUserData] = useState({
     isLoggedIn: false,
     userType: "",
-    name: ""
+    name: "",
   });
 
   return (
@@ -20,7 +20,6 @@ function App() {
       }}
     >
       <Router hashType="noslash">
-        {!userData.isLoggedIn ? <Login /> : ""}
         <Navbar />
         <BasicPage />
       </Router>
