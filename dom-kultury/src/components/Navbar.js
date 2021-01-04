@@ -27,7 +27,7 @@ function Navbar() {
       </Link>
       <div className="links">
         <Link to="/">Glowna</Link>
-        <Link to="/events">Wydarzenia</Link>
+        {/* <Link to="/events">Wydarzenia</Link> */}
         <Link to="/exhibitions">Wystawy</Link>
         <Link to="/lessons">Warsztaty</Link>
         {userData.userType === "developer" ||

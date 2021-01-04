@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import background from "../images/background.jpg";
 import "../styles/Home.css";
 
 function Home() {
@@ -18,7 +17,6 @@ function Home() {
   return (
     <div className="home">
       <div className="jumbotron">
-        {/* <img src={background} alt="" /> */}
         <span>Witamy w naszym domie kultury</span>
       </div>
 

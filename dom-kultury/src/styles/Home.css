@@ -15,12 +15,7 @@
   background-size: cover;
   z-index: -1;
 }
-/* .home > .jumbotron > img {
-  width: 100%;
-  background-repeat: no-repeat;
-  background-size: cover;
-  z-index: -1;
-} */
+
 .home > .jumbotron > span {
   align-self: center;
   justify-self: center;
