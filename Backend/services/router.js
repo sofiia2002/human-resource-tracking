@@ -14,6 +14,7 @@ const uczestnicy_wydarzenia = require('../controllers/uczestnicy_wydarzenia.js')
 const warsztaty = require('../controllers/warsztaty.js');
 const wystawy = require('../controllers/wystawy.js');
 const login_uczestnicy = require('../controllers/login_uczestnicy.js');
+const wydarzenia_uczestnika = require('../controllers/wydarzenia_uczestnika.js');
 
 
 router.route('/')
@@ -28,7 +29,7 @@ router.route('/login_uczestnicy')
 router.route('/domy_kultury/:id?')
       .get(domy_kultury.get);
 
-router.route('/uczestnicy_wydarzenia/:id?')
+router.route('/uczestnicy/:id?') 
       .get(uczestnicy_wydarzenia.get);  
 
 router.route('/stanowiska/:id?')
@@ -53,6 +54,7 @@ router.route('/zasoby')
 // Sonya: Tu wykorzystuje query:
 // Parametr 'dom_kultury' oznacza id domu kultury
 // Parametr 'id' oznacza id sali
+// Parametr 'id uczestnika' oznacza id uczestnika
 // Parametr 'typ' oznacza typ wydarzenia
 // Przyklad: /api/wydarzenia?id=1&dom_kultury=1&typ=wystawa
 router.route('/wydarzenia') 
@@ -61,6 +63,7 @@ router.route('/wydarzenia')
 // Sonya: Tu wykorzystuje query:
 // Parametr 'dom_kultury' oznacza id domu kultury
 // Parametr 'id' oznacza id warsztatu (wydarzenia)
+// Parametr 'id uczestnika' oznacza id uczestnika
 // Przyklad: /api/wydarzenia?id=1&dom_kultury=1
 router.route('/warsztaty') 
       .get(warsztaty.get); 
@@ -68,6 +71,7 @@ router.route('/warsztaty')
 // Sonya: Tu wykorzystuje query:
 // Parametr 'dom_kultury' oznacza id domu kultury
 // Parametr 'id' oznacza id warsztatu (wystawy)
+// Parametr 'id uczestnika' oznacza id uczestnika
 // Przyklad: /api/wydarzenia?id=1&dom_kultury=1
 router.route('/wystawy') 
       .get(wystawy.get); 
@@ -82,8 +86,11 @@ router.route('/pracownicy')
 // Sonya: Tu wykorzystuje query:
 // Parametr 'pracownik' oznacza id pracownika
 // Parametr 'wydarzenie' oznacza id wydarzenia
-// Przyklad: /api/organizacja_wadarzen?pracownik=1&wydarzenie=1
+// Przyklad: /api/organizacja_wydarzen?pracownik=1&wydarzenie=1
 router.route('/organizacja_wydarzen')
       .get(organizacja_wydarzen.get);  
+
+router.route('/wydarzenia_uczestnika/:id') // id uczestnika
+      .get(wydarzenia_uczestnika.get);  
 
 module.exports = router;

@@ -5,7 +5,7 @@ const baseQuery =
         sale.id_sali "id",
         sale.powierzchnia "powierzchnia",
         sale.numer_sali "numer_sali"
-    from zasoby
+    from sale
     `
 
 async function find(context) {
@@ -14,7 +14,7 @@ async function find(context) {
 
     if(context.id){
         binds.id_sali = context.id;
-        query+= `\nwhere zasoby.id_sali = :id_sali`;
+        query+= `\nwhere sale.id_sali = :id_sali`;
     }
 
     const result = await database.simpleExecute(query, binds);

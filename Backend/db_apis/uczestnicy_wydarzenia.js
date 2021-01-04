@@ -9,6 +9,7 @@ const baseQuery =
         telefon "telefon",
         email "email"
     from uczestnicy_wydarzenia
+    where 1 = 1  
     `
 
 async function find(context) {
