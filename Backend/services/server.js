@@ -8,6 +8,9 @@ let httpServer;
 function initialize() {
     return new Promise((resolve, reject) => {
         const app = express();
+        app.use(express.json({
+            reviver: reviveJson
+        }));
         httpServer = http.createServer(app);
         app.use(morgan('combined'));
         app.use('/api', router);
@@ -32,5 +35,16 @@ function close() {
     });
 }
 
+const iso8601RegExp = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{3})?Z$/;
+ 
+function reviveJson(key, value) {
+  if (typeof value === 'string' && iso8601RegExp.test(value)) {
+    return new Date(value);
+  } else {
+    return value;
+  }
+}
+
 module.exports.close = close;
 module.exports.initialize = initialize;
+

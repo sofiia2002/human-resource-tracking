@@ -45,4 +45,27 @@ async function find(context) {
     return result.rows;
 }
 
+async function login(employ) {
+    let query = baseQuery;
+    const binds = {};
+  
+    binds.imie = employ.imie;
+    query += `\nand pracownicy.imie = :imie`;
+
+    binds.nazwisko = employ.nazwisko;
+    query += `\nand pracownicy.nazwisko = :nazwisko`;
+  
+    binds.haslo = employ.haslo;
+    query += `\nand pracownicy.haslo = :haslo`;
+  
+    const result = await database.simpleExecute(query, binds);
+  
+    if ((result.rows.length!==0)) {
+      return result.rows;
+    } else {
+      return null;
+    }
+}
+  
+module.exports.login = login;
 module.exports.find = find;
