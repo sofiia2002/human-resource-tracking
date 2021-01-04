@@ -20,4 +20,36 @@ async function get(req, res, next){
     }
 }
 
+function getEmployeesFromRec(req) {
+    const employee = {
+      imie: req.body.imie,
+      nazwisko: req.body.nazwisko,
+      haslo: req.body.haslo,
+    };
+  
+    return employee;
+  }
+  
+  async function login(req, res, next) {
+    try {
+      let employee = getEmployeesFromRec(req);
+  
+      if (employee.imie && employee.nazwisko && employee.haslo) {
+        employee = await pracownicy.login(employee);
+  
+        if (employee !== null) {
+          res.status(200).json(employee);
+        } else {
+          res.status(404).end();
+        }
+      } else {
+        res.status(400).end();
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+  
+  
+module.exports.login = login;
 module.exports.get = get;

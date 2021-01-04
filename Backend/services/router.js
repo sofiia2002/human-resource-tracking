@@ -13,10 +13,17 @@ const sala_zasoby = require('../controllers/sala_zasoby.js');
 const uczestnicy_wydarzenia = require('../controllers/uczestnicy_wydarzenia.js');
 const warsztaty = require('../controllers/warsztaty.js');
 const wystawy = require('../controllers/wystawy.js');
+const login_uczestnicy = require('../controllers/login_uczestnicy.js');
 
 
 router.route('/')
       .get(basic_info.get);
+
+router.route('/login_pracownicy')
+      .post(pracownicy.login);
+
+router.route('/login_uczestnicy')
+      .post(login_uczestnicy.post);
 
 router.route('/domy_kultury/:id?')
       .get(domy_kultury.get);
