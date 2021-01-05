@@ -27,12 +27,12 @@ async function find(context) {
 
     if(context.dom_kultury){
         binds.id_domu_kultury = context.dom_kultury;
-        query+= `\nand id_domu_kultury = :id_domu_kultury`;
+        query+= `\nand wydarzenie.id_domu_kultury = :id_domu_kultury`;
     }
 
     if(context.id){
         binds.id_wydarzenia = context.id;
-        query+= `\nand id_wydarzenia = :id_wydarzenia`;
+        query+= `\nand warsztaty.id_wydarzenia = :id_wydarzenia`;
     }
 
 
