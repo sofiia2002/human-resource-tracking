@@ -1,12 +1,10 @@
-const dotenv = require("dotenv").config();
 const webServer = require("./services/server.js");
 const database = require("./services/database.js");
 const dbConfig = require("./config/database.js");
 const defaultThreadPoolSize = 4;
 
 // Increase thread pool size by poolMaxç
-process.env.UV_THREADPOOL_SIZE =
-  dbConfig.hrPool.poolMax + defaultThreadPoolSize;
+process.env.UV_THREADPOOL_SIZE = dbConfig.hrPool.poolMax + defaultThreadPoolSize;
 
 async function startup() {
   console.log("Starting application");
