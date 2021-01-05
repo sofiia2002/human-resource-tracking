@@ -10,7 +10,7 @@ const baseQuery =
         warsztaty.telefon "telefon",
         wydarzenia.data_wydarzenia "data",
         wydarzenia.czas_trwania "czas_trwania",
-        wydarzenie.id_domu_kultury "id_domu_kultury",
+        wydarzenia.id_domu_kultury "id_domu_kultury",
         sale.numer_sali "numer_sali"
     from warsztaty
     join wydarzenia  
@@ -27,7 +27,7 @@ async function find(context) {
 
     if(context.dom_kultury){
         binds.id_domu_kultury = context.dom_kultury;
-        query+= `\nand wydarzenie.id_domu_kultury = :id_domu_kultury`;
+        query+= `\nand wydarzenia.id_domu_kultury = :id_domu_kultury`;
     }
 
     if(context.id){
