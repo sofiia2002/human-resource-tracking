@@ -75,8 +75,8 @@ router.route('/warsztaty')
 // Parametr 'id uczestnika' oznacza id uczestnika
 // Przyklad: /api/wydarzenia?id=1&dom_kultury=1
 router.route('/wystawy') 
-      .get(wystawy.get);
-      // .post(wystawy.post); 
+      .get(wystawy.get)
+      .post(wystawy.post); 
       
 // Sonya: Tu wykorzystuje query:
 // Parametr 'dom_kultury' oznacza id domu kultury
