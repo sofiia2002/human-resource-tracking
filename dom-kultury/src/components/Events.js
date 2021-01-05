@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useContext } from "react";
-import { GeneralData } from "../Context";
+import React, { useState, useEffect } from "react";
+//import { GeneralData } from "../Context";
 import axios from "axios";
 import "../styles/Events.css";
 
 function Events() {
-  const { userData } = useContext(GeneralData);
+  //const { userData } = useContext(GeneralData);
   const [selectedDomKultury, setSelectedDomKultury] = useState(1);
   const [domyKultury, setDomyKultury] = useState([]);
   const [wydarzenia, setWydarzenia] = useState([]);
@@ -49,7 +49,7 @@ function Events() {
           <div className="wydarzenia">
             {wydarzenia.length !== 0 ? (
               wydarzenia.map((element, index) => (
-                <Wydarzenie key={index} index={index} wydarzenie={element}/>
+                <Wydarzenie key={index} index={index} wydarzenie={element} />
               ))
             ) : (
               <h4>Niestety nie znalezlismy zadnych wydarzen</h4>
@@ -72,17 +72,8 @@ function DomKultury({ domKultury }) {
       </h5>
       <h5>{domKultury ? "Postal code: " + domKultury.postal_code : ""}</h5>
       <h5>{domKultury ? "Phone: " + domKultury.phone : ""}</h5>
-      <h5>
-        {domKultury
-          ? "Opens: " + domKultury.opens.slice(11, 16)
-          : ""}
-      </h5>
-      <h5>
-        {domKultury
-          ? "Closes: " +
-            domKultury.closes.slice(11, 16)
-          : ""}
-      </h5>
+      <h5>{domKultury ? "Opens: " + domKultury.opens.slice(11, 16) : ""}</h5>
+      <h5>{domKultury ? "Closes: " + domKultury.closes.slice(11, 16) : ""}</h5>
     </div>
   );
 }
@@ -92,14 +83,14 @@ function Wydarzenie({ wydarzenie }) {
     <div className="wydarzenie">
       <h5>{wydarzenie ? "Typ: " + wydarzenie.typ : ""}</h5>
       <h5>{wydarzenie ? "Data: " + wydarzenie.data.slice(0, 10) : ""}</h5>
+      <h5>{wydarzenie ? "Od: " + wydarzenie.data.slice(11, 16) : ""}</h5>
       <h5>
         {wydarzenie
-          ? "Od: " + wydarzenie.data.slice(11, 16)
-          : ""}
-      </h5>
-      <h5>
-        {wydarzenie
-          ? "Do: " + (parseInt(wydarzenie.data.slice(11, 13))+wydarzenie.czas_trwania).toString()+wydarzenie.data.slice(13, 16)
+          ? "Do: " +
+            (
+              parseInt(wydarzenie.data.slice(11, 13)) + wydarzenie.czas_trwania
+            ).toString() +
+            wydarzenie.data.slice(13, 16)
           : ""}
       </h5>
       <h5>{wydarzenie ? "Sala: " + wydarzenie.numer_sali : ""}</h5>

@@ -1,73 +1,85 @@
-.nav{
-    position: relative;
-    display: flex;
-    align-items: center;
-    top: 0;
-    right: 0;
-    left: 0;
-    height: 6rem;
-    background-color: transparent;
-    padding: .5rem 3rem;
+.nav {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 6rem;
+  background-color: transparent;
+  padding: 0.5rem 3rem;
 }
 
-.nav a{
-    color: black;
-    outline: none;
-    text-decoration: none;
+.nav a {
+  color: black;
+  outline: none;
+  text-decoration: none;
 }
 
-.nav > .logo{
-    display: flex;
-    align-items: center;
-    width: 13rem;
+.nav > .logo {
+  display: flex;
+  align-items: center;
+  width: 13rem;
 }
 
-.nav > .links{
-    width: calc(100% - 23rem);
-    max-width: 50rem;
-    margin-right: 0;
-    margin-left: auto;
-    display: flex;
-    justify-content: space-around;
+.nav > .links {
+  width: calc(100% - 23rem);
+  max-width: 50rem;
+  margin-right: 0;
+  margin-left: auto;
+  display: flex;
+  justify-content: space-around;
 }
 
 .nav > .links > *,
-.nav > .user > :last-child{
-    padding-bottom: .3rem;
-    border-bottom: 3px solid transparent;
-    transition: border-bottom .2s;
+.nav > .user > :last-child {
+  padding-bottom: 0.3rem;
+  border-bottom: 3px solid transparent;
+  transition: border-bottom 0.2s;
 }
 
 .nav > .links > *:hover,
-.nav > .user > :last-child:hover{
-    border-bottom: 3px solid black;
+.nav > .user > :last-child:hover {
+  border-bottom: 3px solid black;
 }
 
-.nav > .user{
-    margin-left: 5rem;
-    width: 10rem;
-    display: flex;
-    justify-content: space-between;
+.nav > .user {
+  margin-left: 1rem;
+  justify-self: flex-end;
+  width: 10rem;
+  display: flex;
+  justify-content: space-between;
+}
+.nav > .user > .login-as {
+  font-size: 0.8rem;
+  padding: 0.5rem 0.8rem;
+  border: 0.15rem solid black;
+  transition: color background-color 0.3s ease;
+}
+.nav > .user > .login-as:hover {
+  color: white;
+  background-color: black;
+  border: 0.15rem solid black;
+}
+.nav > .user > .login-name {
+  color: rgba(0, 0, 0, 0.531);
 }
 
-.nav > .user > .login-name{
-    color: rgba(0, 0, 0, 0.531);
+.nav > *:not(.login-name) {
+  cursor: pointer;
 }
 
-.nav > *:not(.login-name){
-    cursor: pointer;
+.nav > .logo > .las {
+  font-size: 5rem;
+  margin-right: 0.5rem;
 }
 
-.nav > .logo > .las{
-    font-size: 5rem;
-    margin-right: .5rem;
-}
-
-.nav > .logo > .logo-text{
-    display: flex;
-    flex-direction: column;
-    letter-spacing: .2rem;
-    font-size: .8rem;
-    line-height: .9rem;
-    font-weight: 500;
+.nav > .logo > .logo-text {
+  display: flex;
+  flex-direction: column;
+  letter-spacing: 0.2rem;
+  font-size: 0.8rem;
+  line-height: 0.9rem;
+  font-weight: 500;
 }

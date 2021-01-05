@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import background from "../images/background.jpg";
 import "../styles/Home.css";
 
 function Home() {
@@ -17,28 +16,37 @@ function Home() {
 
   return (
     <div className="home">
-      <img src={background} alt="" />
+      <div className="jumbotron">
+        <span>Witamy w naszym domie kultury</span>
+      </div>
+
       <div className="domy-kultury-text">Nasze lokalizacje</div>
-      {domyKultury.length>0 ? 
-      <div className="wrapper-domy-kultury">
-        <i
-          className="las la-angle-left"
-          onClick={() => (page > 1 ? setPage(page - 1) : setPage(domyKultury.length))}
-        />
-        <div className="domy-kultury">
-          {/* {domyKultury.map((element, index) => (
+      {domyKultury.length > 0 ? (
+        <div className="wrapper-domy-kultury">
+          <i
+            className="las la-angle-left"
+            onClick={() =>
+              page > 1 ? setPage(page - 1) : setPage(domyKultury.length)
+            }
+          />
+          <div className="domy-kultury">
+            {/* {domyKultury.map((element, index) => (
             <DomKultury data={element} key={index}/>
           ))} */}
-            <DomKultury data={domyKultury[page-1]}/>
+            <DomKultury data={domyKultury[page - 1]} />
+          </div>
+          <i
+            className="las la-angle-right"
+            onClick={() =>
+              page < 2 && domyKultury.length > page
+                ? setPage(page + 1)
+                : setPage(1)
+            }
+          />
         </div>
-        <i
-          className="las la-angle-right"
-          onClick={() =>
-            page < 2 && domyKultury.length > page ? setPage(page + 1) : setPage(1)
-          }
-        />
-      </div> : ""
-      }
+      ) : (
+        ""
+      )}
     </div>
   );
 }

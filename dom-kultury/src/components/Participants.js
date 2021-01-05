@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useContext } from "react";
-import { GeneralData } from "../Context";
+import React, { useState, useEffect } from "react";
+//import { GeneralData } from "../Context";
 import axios from "axios";
 import "../styles/Events.css";
 
 function Employees() {
-  const { userData } = useContext(GeneralData);
+  //const { userData } = useContext(GeneralData);
   const [selectedDomKultury, setSelectedDomKultury] = useState(1);
   const [domyKultury, setDomyKultury] = useState([]);
   const [uczestnicy, setUczestnicy] = useState([]);

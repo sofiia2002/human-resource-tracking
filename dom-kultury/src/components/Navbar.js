@@ -1,17 +1,13 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import { GeneralData } from "../Context";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import "../styles/Navbar.css";
 
 function Navbar() {
   const { setUserData, userData } = useContext(GeneralData);
-
+  const history = useHistory();
   const logout = () => {
-    setUserData({
-      isLoggedIn: false,
-      userType: null,
-      name: null,
-    });
+    setUserData({});
   };
 
   return (
@@ -27,33 +23,43 @@ function Navbar() {
       </Link>
       <div className="links">
         <Link to="/">Glowna</Link>
-        <Link to="/events">Wydarzenia</Link>
+        {/* <Link to="/events">Wydarzenia</Link> */}
         <Link to="/exhibitions">Wystawy</Link>
         <Link to="/lessons">Warsztaty</Link>
-        {userData.userType === "developer" ||
-        userData.userType === "organizator" ? (
+        {((userData && userData?.stanowisko === "Developer") ||
+          userData?.stanowisko) === "Organizator" ? (
           <Link to="/participants">Uczestnicy</Link>
         ) : (
           ""
         )}
-        {userData.userType === "developer" ? (
+        {userData?.stanowisko === "Developer" ? (
           <Link to="/employees">Pracownicy</Link>
         ) : (
           ""
         )}
-        {userData.userType&&userData.userType!=="guest" ? (
+        {userData?.stanowisko && userData?.stanowisko !== "guest" ? (
           <Link to="/myprofile">Moj profil</Link>
         ) : (
           ""
         )}
       </div>
       <div className="user">
-        {userData.name ? (
-          <span className="login-name">Witaj, {userData.name}!</span>
+        {!userData?.imie ? (
+          <Link className="login-as" to="/login">
+            Zaloguj się
+          </Link>
         ) : (
           ""
         )}
-        {userData.isLoggedIn ? (
+
+        {userData?.imie ? (
+          <span className="login-name" onClick={() => history.push("/")}>
+            Witaj, {userData.imie}!
+          </span>
+        ) : (
+          ""
+        )}
+        {userData?.imie ? (
           <Link to="/">
             <span onClick={logout}>Exit</span>
           </Link>

@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useContext } from "react";
-import { GeneralData } from "../Context";
+import React, { useState, useEffect } from "react";
+//import { GeneralData } from "../Context";
 import axios from "axios";
 import "../styles/Events.css";
 
 function Employees() {
-  const { userData } = useContext(GeneralData);
+  //const { userData } = useContext(GeneralData);
   const [selectedDomKultury, setSelectedDomKultury] = useState(1);
   const [domyKultury, setDomyKultury] = useState([]);
   const [pracownicy, setPracownicy] = useState([]);
@@ -48,8 +48,8 @@ function Employees() {
           <h2>Pracownicy w domie Kultury numer {selectedDomKultury}:</h2>
           <div className="wydarzenia">
             {pracownicy.length !== 0 ? (
-                pracownicy.map((element, index) => (
-                <Pracownik key={index} index={index} pracownik={element}/>
+              pracownicy.map((element, index) => (
+                <Pracownik key={index} index={index} pracownik={element} />
               ))
             ) : (
               <h4>Niestety nie znalezlismy zadnych pracownikow</h4>
@@ -72,17 +72,8 @@ function DomKultury({ domKultury }) {
       </h5>
       <h5>{domKultury ? "Postal code: " + domKultury.postal_code : ""}</h5>
       <h5>{domKultury ? "Phone: " + domKultury.phone : ""}</h5>
-      <h5>
-        {domKultury
-          ? "Opens: " + domKultury.opens.slice(11, 16)
-          : ""}
-      </h5>
-      <h5>
-        {domKultury
-          ? "Closes: " +
-            domKultury.closes.slice(11, 16)
-          : ""}
-      </h5>
+      <h5>{domKultury ? "Opens: " + domKultury.opens.slice(11, 16) : ""}</h5>
+      <h5>{domKultury ? "Closes: " + domKultury.closes.slice(11, 16) : ""}</h5>
     </div>
   );
 }
@@ -91,13 +82,17 @@ function Pracownik({ pracownik }) {
   return (
     <div className="wydarzenie">
       <h5>{pracownik ? "Imie: " + pracownik.imie : ""}</h5>
+      <h5>{pracownik ? "Nazwisko: " + pracownik.nazwisko : ""}</h5>
       <h5>
         {pracownik
-          ? "Nazwisko: " + pracownik.nazwisko
+          ? "Plec: " + (pracownik.plec === "K" ? "Kobieta" : "Mężczyzna")
           : ""}
       </h5>
-      <h5>{pracownik ? "Plec: " + (pracownik.plec==="K" ? "Kobieta" : "Mężczyzna") : ""}</h5>
-      <h5>{pracownik ? "Data urodzenia: " + pracownik.data_urodzenia.slice(0, 10) : ""}</h5>
+      <h5>
+        {pracownik
+          ? "Data urodzenia: " + pracownik.data_urodzenia.slice(0, 10)
+          : ""}
+      </h5>
       <h5>{pracownik ? "Pesel: " + pracownik.pesel : ""}</h5>
       <h5>{pracownik ? "Telefon: " + pracownik.telefon : ""}</h5>
       <h5>{pracownik ? "Stanowisko: " + pracownik.stanowisko : ""}</h5>
