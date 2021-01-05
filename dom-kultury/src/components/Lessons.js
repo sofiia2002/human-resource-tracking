@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useContext } from "react";
-import { GeneralData } from "../Context";
+import React, { useState, useEffect } from "react";
+//import { GeneralData } from "../Context";
 import axios from "axios";
 import "../styles/Events.css";
 import "../styles/Exhibitions.css";
 
 function Lessons() {
-  const { userData } = useContext(GeneralData);
+  //const { userData } = useContext(GeneralData);
   const [selectedDomKultury, setSelectedDomKultury] = useState(1);
   const [domyKultury, setDomyKultury] = useState([]);
   const [warsztaty, setWarsztaty] = useState([]);
@@ -29,7 +29,7 @@ function Lessons() {
       );
       const resultWarsztaty = await axios("/api/warsztaty");
       result = [
-        ...resultWarsztaty .data.filter(
+        ...resultWarsztaty.data.filter(
           (warsztat) => resultWydarzenia.indexOf(warsztat.id) !== -1
         ),
       ];
@@ -59,7 +59,7 @@ function Lessons() {
           <h2>Warsztaty w domie Kultury numer {selectedDomKultury}:</h2>
           <div className="wystawy">
             {warsztaty.length !== 0 ? (
-                warsztaty.map((element, index) => (
+              warsztaty.map((element, index) => (
                 <Warsztat key={index} index={index} warsztat={element} />
               ))
             ) : (
@@ -96,7 +96,8 @@ function Warsztat({ warsztat }) {
       <div>
         <h5>
           {warsztat
-            ? "Wykladowca: " + warsztat.imie_wykladowcy +
+            ? "Wykladowca: " +
+              warsztat.imie_wykladowcy +
               " " +
               warsztat.nazwisko_wykladowcy
             : ""}

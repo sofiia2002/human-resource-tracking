@@ -4,7 +4,7 @@ const LoginInput = ({ name, setter, text, type }) => {
   return (
     <label>
       {text}:
-      <input type={type} name={name} id="" onChange={setter} required />
+      <input type={type} name={name} onChange={setter} />
     </label>
   );
 };
