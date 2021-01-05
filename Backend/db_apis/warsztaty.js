@@ -2,13 +2,21 @@ const database = require('../services/database.js');
 
 const baseQuery = 
     `select
-        id_wydarzenia "id",
-        temat "temat",
-        nazwisko_wykladowcy "nazwisko_wykladowcy",
-        imie_wykladowcy "imie_wykladowcy",
-        email "email",
-        telefon "telefon"
+        warsztaty.id_wydarzenia "id",
+        warsztaty.temat "temat",
+        warsztaty.nazwisko_wykladowcy "nazwisko_wykladowcy",
+        warsztaty.imie_wykladowcy "imie_wykladowcy",
+        warsztaty.email "email",
+        warsztaty.telefon "telefon",
+        wydarzenia.data_wydarzenia "data",
+        wydarzenia.czas_trwania "czas_trwania",
+        wydarzenie.id_domu_kultury "id_domu_kultury",
+        sale.numer_sali "numer_sali"
     from warsztaty
+    join wydarzenia  
+        on wydarzenia.id_wydarzenia=warsztaty.id_wydarzenia
+    join sale 
+        on sale.id_sali=wydarzenia.id_sali
     where 1 = 1    
     `
 
