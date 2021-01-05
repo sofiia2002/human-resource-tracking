@@ -10,7 +10,7 @@ const baseQuery =
         wystawy.opis "opis",
         wydarzenia.data_wydarzenia "data",
         wydarzenia.czas_trwania "czas_trwania",
-        wydarzenie.id_domu_kultury "id_domu_kultury",
+        wydarzenia.id_domu_kultury "id_domu_kultury",
         sale.numer_sali "numer_sali"
     from wystawy 
     join wydarzenia  
@@ -40,5 +40,7 @@ async function find(context) {
 
     return result.rows;
 }
+
+
 
 module.exports.find = find;
