@@ -29,7 +29,11 @@ router.route('/login_uczestnicy')
 router.route('/domy_kultury/:id?')
       .get(domy_kultury.get);
 
-router.route('/uczestnicy/:id?') 
+// Sonya: Tu wykorzystuje query:
+// Parametr 'id' oznacza id uczestnika
+// Parametr 'wydarzenie' oznacza id wydarzenia
+// Przyklad: /api/uczestnicy?id=1
+router.route('/uczestnicy') 
       .get(uczestnicy_wydarzenia.get);  
 
 router.route('/stanowiska/:id?')
