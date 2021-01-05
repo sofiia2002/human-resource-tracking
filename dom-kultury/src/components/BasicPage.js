@@ -7,6 +7,8 @@ import Lessons from "./Lessons";
 import Participants from "./Participants";
 import Home from "./Home";
 import Login from "./Login";
+import MyProfile from "./MyProfile";
+import Register from "./Register";
 
 function BasicPage() {
   return (
@@ -30,10 +32,13 @@ function BasicPage() {
         <Employees />
       </Route>
       <Route path="/myprofile">
-        <div>my profile</div>
+        <MyProfile />
       </Route>
       <Route path="/login">
         <Login />
+      </Route>
+      <Route path="/register">
+        <Register />
       </Route>
     </Switch>
   );

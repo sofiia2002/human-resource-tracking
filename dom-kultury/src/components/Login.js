@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { GeneralData } from "../Context";
 import "../styles/Login.css";
 import LoginInput from "../helpers/LoginInput";
@@ -17,7 +17,6 @@ function Login() {
   const [userInfo, setUserInfo] = useState();
 
   useEffect(() => {
-    console.log(userInfo);
     setUserData(userInfo);
   }, [userInfo]);
 
@@ -52,13 +51,6 @@ function Login() {
       }
     }
 
-    // if (userName && userPass && userType) {
-    //   setUserData({
-    //     isLoggedIn: true,
-    //     userType: userType,
-    //     name: userName,
-    //   });
-    // }
     history.push("/");
   };
   const change = (e, setter) => {
@@ -75,7 +67,7 @@ function Login() {
       <h3>Zaloguj sie jako:</h3>
       <form onSubmit={login}>
         <div className="user-type-radios">
-          <label>
+          <label className="radio_button">
             <input
               name="pracownik"
               type="radio"
@@ -86,9 +78,10 @@ function Login() {
                 setParticipantForm({});
               }}
             />
+            <span className="checkmark"></span>
             Pracownik
           </label>
-          <label>
+          <label className="radio_button">
             <input
               name="uczestnik"
               type="radio"
@@ -99,6 +92,7 @@ function Login() {
                 setEmployeeForm({});
               }}
             />
+            <span className="checkmark"></span>
             Uczestnik
           </label>
         </div>
@@ -140,14 +134,20 @@ function Login() {
               name="haslo"
               setter={(e) => change(e, setParticipantForm)}
             />
+            <small>
+              Nie masz konta uczestnika{" "}
+              <Link to="/register">Zarejestruj się</Link>
+            </small>
           </div>
         ) : (
           ""
         )}
 
-        <button className="submit-button" type="submit">
-          Submit
-        </button>
+        {userType && (
+          <button className="submit-button" type="submit">
+            Zaloguj się
+          </button>
+        )}
       </form>
     </div>
   );
