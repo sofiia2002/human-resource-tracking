@@ -19,7 +19,7 @@ function Employees() {
 
   useEffect(() => {
     async function fetchData() {
-      const result = await axios("/api/uczestnicy_wydarzenia");
+      const result = await axios("/api/uczestnicy");
       setUczestnicy(result.data);
     }
     fetchData();

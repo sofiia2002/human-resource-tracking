@@ -20,6 +20,9 @@ function MyProfile() {
       case "Administrator":
         return <AdminProfile />;
 
+      case "Uczestnik":
+        return <h1>UOUGHH STINKYYY</h1>;
+
       default:
         return <h1>Essa, nie ma hakowanka XD </h1>;
     }

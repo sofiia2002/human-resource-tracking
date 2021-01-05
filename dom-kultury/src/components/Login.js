@@ -14,7 +14,7 @@ function Login() {
   const [employeeForm, setEmployeeForm] = useState({});
   const [participantForm, setParticipantForm] = useState({});
 
-  const [userInfo, setUserInfo] = useState();
+  const [userInfo, setUserInfo] = useState({});
 
   useEffect(() => {
     setUserData(userInfo);
@@ -45,7 +45,7 @@ function Login() {
     if (userType === "uczestnik") {
       try {
         const res = await axios.post("/api/login_uczestnicy", o2);
-        setUserInfo(res.data[0]);
+        setUserInfo({ ...res.data[0], stanowisko: "Uczestnik" });
       } catch (error) {
         console.log(error);
       }

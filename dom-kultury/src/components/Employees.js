@@ -26,6 +26,15 @@ function Employees() {
     }
     fetchData();
   }, [selectedDomKultury]);
+  const serveWorkerList = (workersList, workerPosition) => {
+    let workers = workersList.filter((worker) => {
+      return worker.stanowisko === workerPosition;
+    });
+    console.log(workers);
+    return workers.map((element, index) => {
+      return <Pracownik pracownik={element} key={index} index={index} />;
+    });
+  };
 
   return (
     <div className="box">
@@ -46,11 +55,22 @@ function Employees() {
         </div>
         <div className="container-right">
           <h2>Pracownicy w domie Kultury numer {selectedDomKultury}:</h2>
-          <div className="wydarzenia">
+          <div className="workers_group">
             {pracownicy.length !== 0 ? (
-              pracownicy.map((element, index) => (
-                <Pracownik key={index} index={index} pracownik={element} />
-              ))
+              <>
+                <div className="workers_wrapper">
+                  <h3>Developerzy:</h3>
+                  {serveWorkerList(pracownicy, "Developer")}
+                </div>
+                <div className="workers_wrapper">
+                  <h3>Organizatorzy:</h3>
+                  {serveWorkerList(pracownicy, "Organizator")}
+                </div>
+                <div className="workers_wrapper">
+                  <h3>Developerzy:</h3>
+                  {serveWorkerList(pracownicy, "Administrator")}
+                </div>
+              </>
             ) : (
               <h4>Niestety nie znalezlismy zadnych pracownikow</h4>
             )}
@@ -95,7 +115,6 @@ function Pracownik({ pracownik }) {
       </h5>
       <h5>{pracownik ? "Pesel: " + pracownik.pesel : ""}</h5>
       <h5>{pracownik ? "Telefon: " + pracownik.telefon : ""}</h5>
-      <h5>{pracownik ? "Stanowisko: " + pracownik.stanowisko : ""}</h5>
       <h5>{pracownik ? "Pensja: " + pracownik.pensja : ""}</h5>
     </div>
   );

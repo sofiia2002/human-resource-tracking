@@ -1,10 +1,10 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { GeneralData } from "../Context";
 import { Link, useHistory } from "react-router-dom";
 import "../styles/Navbar.css";
 
 function Navbar() {
-  const { setUserData, userData } = useContext(GeneralData);
+  const { userData, setUserData } = useContext(GeneralData);
   const history = useHistory();
   const logout = () => {
     setUserData({});
@@ -22,29 +22,29 @@ function Navbar() {
         </div>
       </Link>
       <div className="links">
-        <Link to="/">Glowna</Link>
+        <Link to="/">Główna</Link>
         {/* <Link to="/events">Wydarzenia</Link> */}
         <Link to="/exhibitions">Wystawy</Link>
         <Link to="/lessons">Warsztaty</Link>
-        {((userData && userData?.stanowisko === "Developer") ||
-          userData?.stanowisko) === "Organizator" ? (
+        {userData.stanowisko === "Developer" ||
+        userData.stanowisko === "Organizator" ? (
           <Link to="/participants">Uczestnicy</Link>
         ) : (
           ""
         )}
-        {userData?.stanowisko === "Developer" ? (
+        {userData.stanowisko === "Developer" ? (
           <Link to="/employees">Pracownicy</Link>
         ) : (
           ""
         )}
-        {userData?.stanowisko && userData?.stanowisko !== "guest" ? (
+        {userData.stanowisko || userData.stanowisko === "uczestnik" ? (
           <Link to="/myprofile">Moj profil</Link>
         ) : (
           ""
         )}
       </div>
       <div className="user">
-        {!userData?.imie ? (
+        {!userData.imie ? (
           <Link className="login-as" to="/login">
             Zaloguj się
           </Link>
@@ -52,14 +52,14 @@ function Navbar() {
           ""
         )}
 
-        {userData?.imie ? (
+        {userData.imie ? (
           <span className="login-name" onClick={() => history.push("/")}>
             Witaj, {userData.imie}!
           </span>
         ) : (
           ""
         )}
-        {userData?.imie ? (
+        {userData.imie ? (
           <Link to="/">
             <span onClick={logout}>Exit</span>
           </Link>
