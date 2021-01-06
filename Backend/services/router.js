@@ -29,12 +29,15 @@ router.route('/login_uczestnicy')
 router.route('/domy_kultury/:id?')
       .get(domy_kultury.get);
 
-// Sonya: Tu wykorzystuje query:
+// Sonya: Tu wykorzystuje query dla get:
 // Parametr 'id' oznacza id uczestnika
 // Parametr 'wydarzenie' oznacza id wydarzenia
 // Przyklad: /api/uczestnicy?id=1
 router.route('/uczestnicy') 
-      .get(uczestnicy.get);  
+      .get(uczestnicy.get);
+      // .post(uczestnicy.post)
+      // .put(uczestnicy.put)
+      // .delete(uczestnicy.delete);
 
 router.route('/stanowiska/:id?')
       .get(stanowiska.get);      
@@ -96,7 +99,12 @@ router.route('/pracownicy')
 router.route('/organizacja_wydarzen')
       .get(organizacja_wydarzen.get);  
 
-router.route('/wydarzenia_uczestnika/:id') // id uczestnika
-      .get(wydarzenia_uczestnika.get);  
+
+// Sonya: POST i DELETE potrzebuja:
+// { id_uczestnika: number, id_wydarzenia: number }
+router.route('/wydarzenia_uczestnika/:id?') // id uczestnika
+      .get(wydarzenia_uczestnika.get)
+      .post(wydarzenia_uczestnika.post) 
+      .delete(wydarzenia_uczestnika.delete);
 
 module.exports = router;
