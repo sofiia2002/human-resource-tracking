@@ -10,7 +10,7 @@ const sale = require('../controllers/sale.js');
 const kategorie_zasobu = require('../controllers/kategorie_zasobu.js');
 const organizacja_wydarzen = require('../controllers/organizacja_wydarzen.js');
 const sala_zasoby = require('../controllers/sala_zasoby.js');
-const uczestnicy_wydarzenia = require('../controllers/uczestnicy_wydarzenia.js');
+const uczestnicy = require('../controllers/uczestnicy.js');
 const warsztaty = require('../controllers/warsztaty.js');
 const wystawy = require('../controllers/wystawy.js');
 const login_uczestnicy = require('../controllers/login_uczestnicy.js');
@@ -29,8 +29,12 @@ router.route('/login_uczestnicy')
 router.route('/domy_kultury/:id?')
       .get(domy_kultury.get);
 
-router.route('/uczestnicy/:id?') 
-      .get(uczestnicy_wydarzenia.get);  
+// Sonya: Tu wykorzystuje query:
+// Parametr 'id' oznacza id uczestnika
+// Parametr 'wydarzenie' oznacza id wydarzenia
+// Przyklad: /api/uczestnicy?id=1
+router.route('/uczestnicy') 
+      .get(uczestnicy.get);  
 
 router.route('/stanowiska/:id?')
       .get(stanowiska.get);      

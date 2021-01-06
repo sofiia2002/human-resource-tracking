@@ -1,0 +1,171 @@
+[33mcommit 5b484eb0805bddbbaed7d0c72d30ebb168496337[m[33m ([m[1;36mHEAD -> [m[1;32mmatitesty[m[33m)[m
+Author: Mati Izbik <mateuszizbicki@o2.pl>
+Date:   Tue Jan 5 22:50:16 2021 +0100
+
+    Couple changes
+
+[33mcommit a63a5e6167eedccfc7e8a7c82bee0ec8da114219[m
+Merge: 31fa1bc 5c14c1e
+Author: Mati Izbik <mateuszizbicki@o2.pl>
+Date:   Tue Jan 5 16:06:08 2021 +0100
+
+    Merge branch 'sonya' of https://github.com/maizyy/BDBT_nie-lubimy-javy into matitesty
+
+[33mcommit 5c14c1efe419dca70b69039e95a71a95b3c37959[m
+Author: Sofiia Levchenko <sofia.levchenko@gmail.com>
+Date:   Tue Jan 5 17:04:47 2021 +0200
+
+    Resolwed issue with sql in wystawy and warsztaty
+
+[33mcommit 31fa1bc54fcc5d067fc57168530de41419b6c271[m
+Merge: 3a32af4 bdf6577
+Author: Mati Izbik <mateuszizbicki@o2.pl>
+Date:   Tue Jan 5 15:57:37 2021 +0100
+
+    Merge branch 'sonya' of https://github.com/maizyy/BDBT_nie-lubimy-javy into matitesty
+
+[33mcommit bdf65772645f9fa97c414be804b8b12617870981[m
+Author: Sofiia Levchenko <sofia.levchenko@gmail.com>
+Date:   Tue Jan 5 16:56:13 2021 +0200
+
+    Resolwed issue with sql in wystawy and warsztaty
+
+[33mcommit 3a32af4af586d6656b55c43657c5c4504628b210[m[33m ([m[1;31morigin/matitesty[m[33m)[m
+Author: Mati Izbik <mateuszizbicki@o2.pl>
+Date:   Tue Jan 5 15:49:14 2021 +0100
+
+    styles to login form and register without link to database
+
+[33mcommit 77bb0b691332250cb0fc388439b1c099f0ab54ee[m
+Merge: d449f97 1555842
+Author: Mati Izbik <mateuszizbicki@o2.pl>
+Date:   Tue Jan 5 11:31:37 2021 +0100
+
+    Merge branch 'sonya' of https://github.com/maizyy/BDBT_nie-lubimy-javy into matitesty
+
+[33mcommit d449f9717829aaa876fb72f1e57ed573b55553f0[m
+Author: Mati Izbik <mateuszizbicki@o2.pl>
+Date:   Tue Jan 5 11:30:03 2021 +0100
+
+    full login page without styles
+
+[33mcommit 15558420cd68dfb3511adfa9162b0fe2fb7cf856[m
+Author: Sofiia Levchenko <sofia.levchenko@gmail.com>
+Date:   Tue Jan 5 02:06:13 2021 +0200
+
+    Added endpoint for events for one student, changed exhibitions and lessons endpoints
+
+[33mcommit 79f822120d3f25b50eb80392d629a2d6f0ba297e[m
+Author: Sofiia Levchenko <sofia.levchenko@gmail.com>
+Date:   Tue Jan 5 02:05:19 2021 +0200
+
+    Added endpoint for events for one student, changed exhibitions and lessons endpoints
+
+[33mcommit 00d69f73e5968bf6c8638b015da1a114f821c506[m
+Author: Sofiia Levchenko <sofia.levchenko@gmail.com>
+Date:   Tue Jan 5 01:24:37 2021 +0200
+
+    Added endpoint for events for one student, changed exhibitions and lessons endpoints
+
+[33mcommit 16340f3b4def2efd8271eddd3e56fb055d3afef0[m
+Merge: 8268d51 0412c50
+Author: Mati Izbik <mateuszizbicki@o2.pl>
+Date:   Mon Jan 4 23:07:35 2021 +0100
+
+    Merge branch 'sonya' of https://github.com/maizyy/BDBT_nie-lubimy-javy into matitesty
+
+[33mcommit 8268d51019959e68f000afb31da9bfb1379c2698[m
+Author: Mati Izbik <mateuszizbicki@o2.pl>
+Date:   Mon Jan 4 23:03:22 2021 +0100
+
+    login screen
+
+[33mcommit 0412c50bbeed14a0fe560c7906a93e273f5fe946[m
+Author: Sofiia Levchenko <sofia.levchenko@gmail.com>
+Date:   Tue Jan 5 00:00:53 2021 +0200
+
+    Added login endpoints
+
+[33mcommit 61ef791f60dd74a06c24c4d138b182f9fe13adcf[m
+Author: Mati Izbik <mateuszizbicki@o2.pl>
+Date:   Mon Jan 4 13:05:28 2021 +0100
+
+    couple changes to .env and home screen
+
+[33mcommit b4331df4f3f418b3a5690310b9681434bf41166d[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m
+Author: Sofiia Levchenko <sofia.levchenko@gmail.com>
+Date:   Sat Jan 2 15:05:25 2021 +0200
+
+    Added some example components and styles and edited some db_apis
+
+[33mcommit d78583e2e3a46c98db2d783a88ae369ae39e3ecd[m
+Author: Sofiia Levchenko <sofia.levchenko@gmail.com>
+Date:   Sat Jan 2 13:47:16 2021 +0200
+
+    Added some example components and styles
+
+[33mcommit cbc98f29dcc238ea5a414ff678be51c756ece425[m
+Author: Sofiia Levchenko <sofia.levchenko@gmail.com>
+Date:   Sat Jan 2 04:33:49 2021 +0200
+
+    Some styles changes, added router
+
+[33mcommit 9653a5968e2a852b4f8c7b083133dbf5002b7fc2[m
+Author: Sofiia Levchenko <sofia.levchenko@gmail.com>
+Date:   Sat Jan 2 00:42:37 2021 +0200
+
+    Added some styles, navbar and login pages on frontend
+
+[33mcommit 812886f3df3b93ce6df3526e1eb8d80c5654f96b[m
+Author: Sofiia Levchenko <sofia.levchenko@gmail.com>
+Date:   Fri Jan 1 21:53:28 2021 +0200
+
+    Added get for warsztaty and wystawy
+
+[33mcommit e51c4298a2eadeac16857e24c101542e3cb2b15b[m
+Author: Sofiia Levchenko <sofia.levchenko@gmail.com>
+Date:   Fri Jan 1 21:40:59 2021 +0200
+
+    First basic page to check endpoints and try react
+
+[33mcommit bcece0a475211ea7a8a8d12ff42279bac6f8c728[m
+Author: Sofiia Levchenko <sofia.levchenko@gmail.com>
+Date:   Fri Jan 1 19:25:23 2021 +0200
+
+    Added gets for most of db things
+
+[33mcommit d0fe83795283fe73dd76db51f639064859119438[m
+Author: Sofiia Levchenko <sofia.levchenko@gmail.com>
+Date:   Fri Jan 1 15:11:27 2021 +0200
+
+    Added router, get for domy kultury and basic information
+
+[33mcommit aaa6cc347411d86c2a9562bc27136f1467f0d3f3[m
+Author: Sofiia Levchenko <sofia.levchenko@gmail.com>
+Date:   Thu Dec 31 14:47:54 2020 +0200
+
+    Added connection with oracledb
+
+[33mcommit 34b08bbd9f19f50cd0dd9650fe090cf732d3aaa8[m
+Author: Sofiia Levchenko <sofia.levchenko@gmail.com>
+Date:   Tue Dec 29 14:29:19 2020 +0200
+
+    Resolved issue with sebserver exiting
+
+[33mcommit 20c6ceaa7ece7f3da9c44b1e807b7c63a9df49cb[m
+Author: Sofiia Levchenko <sofia.levchenko@gmail.com>
+Date:   Mon Dec 28 22:57:04 2020 +0200
+
+    Added some basics, such as default react app and configs of node
+
+[33mcommit ba566feeefbb74c85ec20018ea23f479886df8cd[m
+Author: Sofiia Levchenko <sofia.levchenko@gmail.com>
+Date:   Mon Dec 28 22:50:38 2020 +0200
+
+    Added some basics, such as default react app and configs of node
+
+[33mcommit bcb460ca8a9e4ea25429c02ee8f0cf250a4f0700[m
+Author: Sofiia Levchenko <sofia.levchenko@gmail.com>
+Date:   Mon Dec 28 22:28:39 2020 +0200
+
+    first commit
