@@ -87,6 +87,11 @@ async function create(wys) {
     dir: oracledb.BIND_OUT,
     type: oracledb.NUMBER
   };
+
+// wydarzenie.data = {
+//   dir: oracledb.BIND_OUT,
+//   type: oracledb.DATE
+// };
   const resultOne = await database.simpleExecute(createWydarzenieSql, wydarzenie);
 
   const wystawa = {
