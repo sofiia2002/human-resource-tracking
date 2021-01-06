@@ -33,11 +33,16 @@ router.route('/domy_kultury/:id?')
 // Parametr 'id' oznacza id uczestnika
 // Parametr 'wydarzenie' oznacza id wydarzenia
 // Przyklad: /api/uczestnicy?id=1
+// DLA DELETE -> tylko id w query, czyli /api/uczestnicy?id=1
+// DLA POST -> dodac JSON i nie dodawac id, czyli /api/uczestnicy 
+// DLA MODIFY -> dodac JSON i dodac id w qury, czyli /api/uczestnicy?id=1
+// JSON : 
+// { imie: string, nazwisko: string, telefon: string, email: string, haslo: string };
 router.route('/uczestnicy') 
-      .get(uczestnicy.get);
-      // .post(uczestnicy.post)
-      // .put(uczestnicy.put)
-      // .delete(uczestnicy.delete);
+      .get(uczestnicy.get)
+      .post(uczestnicy.post)
+      .put(uczestnicy.put)
+      .delete(uczestnicy.delete);
 
 router.route('/stanowiska/:id?')
       .get(stanowiska.get);      
