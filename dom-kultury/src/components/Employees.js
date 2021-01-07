@@ -30,7 +30,6 @@ function Employees() {
     let workers = workersList.filter((worker) => {
       return worker.stanowisko === workerPosition;
     });
-    console.log(workers);
     return workers.map((element, index) => {
       return <Pracownik pracownik={element} key={index} index={index} />;
     });
