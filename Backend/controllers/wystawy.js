@@ -59,5 +59,24 @@ async function post(req, res, next) {
   }
 }
 
+async function put(req, res, next) {
+  try {
+    let wystawa = getWystawaFromRec(req);
+ 
+    wystawa.id_wydarzenia = parseInt(req.query.id, 10);
+ 
+    wystawa = await wystawy.update(wystawa);
+ 
+    if (wystawa !== null) {
+      res.status(200).json(wystawa);
+    } else {
+      res.status(404).end();
+    }
+  } catch (err) {
+    next(err);
+  }
+}
+ 
+module.exports.put = put;
 module.exports.post = post;
 module.exports.get = get;
