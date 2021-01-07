@@ -12,24 +12,7 @@ function Participants() {
   const [selectedDomKultury, setSelectedDomKultury] = useState(1);
   const [domyKultury, setDomyKultury] = useState([]);
   const [dataLoaded, setDataLoaded] = useState(false);
-  // const [uczestnicy, setUczestnicy] = useState([]);
-  // const [wydarzenia, setWydarzenia] = useState([]);
-  // const [warsztaty, setWarsztaty] = useState([]);
-  // const [wystawy, setWystawy] = useState([]);
   const [allInfo, setAllInfo] = useState({});
-
-  // const addParticipants = async (event, res) => {
-  //   const { data: wystawyR } = await axios("/api/wystawy");
-  //   const { data: warsztatyR } = await axios("/api/warsztaty");
-  //   const all = [...wystawyR, ...warsztatyR];
-  //   //console.log(all);
-  //   let match = all.find((element) => element.id == event.id);
-  //   const { data: uczestnicyLista } = await axios(
-  //     `/api/uczestnicy?wydarzenie=${event.id}`
-  //   );
-  //   let final = { ...event, ...match, uczestnicyLista };
-  //   return final;
-  // };
 
   const serveParticipants = async ({ stanowisko }) => {
     let res = {
@@ -62,12 +45,6 @@ function Participants() {
     fetchData();
   }, []);
 
-  // useEffect(() => {
-  //   console.log("zmiana allinfo");
-  //   console.log(dataLoaded);
-  //   console.log(allInfo);
-  // }, [allInfo]);
-
   useEffect(() => {
     async function serve() {
       const info = await serveParticipants(userData);
@@ -78,14 +55,6 @@ function Participants() {
       serve();
     }
   }, [dataLoaded]);
-
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const result = await axios("/api/uczestnicy");
-  //     setUczestnicy(result.data);
-  //   }
-  //   fetchData();
-  // }, [selectedDomKultury]);
 
   return (
     <div className="box">
@@ -124,9 +93,6 @@ function Uczestnik({ uczestnik }) {
       <p>{uczestnik ? "Email: " + uczestnik.email : ""}</p>
     </div>
   );
-}
-{
-  /* <Uczestnik key={index} index={index} uczestnik={element} /> */
 }
 
 function Wydarzanie_card({ event }) {
