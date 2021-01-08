@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { GeneralData } from "../Context";
 import axios from "axios";
-import moment, { locales } from "moment";
+import moment from "moment";
+import Loader from "react-loader-spinner";
 import localization from "moment/locale/pl";
 import "../styles/Events.css";
 
@@ -60,22 +61,27 @@ function Participants() {
     <div className="box">
       <div className="wrapper">
         <h2>Uczestnicy wydarzen:</h2>
+
         <div className="wydarzenia">
-          {dataLoaded
-            ? Object.entries(allInfo).map(([key, events], i) => (
-                <div className="event_group" key={i}>
-                  <h4>{`Rodzaj: ${key}`} </h4>
-                  <ul>
-                    {events.map((event, i) => {
-                      {
-                        console.log(event.temat);
-                      }
-                      return <Wydarzanie_card event={event} />;
-                    })}
-                  </ul>
-                </div>
-              ))
-            : "chwilka"}
+          {dataLoaded ? (
+            Object.entries(allInfo).map(([key, events], i) => (
+              <div className="event_group" key={i}>
+                <h4>{`Rodzaj: ${key}`} </h4>
+                <ul>
+                  {events.map((event, i) => {
+                    {
+                      console.log(event.temat);
+                    }
+                    return <Wydarzanie_card event={event} />;
+                  })}
+                </ul>
+              </div>
+            ))
+          ) : (
+            <div className="loader">
+              <Loader type="ThreeDots" color="#2196f3" />
+            </div>
+          )}
         </div>
       </div>
     </div>

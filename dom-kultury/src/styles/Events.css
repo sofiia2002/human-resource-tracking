@@ -13,10 +13,11 @@
 
 .container-left {
   width: 400px;
-  background-color: #0080ff74;
+  background-color: #2196f3;
   border-radius: 1rem;
   padding: 1rem 3rem 3rem 3rem;
   margin-right: 4rem;
+  color: white;
 }
 
 .container-right {
@@ -58,7 +59,7 @@
   margin: 0;
 }
 .event {
-  width: 90%;
+  width: 100%;
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -140,6 +141,9 @@ select {
   display: grid;
   grid-template-columns: 1fr 1fr 2fr;
   grid-template-rows: auto;
+}
+.workers_wrapper > h3 {
+  color: #0a6ebd;
 }
 .worker {
   display: grid;

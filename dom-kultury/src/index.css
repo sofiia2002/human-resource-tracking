@@ -31,3 +31,8 @@ code {
   color: #2196f3;
   cursor: pointer;
 }
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
