@@ -29,6 +29,8 @@ router.route('/login_uczestnicy')
 router.route('/domy_kultury/:id?')
       .get(domy_kultury.get);
 
+
+
 // Sonya: Tu wykorzystuje query dla get:
 // GET:
 // /api/uczestnicy?id=1
@@ -55,6 +57,8 @@ router.route('/uczestnicy')
       .put(uczestnicy.put)
       .delete(uczestnicy.delete);
 
+
+
 router.route('/stanowiska/:id?')
       .get(stanowiska.get);      
 
@@ -72,9 +76,10 @@ router.route('/kategorie_zasobu/:id?')
 // /api/zasoby?id=1&kategoria=2
 // Parametr 'id' oznacza id zasobu
 // Parametr 'kategoria' oznacza id kategorii zasobow
-
 router.route('/zasoby') 
       .get(zasoby.get);
+
+
 
 // Sonya: Tu wykorzystuje query do get'a:
 // GET:
@@ -86,9 +91,11 @@ router.route('/zasoby')
 router.route('/wydarzenia') 
       .get(wydarzenia.get)
 
+
+
 // Sonya: Tu wykorzystuje query do get'a:
 // GET:
-// api/wydarzenia?id=1&dom_kultury=1
+// api/warsztaty?id=1&dom_kultury=1
 // Parametr 'dom_kultury' oznacza id domu kultury
 // Parametr 'id' oznacza id warsztatu (wydarzenia)
 // Parametr 'id uczestnika' oznacza id uczestnika
@@ -107,15 +114,22 @@ router.route('/wydarzenia')
 //   temat: string;
 //   email: string;
 //   phone: string;
-//   data: string type of 'YYYY'-'MM'-'DD'T'HH'-MI-SS.123H, przyklad "2021-01-30T15:00:00.123Z"
+//   data: string type of 'YYYY'-'MM'-'DD'T'HH'-'MI'-'SS' przyklad "2021-01-30T15:00:00"
 //   czas_trwania: number;
 //   id_domu_kultury: number;
 //   id_sali: number;
 // };
+//
+// DELETE:
+// /api/warsztaty?id=3
+// Parametr 'id' oznacza id wystawy (wydarzenia)
 router.route('/warsztaty') 
       .get(warsztaty.get)
       .post(warsztaty.post)
-      .put(warsztaty.put); 
+      .put(warsztaty.put)
+      .delete(warsztaty.delete); 
+
+
 
 // Sonya: Tu wykorzystuje query do get'a:
 // GET:
@@ -125,10 +139,10 @@ router.route('/warsztaty')
 // Parametr 'id uczestnika' oznacza id uczestnika
 //
 // POST: 
-// /api/wydarzenia
+// /api/wystawy
 //
 // PUT: 
-// /api/wydarzenia?id=3
+// /api/wystawy?id=3
 // Parametr 'id' oznacza id wystawy (wydarzenia)
 //
 // DANE DO POST I PUT:
@@ -138,34 +152,85 @@ router.route('/warsztaty')
 //   nazwisko_wystawiajacego: string;
 //   temat: string;
 //   opis: string | null;
-//   data: string type of 'YYYY'-'MM'-'DD'T'HH'-MI-SS.123H, przyklad "2021-01-30T15:00:00.123Z"
+//   data: string type of 'YYYY'-'MM'-'DD'T'HH'-'MI'-'SS' przyklad "2021-01-30T15:00:00"
 //   czas_trwania: number;
 //   id_domu_kultury: number;
 //   id_sali: number;
 // };
+//
+// DELETE:
+// /api/wystawy?id=3
+// Parametr 'id' oznacza id wystawy (wydarzenia)
 router.route('/wystawy') 
       .get(wystawy.get)
       .post(wystawy.post)
-      .put(wystawy.put); 
+      .put(wystawy.put)
+      .delete(wystawy.delete);
       
-// Sonya: Tu wykorzystuje query:
-// GET:
-// api/pracownicy?id=1&dom_kultury=1
-// Parametr 'dom_kultury' oznacza id domu kultury
-// Parametr 'id' oznacza id pracownika
-router.route('/pracownicy') 
-      .get(pracownicy.get); 
+
 
 // Sonya: Tu wykorzystuje query:
 // GET:
-// api/organizacja_wydarzen?pracownik=1&wydarzenie=1
+// /api/pracownicy?id=1&dom_kultury=1
+// Parametr 'dom_kultury' oznacza id domu kultury
+// Parametr 'id' oznacza id pracownika
+//
+// PUT:
+// /api/pracownicy?id=1
+// Parametr 'id' oznacza id pracownika
+//
+// DANE DO PUT:
+//{
+//   nazwisko: string,
+//   imie: string,
+//   pesel: string | null,
+//   data_urodzenia: string type of 'YYYY'-'MM'-'DD'T'HH'-'MI'-'SS' przyklad "2021-01-30T15:00:00"
+//   telefon: string,
+//   haslo: haslo,
+//   plec: string, "K" lub "M"
+//   id_stanowiska: number, //nie da sie zmienic przez pracownika
+//   id_adresu: number, //nie da sie zmienic przez kogokolwiek
+//   miasto: string,
+//   ulica: string,
+//   nr_lokalu: string,
+//   id_poczty: number, //nie da sie zmienic przez kogokolwiek
+//   kod_poczty: string,
+//   poczta: string
+//}
+router.route('/pracownicy') 
+      .get(pracownicy.get)
+      .put(pracownicy.put); 
+
+
+
+// Sonya: Tu wykorzystuje query:
+// GET:
+// /api/organizacja_wydarzen?pracownik=1&wydarzenie=1
 // Parametr 'pracownik' oznacza id pracownika
 // Parametr 'wydarzenie' oznacza id wydarzenia
+//
+// POST:
+// /api/organizacja_wydarzen
+//
+// DELETE:
+// /api/organizacja_wydarzen
+// Parametr 'pracownik' oznacza id pracownika
+// Parametr 'wydarzenie' oznacza id wydarzenia
+//
+// JSON DO POST: 
+// { 
+//   id_pracownika: number, 
+//   id_wydarzenia: number 
+// };
 router.route('/organizacja_wydarzen')
-      .get(organizacja_wydarzen.get);  
+      .get(organizacja_wydarzen.get)
+      .post(organizacja_wydarzen.post) 
+      .delete(organizacja_wydarzen.delete);  
+
 
 
 // Sonya: POST i DELETE potrzebuja:
+// /api/wydarzenia_uczestnika
 // { id_uczestnika: number, id_wydarzenia: number }
 router.route('/wydarzenia_uczestnika/:id?') // id uczestnika
       .get(wydarzenia_uczestnika.get)

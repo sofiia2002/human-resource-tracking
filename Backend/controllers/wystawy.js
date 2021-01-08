@@ -77,6 +77,23 @@ async function put(req, res, next) {
   }
 }
  
+async function del(req, res, next) {
+  try {
+    const id = parseInt(req.query.id, 10);
+
+    const success = await wystawy.delete(id);
+
+    if (success) {
+      res.status(204).end();
+    } else {
+      res.status(404).end();
+    }
+  } catch (err) {
+    next(err);
+  }
+}
+ 
+module.exports.delete = del;
 module.exports.put = put;
 module.exports.post = post;
 module.exports.get = get;
