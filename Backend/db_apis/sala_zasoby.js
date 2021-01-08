@@ -25,7 +25,7 @@ async function find(context) {
 
     if(context.id){
         binds.id_sali = context.id;
-        query+= `\nand id_sali= :id_sali`;
+        query+= `\nand sala_zasoby_egzemplarze.id_sali= :id_sali`;
     }
 
     const result = await database.simpleExecute(query, binds);

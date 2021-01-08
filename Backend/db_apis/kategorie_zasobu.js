@@ -13,7 +13,7 @@ async function find(context) {
 
     if(context.id){
         binds.id_kategorii_zasobu = context.id;
-        query+= `\nand id_kategorii_zasobu = :id_kategorii_zasobu`;
+        query+= `\nwhere kategorie_zasobu.id_kategorii_zasobu = :id_kategorii_zasobu`;
     }
 
     const result = await database.simpleExecute(query, binds);

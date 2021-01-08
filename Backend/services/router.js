@@ -57,12 +57,15 @@ router.route('/uczestnicy')
       .put(uczestnicy.put)
       .delete(uczestnicy.delete);
 
-
-
 router.route('/stanowiska/:id?')
       .get(stanowiska.get);      
 
-router.route('/sale/:id?')
+// Sonya: Tu wykorzystuje query:
+// GET:
+// /api/sale?id=1&kategoria=2
+// Parametr 'id' oznacza id zasobu
+// Parametr 'dom_kultury' oznacza id domu kultury
+router.route('/sale')
       .get(sale.get);
 
 router.route('/sala_zasoby/:id?') // id sali
@@ -186,7 +189,7 @@ router.route('/wystawy')
 //   pesel: string | null,
 //   data_urodzenia: string type of 'YYYY'-'MM'-'DD'T'HH'-'MI'-'SS' przyklad "2021-01-30T15:00:00"
 //   telefon: string,
-//   haslo: haslo,
+//   haslo: string,
 //   plec: string, "K" lub "M"
 //   id_stanowiska: number, //nie da sie zmienic przez pracownika
 //   id_adresu: number, //nie da sie zmienic przez kogokolwiek
