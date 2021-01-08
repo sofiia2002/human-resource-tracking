@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/Events.css";
 import moment from "moment";
+import ChangePopup from "../helpers/ChangePopup";
 
 function Employees() {
   //const { userData } = useContext(GeneralData);
@@ -27,6 +28,7 @@ function Employees() {
     }
     fetchData();
   }, [selectedDomKultury]);
+
   const serveWorkerList = (workersList, workerPosition) => {
     let workers = workersList.filter((worker) => {
       return worker.stanowisko === workerPosition;
@@ -48,7 +50,9 @@ function Employees() {
             }
           >
             {domyKultury.map((element, index) => (
-              <option value={element.id}>Dom Kultury numer {element.id}</option>
+              <option key={index} value={element.id}>
+                Dom Kultury numer {element.id}
+              </option>
             ))}
           </select>
           <DomKultury domKultury={domyKultury[selectedDomKultury - 1]} />
@@ -103,7 +107,7 @@ function DomKultury({ domKultury }) {
 
 function Pracownik({ pracownik }) {
   const dataUr = moment(pracownik.data_urodzenia).format("L");
-
+  const [tooglePopup, setTooglePopup] = useState(false);
   return (
     <div className="worker">
       <p>
@@ -119,7 +123,20 @@ function Pracownik({ pracownik }) {
       <p>{pracownik ? "Pesel: " + pracownik.pesel : ""}</p>
       <p>{pracownik ? "Telefon: " + pracownik.telefon : ""}</p>
       <p>{pracownik ? "Pensja: " + pracownik.pensja : ""}</p>
-      <button className="classic_button_style">Zmień dane</button>
+      <button
+        className="classic_button_style"
+        onClick={() => {
+          setTooglePopup(true);
+        }}
+      >
+        Zmień dane
+      </button>
+      {tooglePopup && (
+        <ChangePopup
+          data={pracownik}
+          popupHandler={() => setTooglePopup(false)}
+        />
+      )}
     </div>
   );
 }
