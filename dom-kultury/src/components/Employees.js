@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 //import { GeneralData } from "../Context";
 import axios from "axios";
 import "../styles/Events.css";
+import moment from "moment";
 
 function Employees() {
   //const { userData } = useContext(GeneralData);
@@ -54,12 +55,15 @@ function Employees() {
         </div>
         <div className="container-right">
           <h2>Pracownicy w domie Kultury numer {selectedDomKultury}:</h2>
+          <button className="classic_button_style">Dodaj Pracownika</button>
           <div className="workers_group">
             {pracownicy.length !== 0 ? (
               <>
                 <div className="workers_wrapper">
                   <h3>Developerzy:</h3>
-                  {serveWorkerList(pracownicy, "Developer")}
+                  <div className="participant_group">
+                    {serveWorkerList(pracownicy, "Developer")}
+                  </div>
                 </div>
                 <div className="workers_wrapper">
                   <h3>Organizatorzy:</h3>
@@ -98,23 +102,24 @@ function DomKultury({ domKultury }) {
 }
 
 function Pracownik({ pracownik }) {
+  const dataUr = moment(pracownik.data_urodzenia).format("L");
+
   return (
-    <div className="wydarzenie">
-      <h5>{pracownik ? "Imie: " + pracownik.imie : ""}</h5>
-      <h5>{pracownik ? "Nazwisko: " + pracownik.nazwisko : ""}</h5>
-      <h5>
+    <div className="worker">
+      <p>
+        {pracownik ? pracownik.imie : ""}
+        {pracownik ? " " + pracownik.nazwisko : ""}
+      </p>
+      <p>
         {pracownik
           ? "Plec: " + (pracownik.plec === "K" ? "Kobieta" : "Mężczyzna")
           : ""}
-      </h5>
-      <h5>
-        {pracownik
-          ? "Data urodzenia: " + pracownik.data_urodzenia.slice(0, 10)
-          : ""}
-      </h5>
-      <h5>{pracownik ? "Pesel: " + pracownik.pesel : ""}</h5>
-      <h5>{pracownik ? "Telefon: " + pracownik.telefon : ""}</h5>
-      <h5>{pracownik ? "Pensja: " + pracownik.pensja : ""}</h5>
+      </p>
+      <p>{pracownik ? "Data ur.: " + dataUr : ""}</p>
+      <p>{pracownik ? "Pesel: " + pracownik.pesel : ""}</p>
+      <p>{pracownik ? "Telefon: " + pracownik.telefon : ""}</p>
+      <p>{pracownik ? "Pensja: " + pracownik.pensja : ""}</p>
+      <button className="classic_button_style">Zmień dane</button>
     </div>
   );
 }

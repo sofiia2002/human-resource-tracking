@@ -16,8 +16,6 @@ form > .user-type-radios > label {
   margin: 1rem 0rem;
   user-select: select none;
 }
-form > .user-type-radios input {
-}
 
 form > .form-group {
   display: flex;
@@ -26,17 +24,17 @@ form > .form-group {
 
 form > .submit-button {
   font-family: "Montserrat";
+  font-size: 1.1rem;
   padding: 0.5rem 1rem;
+  margin: 2rem 0 0 0;
   background-color: #2196f3;
   color: white;
   font-weight: 700;
+  border: 2px solid #2196f3;
+  transition: background-color, color 0.3s ease;
+  user-select: none;
   outline: none;
   border: none;
-  border: 2px solid #2196f3;
-  margin: 2rem 0 0 0;
-  transition: background-color, color 0.3s ease;
-  font-size: 1.1rem;
-  user-select: none;
 }
 form > .submit-button:hover {
   background-color: white;

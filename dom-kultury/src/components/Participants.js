@@ -117,6 +117,7 @@ function Wydarzanie_card({ event }) {
         <div className="date">
           <p>{data}</p>
           <p>{godzina}</p>
+          <button className="classic_button_style">Zmień dane</button>
         </div>
       </div>
 

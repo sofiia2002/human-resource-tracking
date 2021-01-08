@@ -25,7 +25,7 @@
 }
 
 .container-right h2 {
-  margin-bottom: 3rem;
+  margin-bottom: 1.5rem;
 }
 
 .wydarzenia {
@@ -84,6 +84,9 @@
   margin: 0 0 0.5rem 0;
   padding: 0;
 }
+.date > button {
+  font-size: 0.8rem;
+}
 .info > .sala {
   font-size: 0.7rem;
 }
@@ -114,11 +117,42 @@ select {
   flex-direction: column;
   flex-wrap: wrap;
 }
+.participant,
+.worker {
+  border-bottom: 1px solid black;
+  padding: 0 0 0.5rem 0;
+}
+.participant > button {
+  grid-column-start: 4;
+  grid-column-end: 5;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  font-size: 0.8rem;
+}
+.worker > button {
+  grid-column-start: 4;
+  grid-column-end: 5;
+  grid-row-start: 3;
+  grid-row-end: 4;
+  font-size: 0.8rem;
+}
 .participant {
   display: grid;
   grid-template-columns: 1fr 1fr 2fr;
   grid-template-rows: auto;
 }
-.participant > p {
+.worker {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  margin: 0 0 0.5rem 0;
+}
+.participant > p,
+.worker > p {
   font-size: 0.8rem;
+  margin: 0.65rem 0;
+}
+.participant > p:first-child,
+.worker > p:first-child {
+  font-weight: 600;
 }
