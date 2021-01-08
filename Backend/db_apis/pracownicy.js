@@ -5,6 +5,7 @@ const baseQuery = `select
         pracownicy.nazwisko "nazwisko",
         pracownicy.imie "imie",
         pracownicy.pesel "pesel",
+        pracownicy.haslo "haslo",
         pracownicy.data_urodzenia "data_urodzenia",
         pracownicy.telefon "telefon",
         pracownicy.plec "plec",
