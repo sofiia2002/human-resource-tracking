@@ -160,6 +160,39 @@ async function update(warsz) {
   }
 }
  
+const deleteSql =
+ `begin
+
+    delete from wydarzenia_uczestnicy
+    where id_wydarzenia = :id_wydarzenia;
+
+    delete from pracownicy_wydarzenia
+    where id_wydarzenia = :id_wydarzenia;
+    
+    delete from warsztaty
+    where id_wydarzenia = :id_wydarzenia;
+
+    delete from wydarzenia
+    where id_wydarzenia = :id_wydarzenia;
+ 
+    :rowcount := sql%rowcount;
+ 
+  end;`
+ 
+async function del(id) {
+  const binds = {
+    id_wydarzenia: id,
+    rowcount: {
+      dir: oracledb.BIND_OUT,
+      type: oracledb.NUMBER
+    }
+  }
+  const result = await database.simpleExecute(deleteSql, binds);
+ 
+  return result.outBinds.rowcount === 1;
+}
+ 
+module.exports.delete = del;
 module.exports.update = update;
 module.exports.create = create;
 module.exports.find = find;
