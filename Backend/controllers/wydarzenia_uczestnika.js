@@ -11,7 +11,7 @@ async function get(req, res, next){
     }
 }
 
-function getEmployeeFromRec(req) {
+function getWydarzenieFromRec(req) {
     const wydarzenie = {
         id_uczestnika: req.body.id_uczestnika,
         id_wydarzenia: req.body.id_wydarzenia
@@ -22,7 +22,7 @@ function getEmployeeFromRec(req) {
    
 async function post(req, res, next) {
     try {
-      let dodaneWydarzenie = getEmployeeFromRec(req);
+      let dodaneWydarzenie = getWydarzenieFromRec(req);
       dodaneWydarzenie = await wydarzenia_uczestnika.create(dodaneWydarzenie);
    
       res.status(201).json(dodaneWydarzenie);
@@ -33,7 +33,7 @@ async function post(req, res, next) {
 
 async function del(req, res, next) {
     try {
-        let wyrzuconeWydarzenie = getEmployeeFromRec(req);
+        let wyrzuconeWydarzenie = getWydarzenieFromRec(req);
         const success = await wydarzenia_uczestnika.delete(wyrzuconeWydarzenie);
    
       if (success) {

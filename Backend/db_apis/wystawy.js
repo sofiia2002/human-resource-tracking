@@ -42,6 +42,24 @@ async function find(context) {
     return result.rows;
 }
 
+const createWydarzenieSql =
+`insert into wydarzenia (
+    id_wydarzenia,
+    typ_wydarzenia,
+    data_wydarzenia,
+    czas_trwania,
+    id_domu_kultury,
+    id_sali
+ ) values (
+    (SELECT (MAX(id_wydarzenia) + 1) FROM wydarzenia),
+    :typ_wydarzenia,
+    :data,
+    :czas_trwania,
+    :id_domu_kultury,
+    :id_sali
+ ) returning id_wydarzenia
+ into :id_wydarzenia`;
+
 const createWystawaSql =
  `insert into wystawy (
     id_wydarzenia,
@@ -58,26 +76,11 @@ const createWystawaSql =
     :temat,
     :opis
   )`;
-
-  const createWydarzenieSql =
-  `insert into wydarzenia (
-      id_wydarzenia,
-      data,
-      czas_trwania,
-      id_domu_kultury,
-      id_sali
-   ) values (
-     (SELECT (MAX(id_wydarzenia) + 1) FROM wydarzenia),
-      :data,
-      :czas_trwania,
-      :id_domu_kultury,
-      :id_sali
-   ) returning id_wydarzenia
-   into :id_wydarzenia`;
  
 async function create(wys) {
   const wydarzenie = {
-    data: new Date(Date.UTC(0, 0, 0, 0, 0, 0)),
+    typ_wydarzenia: "wystawa",
+    data: new Date(wys.data),
     czas_trwania: wys.czas_trwania,
     id_domu_kultury: wys.id_domu_kultury,
     id_sali: wys.id_sali,
@@ -86,12 +89,8 @@ async function create(wys) {
   wydarzenie.id_wydarzenia = {
     dir: oracledb.BIND_OUT,
     type: oracledb.NUMBER
-  };
+  }
 
-// wydarzenie.data = {
-//   dir: oracledb.BIND_OUT,
-//   type: oracledb.DATE
-// };
   const resultOne = await database.simpleExecute(createWydarzenieSql, wydarzenie);
 
   const wystawa = {
@@ -102,18 +101,65 @@ async function create(wys) {
     temat: wys.temat,
     opis: wys.opis ? wys.opis : null
   };
-  
-  wystawa.id_wydarzenia = {
-    dir: oracledb.BIND_OUT,
-    type: oracledb.NUMBER
-  };
 
   const resultTwo = await database.simpleExecute(createWystawaSql, wystawa);
-
-  console.log(resultTwo);
 
   return resultTwo;
 }
  
+
+const updateWydarzenieSql =
+ `update wydarzenia
+  set 
+    data_wydarzenia = :data_wydarzenia,
+    czas_trwania = :czas_trwania,
+    id_domu_kultury = :id_domu_kultury,
+    id_sali = :id_sali
+  where id_wydarzenia = :id_wydarzenia`;
+
+const updateWystawaSql =
+ `update wystawy
+  set 
+    typ_wystawy = :typ_wystawy,
+    imie_wystawiajacego = :imie_wystawiajacego,
+    nazwisko_wystawiajacego = :nazwisko_wystawiajacego,
+    temat = :temat,
+    opis = :opis
+  where id_wydarzenia = :id_wydarzenia`;
+ 
+async function update(wys) {
+  const wydarzenie = {
+    id_wydarzenia: wys.id_wydarzenia,
+    data_wydarzenia: new Date(wys.data),
+    czas_trwania: wys.czas_trwania,
+    id_domu_kultury: wys.id_domu_kultury,
+    id_sali: wys.id_sali,
+  }
+
+  const wystawa = {
+    id_wydarzenia: wys.id_wydarzenia,
+    typ_wystawy: wys.typ_wystawy,
+    imie_wystawiajacego: wys.imie_wystawiajacego,
+    nazwisko_wystawiajacego: wys.nazwisko_wystawiajacego,
+    temat: wys.temat,
+    opis: wys.opis ? wys.opis : null
+  };
+
+  const resultOne = await database.simpleExecute(updateWydarzenieSql, wydarzenie);
+ 
+  if (resultOne.rowsAffected && resultOne.rowsAffected === 1) {
+    const resultTwo = await database.simpleExecute(updateWystawaSql, wystawa);
+
+    if (resultTwo.rowsAffected && resultTwo.rowsAffected === 1) {
+      return resultTwo;
+    } else {
+      return null;
+    }
+  } else {
+    return null;
+  }
+}
+ 
+module.exports.update = update;
 module.exports.create = create;
 module.exports.find = find;

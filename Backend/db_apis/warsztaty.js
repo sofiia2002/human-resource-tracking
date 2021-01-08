@@ -1,4 +1,5 @@
 const database = require('../services/database.js');
+const oracledb = require('oracledb');
 
 const baseQuery = 
     `select
@@ -41,4 +42,124 @@ async function find(context) {
     return result.rows;
 }
 
+
+const createWydarzenieSql =
+`insert into wydarzenia (
+    id_wydarzenia,
+    typ_wydarzenia,
+    data_wydarzenia,
+    czas_trwania,
+    id_domu_kultury,
+    id_sali
+ ) values (
+    (SELECT (MAX(id_wydarzenia) + 1) FROM wydarzenia),
+    :typ_wydarzenia,
+    :data,
+    :czas_trwania,
+    :id_domu_kultury,
+    :id_sali
+ ) returning id_wydarzenia
+ into :id_wydarzenia`;
+
+const createWarsztatSql =
+ `insert into warsztaty (
+    id_wydarzenia,
+    imie_wykladowcy,
+    nazwisko_wykladowcy,
+    temat,
+    email,
+    telefon
+  ) values (
+    :id_wydarzenia,
+    :imie_wykladowcy,
+    :nazwisko_wykladowcy,
+    :temat,
+    :email,
+    :telefon
+  )`;
+ 
+async function create(warsz) {
+  const wydarzenie = {
+    typ_wydarzenia: "warsztat",
+    data: new Date(warsz.data),
+    czas_trwania: warsz.czas_trwania,
+    id_domu_kultury: warsz.id_domu_kultury,
+    id_sali: warsz.id_sali,
+  }
+
+  wydarzenie.id_wydarzenia = {
+    dir: oracledb.BIND_OUT,
+    type: oracledb.NUMBER
+  }
+
+  const resultOne = await database.simpleExecute(createWydarzenieSql, wydarzenie);
+
+  const warsztat = {
+    id_wydarzenia: resultOne.outBinds.id_wydarzenia[0],
+    imie_wykladowcy: warsz.imie_wykladowcy,
+    nazwisko_wykladowcy: warsz.nazwisko_wykladowcy,
+    email: warsz.email,
+    telefon: warsz.telefon,
+    temat: warsz.temat,
+  };
+
+  const resultTwo = await database.simpleExecute(createWarsztatSql, warsztat);
+
+  return resultTwo;
+}
+ 
+const updateWydarzenieSql =
+ `update wydarzenia
+  set data_wydarzenia = :data_wydarzenia,
+    typ_wydarzenia = :typ_wydarzenia,
+    czas_trwania = :czas_trwania,
+    id_domu_kultury = :id_domu_kultury,
+    id_sali = :id_sali
+  where id_wydarzenia = :id_wydarzenia`;
+
+const updateWarsztatSql =
+ `update warsztaty
+  set imie_wykladowcy = :imie_wykladowcy,
+    nazwisko_wykladowcy = :nazwisko_wykladowcy,
+    temat = :temat,
+    email = :email,
+    telefon = :telefon
+  where id_wydarzenia = :id_wydarzenia`;
+ 
+async function update(warsz) {
+  const wydarzenie = {
+    id_wydarzenia: warsz.id_wydarzenia,
+    typ_wydarzenia: "warsztat",
+    data_wydarzenia: new Date(warsz.data),
+    czas_trwania: warsz.czas_trwania,
+    id_domu_kultury: warsz.id_domu_kultury,
+    id_sali: warsz.id_sali,
+  }
+
+  const warsztat = {
+    id_wydarzenia: warsz.id_wydarzenia,
+    imie_wykladowcy: warsz.imie_wykladowcy,
+    nazwisko_wykladowcy: warsz.nazwisko_wykladowcy,
+    temat: warsz.temat,
+    email: warsz.email,
+    telefon: warsz.telefon
+  };
+
+  const resultOne = await database.simpleExecute(updateWydarzenieSql, wydarzenie);
+ 
+  if (resultOne.rowsAffected && resultOne.rowsAffected === 1) {
+    const resultTwo = await database.simpleExecute(updateWarsztatSql, warsztat);
+
+    if (resultTwo.rowsAffected && resultTwo.rowsAffected === 1) {
+      return resultTwo;
+    } else {
+      return null;
+    }
+  } else {
+    return null;
+  }
+}
+ 
+module.exports.update = update;
+module.exports.create = create;
 module.exports.find = find;

@@ -1,4 +1,5 @@
 const database = require('../services/database.js');
+const oracledb = require("oracledb");
 
 const baseQuery = 
     `
@@ -30,7 +31,86 @@ async function find(context) {
 
     const result = await database.simpleExecute(query, binds);
 
-    return result.rows;
+    const dataArr = result.rows.map(item=>{
+        return [item.id,item]
+    }); 
+
+    const maparr = new Map(dataArr); 
+    
+    const filteredResult = [...maparr.values()];
+
+    return filteredResult;
 }
 
+const createSql =
+ `insert into uczestnicy_wydarzenia (
+    id_uczestnika,
+    imie,
+    nazwisko,
+    telefon,
+    email,
+    haslo
+  ) values (
+    (SELECT (MAX(id_uczestnika) + 1) FROM uczestnicy_wydarzenia),
+    :imie,
+    :nazwisko,
+    :telefon,
+    :email,
+    :haslo
+  )`;
+ 
+async function create(data) {
+  const dodanyUczestnik = Object.assign({}, data);
+
+  const result = await database.simpleExecute(createSql, dodanyUczestnik);
+ 
+  return dodanyUczestnik;
+}
+
+const deleteSql =
+ `begin
+ 
+    delete from uczestnicy_wydarzenia
+    where id_uczestnika = :id_uczestnika;
+ 
+    :rowcount := sql%rowcount;
+ 
+  end;`
+ 
+async function del(id) {
+  const binds = {
+    id_uczestnika: id,
+    rowcount: {
+      dir: oracledb.BIND_OUT,
+      type: oracledb.NUMBER
+    }
+  }
+  const result = await database.simpleExecute(deleteSql, binds);
+ 
+  return result.outBinds.rowcount === 1;
+}
+
+const updateSql =
+ `update uczestnicy_wydarzenia
+  set imie = :imie,
+      telefon = :telefon,
+      nazwisko = :nazwisko,
+      email = :email,
+      haslo = :haslo
+  where id_uczestnika = :id_uczestnika`;
+ 
+async function update(emp) {
+  const uczestnik = Object.assign({}, emp);
+  const result = await database.simpleExecute(updateSql, uczestnik);
+ 
+  if (result.rowsAffected && result.rowsAffected === 1) {
+    return uczestnik;
+  } else {
+    return null;
+  }
+}
+ 
+module.exports.update = update;
+module.exports.delete = del;
+module.exports.create = create;
 module.exports.find = find;
