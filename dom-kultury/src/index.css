@@ -36,3 +36,7 @@ code {
   justify-content: center;
   align-items: center;
 }
+#root {
+  display: flex;
+  flex-direction: column;
+}

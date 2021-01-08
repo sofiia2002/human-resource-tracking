@@ -11,7 +11,7 @@ function Navbar() {
   };
 
   return (
-    <div className="nav">
+    <nav className="nav">
       <Link to="/" className="logo">
         <i className="las la-university"></i>
         <div className="logo-text">
@@ -67,7 +67,7 @@ function Navbar() {
           ""
         )}
       </div>
-    </div>
+    </nav>
   );
 }
 
