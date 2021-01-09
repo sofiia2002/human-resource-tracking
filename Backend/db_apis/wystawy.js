@@ -12,6 +12,7 @@ const baseQuery =
         wydarzenia.data_wydarzenia "data",
         wydarzenia.czas_trwania "czas_trwania",
         wydarzenia.id_domu_kultury "id_domu_kultury",
+        sale.id_sali "id_sali",
         sale.numer_sali "numer_sali"
     from wystawy 
     join wydarzenia  
