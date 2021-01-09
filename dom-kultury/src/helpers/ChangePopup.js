@@ -160,7 +160,9 @@ function ChangePopup({ data, popupHandler }) {
         <h2>Zmień dane {data.imie + " " + data.nazwisko}</h2>
 
         <div className="change_wrapper">
-          {Object.entries(data).map((key, i) => renderChangeGroup(key, i))}
+          {Object.entries(data).map(([key, value], i) =>
+            renderChangeGroup(key, i)
+          )}
         </div>
         <button
           onClick={handleChange}
