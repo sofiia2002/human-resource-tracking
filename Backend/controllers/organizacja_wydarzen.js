@@ -44,7 +44,11 @@ async function del(req, res, next){
         context.pracownik = parseInt(req.query.pracownik, 10);
         context.wydarzenie = parseInt(req.query.wydarzenie, 10);
         const rows = await organizacja_wydarzen.delete(context);
-        res.status(200).json(rows);
+        if (rows){
+          res.status(204).end();
+        } else {
+          res.status(400).end();
+        }
     } catch (err) {
         next(err);
     }

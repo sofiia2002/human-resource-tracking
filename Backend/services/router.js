@@ -102,7 +102,7 @@ router.route("/wydarzenia").get(wydarzenia.get);
 //   nazwisko_wykladowcy: string;
 //   temat: string;
 //   email: string;
-//   phone: string;
+//   telefon: stßring;
 //   data: string type of 'YYYY'-'MM'-'DD'T'HH'-'MI'-'SS' przyklad "2021-01-30T15:00:00"
 //   czas_trwania: number;
 //   id_domu_kultury: number;
