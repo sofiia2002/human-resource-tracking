@@ -6,19 +6,34 @@ import "../styles/Popup.css";
 
 function ChangePopup({ data, popupHandler, typ, url }) {
   const [positions, setPositions] = useState([]);
+  const [rooms, setRooms] = useState([]);
   const [workerInfo, setWorkerInfo] = useState(data);
   const { refetch, setRefetch } = useContext(Refetch);
   useEffect(() => {
     async function fetch() {
-      const positions = await axios("/api/stanowiska");
-      setPositions(positions.data);
+      switch (typ) {
+        case "pracownik":
+          const positions = await axios("/api/stanowiska");
+          setPositions(positions.data);
+          break;
+        case "wystawa":
+        case "warsztat":
+          const res = await axios("/api/sale");
+          setRooms(res.data);
+
+          break;
+      }
     }
     fetch();
   }, []);
 
-  const infoAboutPosition = (position) => {
-    const res = positions.filter((el) => {
-      return el.nazwa === position;
+  const infoAboutPosition = (position, arr) => {
+    const res = arr.filter((el) => {
+      if (typ === "pracownik") {
+        return el.nazwa === position;
+      } else {
+        return el.numer_sali == position;
+      }
     });
     return res[0];
   };
@@ -49,6 +64,29 @@ function ChangePopup({ data, popupHandler, typ, url }) {
             <option value="M">Mężczyzna</option>
           </select>
         );
+      case "numer_sali":
+        return (
+          <select
+            name={key}
+            value={workerInfo[key]}
+            onChange={(e) => {
+              change(e, setWorkerInfo);
+
+              setWorkerInfo((prevState) => ({
+                ...prevState,
+                id_sali: infoAboutPosition(e.target.value, rooms).id,
+              }));
+            }}
+          >
+            {rooms.map((room, i) => {
+              return (
+                <option key={i} value={room.numer_sali}>
+                  {room.numer_sali}
+                </option>
+              );
+            })}
+          </select>
+        );
       case "stanowisko":
         return (
           <select
@@ -58,8 +96,8 @@ function ChangePopup({ data, popupHandler, typ, url }) {
               change(e, setWorkerInfo);
               setWorkerInfo((prevState) => ({
                 ...prevState,
-                id_stanowiska: infoAboutPosition(e.target.value).id,
-                pensja: infoAboutPosition(e.target.value).pensja,
+                id_stanowiska: infoAboutPosition(e.target.value, positions).id,
+                pensja: infoAboutPosition(e.target.value, positions).pensja,
               }));
             }}
           >
@@ -74,19 +112,34 @@ function ChangePopup({ data, popupHandler, typ, url }) {
         );
       case "data_urodzenia":
       case "data":
-        const dataUr = moment.utc(workerInfo[key]).format("YYYY-MM-DD");
-        console.log(dataUr);
-        return (
-          <input
-            type="date"
-            name={key}
-            value={dataUr}
-            onChange={(e) => change(e, setWorkerInfo)}
-          />
-        );
+        if (typ === "pracownik") {
+          const dataUr = moment.utc(workerInfo[key]).format("YYYY-MM-DD");
+
+          console.log(dataUr);
+          return (
+            <input
+              type="date"
+              name={key}
+              value={dataUr}
+              onChange={(e) => change(e, setWorkerInfo)}
+            />
+          );
+        } else {
+          const dataUr = moment.utc(workerInfo[key]).format("YYYY-MM-DDTHH:mm");
+          return (
+            <input
+              type="datetime-local"
+              name={key}
+              value={dataUr}
+              onChange={(e) => change(e, setWorkerInfo)}
+            />
+          );
+        }
+
       case "id":
       case "id_adresu":
       case "id_poczty":
+      case "id_sali":
         return (
           <input type="text" disabled name={key} value={workerInfo[key]} />
         );
@@ -114,6 +167,7 @@ function ChangePopup({ data, popupHandler, typ, url }) {
     switch (key) {
       // case "id":
       case "id_stanowiska":
+      case "id_sali":
       case "uczestnicyLista":
         // case "id_poczty":
         // case "id_adresu":

@@ -112,8 +112,8 @@ function Wydarzanie_card({ event }) {
     }
   };
   const [open, setOpen] = useState(false);
-  let data = moment(event.data).local("pl").format("LL");
-  let godzina = moment(event.data).local("pl").format("LTS");
+  let data = moment.utc(event.data).local("pl").format("LL");
+  let godzina = moment.utc(event.data).local("pl").format("hh:mm");
   const [haveP, setHaveP] = useState(event.uczestnicyLista.length !== 0);
   const [tooglePopup, setTooglePopup] = useState(false);
   return (
