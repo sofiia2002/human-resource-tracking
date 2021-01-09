@@ -60,6 +60,9 @@
   border-width: 3px;
   border-color: #2196f3;
 }
+.change_wrapper .change_group input[type="date"] {
+  user-select: none;
+}
 .change_wrapper .change_group input,
 .change_wrapper .change_group select {
   font-family: inherit;

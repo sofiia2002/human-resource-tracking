@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 //import { GeneralData } from "../Context";
 import axios from "axios";
 import "../styles/Events.css";
 import moment from "moment";
 import ChangePopup from "../helpers/ChangePopup";
+import { Refetch } from "../Context";
 
 function Employees() {
   //const { userData } = useContext(GeneralData);
   const [selectedDomKultury, setSelectedDomKultury] = useState(1);
   const [domyKultury, setDomyKultury] = useState([]);
   const [pracownicy, setPracownicy] = useState([]);
+  const { refetch, setRefetch } = useContext(Refetch);
 
   useEffect(() => {
     async function fetchData() {
@@ -27,7 +29,8 @@ function Employees() {
       setPracownicy(result.data);
     }
     fetchData();
-  }, [selectedDomKultury]);
+    console.log("refetch");
+  }, [selectedDomKultury, refetch]);
 
   const serveWorkerList = (workersList, workerPosition) => {
     let workers = workersList.filter((worker) => {
@@ -106,7 +109,7 @@ function DomKultury({ domKultury }) {
 }
 
 function Pracownik({ pracownik }) {
-  const dataUr = moment(pracownik.data_urodzenia).format("L");
+  const dataUr = moment.utc(pracownik.data_urodzenia).format("L");
   const [tooglePopup, setTooglePopup] = useState(false);
   return (
     <div className="worker">
@@ -120,7 +123,7 @@ function Pracownik({ pracownik }) {
           : ""}
       </p>
       <p>{pracownik ? "Data ur.: " + dataUr : ""}</p>
-      <p>{pracownik ? "Pesel: " + pracownik.pesel : ""}</p>
+      <p>{pracownik ? "Pesel: " + pracownik.pesel : "Nima"}</p>
       <p>{pracownik ? "Telefon: " + pracownik.telefon : ""}</p>
       <p>{pracownik ? "Pensja: " + pracownik.pensja : ""}</p>
       <button
