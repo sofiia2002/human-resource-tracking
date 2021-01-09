@@ -4,7 +4,7 @@ import { Refetch } from "../Context";
 import moment from "moment";
 import "../styles/Popup.css";
 
-function ChangePopup({ data, popupHandler }) {
+function ChangePopup({ data, popupHandler, typ, url }) {
   const [positions, setPositions] = useState([]);
   const [workerInfo, setWorkerInfo] = useState(data);
   const { refetch, setRefetch } = useContext(Refetch);
@@ -73,6 +73,7 @@ function ChangePopup({ data, popupHandler }) {
           </select>
         );
       case "data_urodzenia":
+      case "data":
         const dataUr = moment.utc(workerInfo[key]).format("YYYY-MM-DD");
         console.log(dataUr);
         return (
@@ -113,6 +114,7 @@ function ChangePopup({ data, popupHandler }) {
     switch (key) {
       // case "id":
       case "id_stanowiska":
+      case "uczestnicyLista":
         // case "id_poczty":
         // case "id_adresu":
         return <div></div>;
@@ -125,27 +127,60 @@ function ChangePopup({ data, popupHandler }) {
         );
     }
   };
-  const handleChange = async (e) => {
-    const params = {
-      imie: workerInfo.imie,
-      nazwisko: workerInfo.nazwisko,
-      pesel: workerInfo.pesel,
-      haslo: workerInfo.haslo,
-      data_urodzenia: workerInfo.data_urodzenia,
-      telefon: workerInfo.telefon,
-      plec: workerInfo.plec,
-      id_stanowiska: workerInfo.id_stanowiska,
-      id_adresu: workerInfo.id_adresu,
-      miasto: workerInfo.miasto,
-      ulica: workerInfo.ulica,
-      nr_lokalu: workerInfo.nr_lokalu,
-      id_poczty: workerInfo.id_poczty,
-      kod_poczty: workerInfo.kod_poczty,
-      poczta: workerInfo.poczta,
-    };
+  const employeesHandleChange = async (e) => {
+    let params;
+    switch (typ) {
+      case "pracownik":
+        params = {
+          imie: workerInfo.imie,
+          nazwisko: workerInfo.nazwisko,
+          pesel: workerInfo.pesel,
+          haslo: workerInfo.haslo,
+          data_urodzenia: workerInfo.data_urodzenia,
+          telefon: workerInfo.telefon,
+          plec: workerInfo.plec,
+          id_stanowiska: workerInfo.id_stanowiska,
+          id_adresu: workerInfo.id_adresu,
+          miasto: workerInfo.miasto,
+          ulica: workerInfo.ulica,
+          nr_lokalu: workerInfo.nr_lokalu,
+          id_poczty: workerInfo.id_poczty,
+          kod_poczty: workerInfo.kod_poczty,
+          poczta: workerInfo.poczta,
+        };
+        break;
+      case "wystawa":
+        params = {
+          imie_wystawiajacego: workerInfo.imie_wystawiajacego,
+          nazwisko_wystawiajacego: workerInfo.nazwisko_wystawiajacego,
+          temat: workerInfo.temat,
+          typ_wystawy: workerInfo.typ_wystawy,
+          opis: workerInfo.opis,
+          data: workerInfo.data,
+          czas_trwania: workerInfo.czas_trwania,
+          id_domu_kultury: workerInfo.id_domu_kultury,
+          id_sali: workerInfo.id_sali,
+        };
 
-    await axios.put(`/api/pracownicy?id=${workerInfo.id}`, params);
+        break;
+      case "warsztat":
+        params = {
+          imie_wykladowcy: workerInfo.imie_wykladowcy,
+          nazwisko_wykladowcy: workerInfo.nazwisko_wykladowcy,
+          temat: workerInfo.temat,
+          email: workerInfo.email,
+          telefon: workerInfo.telefon,
+          data: workerInfo.data,
+          czas_trwania: workerInfo.czas_trwania,
+          id_domu_kultury: workerInfo.id_domu_kultury,
+          id_sali: workerInfo.id_sali,
+        };
+        break;
+    }
+    console.log(params);
+    const res = await axios.put(url, params);
     //getAuthData(e);
+    console.log(res);
     setRefetch(!refetch);
     popupHandler();
   };
@@ -165,7 +200,7 @@ function ChangePopup({ data, popupHandler }) {
           )}
         </div>
         <button
-          onClick={handleChange}
+          onClick={employeesHandleChange}
           className="popup_submit classic_button_style"
         >
           Zapisz Zmiany

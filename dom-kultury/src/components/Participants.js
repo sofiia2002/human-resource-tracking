@@ -5,6 +5,7 @@ import moment from "moment";
 import Loader from "react-loader-spinner";
 import localization from "moment/locale/pl";
 import "../styles/Events.css";
+import ChangePopup from "../helpers/ChangePopup";
 
 moment.updateLocale("pl", localization);
 
@@ -72,7 +73,7 @@ function Participants() {
                     {
                       console.log(event.temat);
                     }
-                    return <Wydarzanie_card event={event} />;
+                    return <Wydarzanie_card event={event} key={event.id} />;
                   })}
                 </ul>
               </div>
@@ -102,10 +103,19 @@ function Uczestnik({ uczestnik }) {
 }
 
 function Wydarzanie_card({ event }) {
+  const serveUrl = () => {
+    switch (event.typ) {
+      case "wystawa":
+        return `/api/wystawy?id=${event.id}`;
+      case "warsztat":
+        return `/api/warsztaty?id=${event.id}`;
+    }
+  };
   const [open, setOpen] = useState(false);
   let data = moment(event.data).local("pl").format("LL");
   let godzina = moment(event.data).local("pl").format("LTS");
   const [haveP, setHaveP] = useState(event.uczestnicyLista.length !== 0);
+  const [tooglePopup, setTooglePopup] = useState(false);
   return (
     <div className="event">
       {console.log()}
@@ -123,7 +133,12 @@ function Wydarzanie_card({ event }) {
         <div className="date">
           <p>{data}</p>
           <p>{godzina}</p>
-          <button className="classic_button_style">Zmień dane</button>
+          <button
+            onClick={() => setTooglePopup(true)}
+            className="classic_button_style"
+          >
+            Zmień dane
+          </button>
         </div>
       </div>
 
@@ -141,6 +156,14 @@ function Wydarzanie_card({ event }) {
         <i className="las la-angle-up" onClick={() => setOpen(false)}></i>
       ) : (
         <i className="las la-angle-down" onClick={() => setOpen(true)}></i>
+      )}
+      {tooglePopup && (
+        <ChangePopup
+          data={event}
+          popupHandler={() => setTooglePopup(false)}
+          url={serveUrl()}
+          typ={event.typ}
+        />
       )}
     </div>
   );

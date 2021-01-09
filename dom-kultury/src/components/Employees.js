@@ -136,8 +136,10 @@ function Pracownik({ pracownik }) {
       </button>
       {tooglePopup && (
         <ChangePopup
+          typ="pracownik"
           data={pracownik}
           popupHandler={() => setTooglePopup(false)}
+          url={`/api/pracownicy?id=${pracownik.id}`}
         />
       )}
     </div>
