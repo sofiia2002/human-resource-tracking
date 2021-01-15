@@ -62,7 +62,7 @@ function Employees() {
         </div>
         <div className="container-right">
           <h2>Pracownicy w domie Kultury numer {selectedDomKultury}:</h2>
-          <button className="classic_button_style">Dodaj Pracownika</button>
+          {/* <button className="classic_button_style">Dodaj Pracownika</button> */}
           <div className="workers_group">
             {pracownicy.length !== 0 ? (
               <>

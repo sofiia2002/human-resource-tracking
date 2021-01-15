@@ -39,7 +39,7 @@ function ChangePopup({ data, popupHandler, typ, url }) {
   };
   const change = (e, setter) => {
     let { name, value } = e.target;
-    if (name === "data_urodzenia") {
+    if (name === "data_urodzenia" || name === "data") {
       setter((prevState) => ({
         ...prevState,
         [name]: moment.utc(value).toISOString(),
@@ -125,13 +125,16 @@ function ChangePopup({ data, popupHandler, typ, url }) {
             />
           );
         } else {
-          const dataUr = moment.utc(workerInfo[key]).format("YYYY-MM-DDTHH:mm");
+          const data = moment.utc(workerInfo[key]).format("YYYY-MM-DDTHH:mm");
           return (
             <input
               type="datetime-local"
               name={key}
-              value={dataUr}
-              onChange={(e) => change(e, setWorkerInfo)}
+              value={data}
+              onChange={(e) => {
+                change(e, setWorkerInfo);
+                console.log(e.target.value);
+              }}
             />
           );
         }
@@ -231,10 +234,7 @@ function ChangePopup({ data, popupHandler, typ, url }) {
         };
         break;
     }
-    console.log(params);
-    const res = await axios.put(url, params);
-    //getAuthData(e);
-    console.log(res);
+    await axios.put(url, params);
     setRefetch(!refetch);
     popupHandler();
   };

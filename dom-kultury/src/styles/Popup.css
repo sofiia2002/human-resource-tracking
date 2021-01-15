@@ -63,7 +63,11 @@
 .change_wrapper .change_group input[type="date"] {
   user-select: none;
 }
+.change_wrapper .change_group textarea {
+  resize: vertical;
+}
 .change_wrapper .change_group input,
+.change_wrapper .change_group textarea,
 .change_wrapper .change_group select {
   font-family: inherit;
   width: 100%;
@@ -78,6 +82,7 @@
   transition: border-color 0.2s;
 }
 .change_wrapper .change_group input:focus ~ label,
+.change_wrapper .change_group textarea:focus ~ label,
 .change_wrapper .change_group select:focus ~ label {
   transition: 0.2s;
   font-size: 1rem;

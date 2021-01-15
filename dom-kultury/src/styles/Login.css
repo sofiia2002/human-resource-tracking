@@ -8,7 +8,7 @@
 }
 form {
 }
-form > .user-type-radios {
+.user-type-radios {
   display: flex;
   flex-direction: row;
 }

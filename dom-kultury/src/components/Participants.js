@@ -1,20 +1,24 @@
 import React, { useState, useEffect, useContext } from "react";
 import { GeneralData } from "../Context";
+import { Refetch } from "../Context";
 import axios from "axios";
 import moment from "moment";
 import Loader from "react-loader-spinner";
 import localization from "moment/locale/pl";
 import "../styles/Events.css";
 import ChangePopup from "../helpers/ChangePopup";
+import AddEvent from "../helpers/AddEvent";
 
 moment.updateLocale("pl", localization);
 
 function Participants() {
   const { userData } = useContext(GeneralData);
+  const { refetch, setRefetch } = useContext(Refetch);
   const [selectedDomKultury, setSelectedDomKultury] = useState(1);
   const [domyKultury, setDomyKultury] = useState([]);
   const [dataLoaded, setDataLoaded] = useState(false);
   const [allInfo, setAllInfo] = useState({});
+  const [handleAdding, setHandleAdding] = useState(false);
 
   const serveParticipants = async ({ stanowisko }) => {
     let res = {
@@ -53,16 +57,23 @@ function Participants() {
       setAllInfo(info);
       setDataLoaded(true);
     }
-    if (dataLoaded == false) {
-      serve();
-    }
-  }, [dataLoaded]);
+    serve();
+    console.log("fetching for new data");
+  }, [refetch]);
 
   return (
     <div className="box">
       <div className="wrapper">
         <h2>Uczestnicy wydarzen:</h2>
-
+        <button
+          className="classic_button_style"
+          onClick={() => setHandleAdding(true)}
+        >
+          Dodaj wydarzenie
+        </button>
+        {handleAdding && (
+          <AddEvent handleActive={() => setHandleAdding(false)} />
+        )}
         <div className="wydarzenia">
           {dataLoaded ? (
             Object.entries(allInfo).map(([key, events], i) => (
@@ -70,9 +81,6 @@ function Participants() {
                 <h4>{`Rodzaj: ${key}`} </h4>
                 <ul>
                   {events.map((event, i) => {
-                    {
-                      console.log(event.temat);
-                    }
                     return <Wydarzanie_card event={event} key={event.id} />;
                   })}
                 </ul>
@@ -101,6 +109,20 @@ function Uczestnik({ uczestnik }) {
     </div>
   );
 }
+const change = (e, setter) => {
+  let { name, value } = e.target;
+  if (name === "data_urodzenia" || name === "data") {
+    setter((prevState) => ({
+      ...prevState,
+      [name]: moment.utc(value).toISOString(),
+    }));
+  } else {
+    setter((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  }
+};
 
 function Wydarzanie_card({ event }) {
   const serveUrl = () => {
@@ -113,7 +135,8 @@ function Wydarzanie_card({ event }) {
   };
   const [open, setOpen] = useState(false);
   let data = moment.utc(event.data).local("pl").format("LL");
-  let godzina = moment.utc(event.data).local("pl").format("hh:mm");
+  let godzina = moment.utc(event.data).format("LTS");
+
   const [haveP, setHaveP] = useState(event.uczestnicyLista.length !== 0);
   const [tooglePopup, setTooglePopup] = useState(false);
   return (
