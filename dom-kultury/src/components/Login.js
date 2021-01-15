@@ -24,9 +24,9 @@ function Login() {
     e.preventDefault();
     // axios i endpoint z logowaniem
     const o = {
-      imie: "Mateusz",
-      nazwisko: "Izbicki",
-      haslo: "123",
+      imie: "Aleksandra",
+      nazwisko: "Glos",
+      haslo: "hardpass37",
     };
     const o2 = {
       email: "kzyn@email.com",

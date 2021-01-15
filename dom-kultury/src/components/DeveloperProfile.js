@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import { GeneralData } from "../Context";
 
 function DeveloperProfile() {
@@ -12,10 +13,14 @@ function DeveloperProfile() {
       <div className="dashboard">
         <h3>Panel sterowania:</h3>
         <div className="change-worker">
-          <h5>Zmiana danych / utworzenie pracownika</h5>
+          <Link to="/employees">
+            <h5>Zmiana danych pracownika</h5>
+          </Link>
         </div>
         <div className="change-event">
-          <h5>Zmiana danych / utworzenie wydarzenia</h5>
+          <Link to="/participants">
+            <h5>Zmiana danych / utworzenie wydarzenia</h5>
+          </Link>
         </div>
       </div>
     </div>

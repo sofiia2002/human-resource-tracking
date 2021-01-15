@@ -29,17 +29,72 @@ function Participants() {
     const { data: wystawyR } = await axios("/api/wystawy");
     const { data: warsztatyR } = await axios("/api/warsztaty");
     const all = [...wystawyR, ...warsztatyR];
-
+    const { data: organizatorzy } = await axios("/api/organizacja_wydarzen");
+    const or = {};
+    let organizatorWydarzenia = all.map((el, index) => {
+      return organizatorzy.filter((ev) => {
+        return ev.id_wydarzenia === el.id;
+      });
+    });
+    organizatorWydarzenia.map((org) => {
+      if (org.length == 0) {
+        return;
+      } else {
+        org.map((el) => {
+          let {
+            czas_trwania,
+            data_wydarzenia,
+            numer_sali,
+            powierzchnia_sali,
+            id_sali,
+            id_wydarzenia,
+            typ_wydarzenia,
+            ...rest
+          } = el;
+          if (or[el.id_wydarzenia] == undefined) {
+            or[el.id_wydarzenia] = [];
+          }
+          or[el.id_wydarzenia].push(rest);
+        });
+      }
+    });
+    // console.log(or);
     await Promise.all(
       wydarzeniaR.map(async (event) => {
+        let organizatorzy = [];
+        for (const key in or) {
+          if (event.id == key) {
+            organizatorzy = or[key];
+          }
+        }
+
         let match = all.find((element) => element.id == event.id);
+
         const { data: uczestnicyLista } = await axios(
           `/api/uczestnicy?wydarzenie=${event.id}`
         );
-        let final = { ...event, ...match, uczestnicyLista };
+        let final = { ...event, ...match, uczestnicyLista, organizatorzy };
+        // console.log(final);
         res[event.typ].push(final);
       })
     );
+    if (userData.stanowisko === "Organizator") {
+      console.log(userData.id);
+      Object.entries(res).map(([key, vals]) => {
+        // console.log({ vals });
+        const filtred = vals.filter((el) => {
+          if (el.organizatorzy.length != 0) {
+            return el.organizatorzy.filter((org) => {
+              return org.id_pracownika == userData.id;
+            });
+          } else {
+            return;
+          }
+        });
+        console.log(key, filtred);
+        res[key] = filtred;
+      });
+    }
     return res;
   };
 
