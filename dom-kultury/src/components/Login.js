@@ -13,20 +13,24 @@ function Login() {
   const [userType, setUserType] = useState("");
   const [employeeForm, setEmployeeForm] = useState({});
   const [participantForm, setParticipantForm] = useState({});
+  const [errorHere, setErrorHere] = useState(true);
 
   const [userInfo, setUserInfo] = useState({});
 
   useEffect(() => {
     setUserData(userInfo);
+    if (Object.keys(userInfo).length!==0){
+      history.push("/");
+    }
   }, [userInfo]);
 
   const login = async (e) => {
     e.preventDefault();
     // axios i endpoint z logowaniem
     const o = {
-      imie: "Aleksandra",
-      nazwisko: "Glos",
-      haslo: "hardpass37",
+      imie: "Sonya",
+      nazwisko: "Levchenko",
+      haslo: "hardpass36",
     };
     const o2 = {
       email: "kzyn@email.com",
@@ -36,22 +40,23 @@ function Login() {
     if (userType === "pracownik") {
       try {
         const res = await axios.post("/api/login_pracownicy", o);
-
         setUserInfo(res.data[0]);
+        setErrorHere(false);
       } catch (error) {
         console.log(error);
+        window.alert('Nieprawidłowe dane! Spróbuj ponownie!');
       }
     }
     if (userType === "uczestnik") {
       try {
         const res = await axios.post("/api/login_uczestnicy", o2);
         setUserInfo({ ...res.data[0], stanowisko: "Uczestnik" });
+        setErrorHere(false);
       } catch (error) {
         console.log(error);
+        window.alert('Nieprawidłowe dane! Spróbuj ponownie!')
       }
     }
-
-    history.push("/");
   };
   const change = (e, setter) => {
     let { name, value } = e.target;

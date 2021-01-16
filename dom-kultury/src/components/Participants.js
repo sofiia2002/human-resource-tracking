@@ -37,7 +37,7 @@ function Participants() {
       });
     });
     organizatorWydarzenia.map((org) => {
-      if (org.length == 0) {
+      if (org.length === 0) {
         return;
       } else {
         org.map((el) => {
@@ -51,7 +51,7 @@ function Participants() {
             typ_wydarzenia,
             ...rest
           } = el;
-          if (or[el.id_wydarzenia] == undefined) {
+          if (or[el.id_wydarzenia] === undefined) {
             or[el.id_wydarzenia] = [];
           }
           or[el.id_wydarzenia].push(rest);
@@ -63,12 +63,12 @@ function Participants() {
       wydarzeniaR.map(async (event) => {
         let organizatorzy = [];
         for (const key in or) {
-          if (event.id == key) {
+          if (event.id === key) {
             organizatorzy = or[key];
           }
         }
 
-        let match = all.find((element) => element.id == event.id);
+        let match = all.find((element) => element.id === event.id);
 
         const { data: uczestnicyLista } = await axios(
           `/api/uczestnicy?wydarzenie=${event.id}`
@@ -83,9 +83,9 @@ function Participants() {
       Object.entries(res).map(([key, vals]) => {
         // console.log({ vals });
         const filtred = vals.filter((el) => {
-          if (el.organizatorzy.length != 0) {
+          if (el.organizatorzy.length !== 0) {
             return el.organizatorzy.filter((org) => {
-              return org.id_pracownika == userData.id;
+              return org.id_pracownika === userData.id;
             });
           } else {
             return;
@@ -186,6 +186,8 @@ function Wydarzanie_card({ event }) {
         return `/api/wystawy?id=${event.id}`;
       case "warsztat":
         return `/api/warsztaty?id=${event.id}`;
+      default: 
+        return "";  
     }
   };
   const [open, setOpen] = useState(false);

@@ -20,8 +20,8 @@ function ChangePopup({ data, popupHandler, typ, url }) {
         case "warsztat":
           const res = await axios("/api/sale");
           setRooms(res.data);
-
           break;
+        default: break;  
       }
     }
     fetch();
@@ -32,7 +32,7 @@ function ChangePopup({ data, popupHandler, typ, url }) {
       if (typ === "pracownik") {
         return el.nazwa === position;
       } else {
-        return el.numer_sali == position;
+        return el.numer_sali === position;
       }
     });
     return res[0];
@@ -120,7 +120,7 @@ function ChangePopup({ data, popupHandler, typ, url }) {
             <input
               type="date"
               name={key}
-              value={dataUr}
+              value={dataUr || ""}
               onChange={(e) => change(e, setWorkerInfo)}
             />
           );
@@ -130,7 +130,7 @@ function ChangePopup({ data, popupHandler, typ, url }) {
             <input
               type="datetime-local"
               name={key}
-              value={data}
+              value={data || ""}
               onChange={(e) => {
                 change(e, setWorkerInfo);
                 console.log(e.target.value);
@@ -144,7 +144,7 @@ function ChangePopup({ data, popupHandler, typ, url }) {
       case "id_poczty":
       case "id_sali":
         return (
-          <input type="text" disabled name={key} value={workerInfo[key]} />
+          <input type="text" disabled name={key} value={workerInfo[key] || ""} />
         );
       case "haslo":
         return (
@@ -160,7 +160,7 @@ function ChangePopup({ data, popupHandler, typ, url }) {
           <input
             type="text"
             name={key}
-            value={workerInfo[key]}
+            value={workerInfo[key] || ""}
             onChange={(e) => change(e, setWorkerInfo)}
           />
         );
@@ -233,6 +233,7 @@ function ChangePopup({ data, popupHandler, typ, url }) {
           id_sali: workerInfo.id_sali,
         };
         break;
+      default: break;  
     }
     await axios.put(url, params);
     setRefetch(!refetch);
