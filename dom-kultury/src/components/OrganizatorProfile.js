@@ -9,6 +9,13 @@ function OrganizatorProfile() {
       <div className="header">
         <h1>Zalogowany jako: {userData.stanowisko}</h1>
       </div>
+      <div className="dashboard">
+        <div className="change-event">
+          <Link to="/participants">
+            <h5>Zmiana danych moich wydarzeń</h5>
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }

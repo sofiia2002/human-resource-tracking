@@ -29,8 +29,8 @@ function Login() {
       haslo: "hardpass37",
     };
     const o2 = {
-      email: "kzyn@email.com",
-      haslo: "litepass1",
+      email: "mnikonski@email.com",
+      haslo: "litepass2",
     };
     if (!userType) return;
     if (userType === "pracownik") {

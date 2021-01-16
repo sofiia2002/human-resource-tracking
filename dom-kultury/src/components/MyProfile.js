@@ -3,6 +3,7 @@ import { GeneralData } from "../Context";
 import DeveloperProfile from "./DeveloperProfile";
 import OrganizatorProfile from "./OrganizatorProfile";
 import AdminProfile from "./AdminProfile";
+import ParticipantProfile from "./ParticipantProfile";
 
 import "../styles/MyProfile.css";
 function MyProfile() {
@@ -21,7 +22,7 @@ function MyProfile() {
         return <AdminProfile />;
 
       case "Uczestnik":
-        return <h1>UOUGHH STINKYYY</h1>;
+        return <ParticipantProfile />;
 
       default:
         return <h1>Essa, nie ma hakowanka XD </h1>;

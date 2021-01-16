@@ -1,10 +1,10 @@
-import React, { useContext } from "react";
+import axios from "axios";
+import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { GeneralData } from "../Context";
 
 function DeveloperProfile() {
   const { userData, setUserData } = useContext(GeneralData);
-
   return (
     <div className="wrapper">
       <div className="header">
