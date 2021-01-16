@@ -13,8 +13,8 @@ async function get(req, res, next){
 
 function getWydarzenieFromRec(req) {
     const wydarzenie = {
-        id_uczestnika: req.body.id_uczestnika,
-        id_wydarzenia: req.body.id_wydarzenia
+        id_uczestnika: parseInt(req.body.id_uczestnika),
+        id_wydarzenia: parseInt(req.body.id_wydarzenia)
     };
    
     return wydarzenie;

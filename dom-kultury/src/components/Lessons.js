@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from "react";
-//import { GeneralData } from "../Context";
+import React, { useState, useEffect, useContext } from "react";
+import { GeneralData } from "../Context";
 import axios from "axios";
 import "../styles/Events.css";
 import "../styles/Exhibitions.css";
 
 function Lessons() {
-  //const { userData } = useContext(GeneralData);
+  const { userData } = useContext(GeneralData);
   const [selectedDomKultury, setSelectedDomKultury] = useState(1);
   const [domyKultury, setDomyKultury] = useState([]);
   const [warsztaty, setWarsztaty] = useState([]);
+  const [isWarsztatyChanged, setWarsztatyChanged] = useState(false);
+  const [warsztatyOfParticipant, setWarsztatyOfParticipant] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -17,6 +19,17 @@ function Lessons() {
     }
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (userData.stanowisko === "Uczestnik" && isWarsztatyChanged) {
+      async function fetchData() {
+        const result = await axios("/api/wydarzenia_uczestnika/" + userData.id);
+        setWarsztatyOfParticipant(result.data);
+      }
+      fetchData();
+      setWarsztatyChanged(false);
+    }
+  }, [isWarsztatyChanged]);
 
   useEffect(() => {
     async function fetchData() {
@@ -60,7 +73,15 @@ function Lessons() {
           <div className="wystawy">
             {warsztaty.length !== 0 ? (
               warsztaty.map((element, index) => (
-                <Warsztat key={index} index={index} warsztat={element} />
+                <Warsztat
+                  uczestnik={userData.stanowisko === "Uczestnik"}
+                  id={userData.id}
+                  key={index}
+                  index={index}
+                  setWystawyChanged={setWarsztatyChanged}
+                  wystawyOfParticipant={warsztatyOfParticipant}
+                  warsztat={element}
+                />
               ))
             ) : (
               <h4>Niestety nie znalezlismy zadnych warsztatow</h4>
@@ -89,10 +110,66 @@ function DomKultury({ domKultury }) {
   );
 }
 
-function Warsztat({ warsztat }) {
+function Warsztat({
+  warsztat,
+  uczestnik,
+  id,
+  wystawyOfParticipant,
+  setWystawyChanged,
+}) {
+  const sign = async () => {
+    console.log("sign");
+    const url = "/api/wydarzenia_uczestnika";
+    const params = {
+      id_uczestnika: parseInt(id),
+      id_wydarzenia: parseInt(warsztat.id),
+    };
+    console.log(params);
+    await axios.post(url, params);
+    setWystawyChanged(true);
+  };
+
+  const unsign = async () => {
+    console.log("unsign");
+    const url = "/api/wydarzenia_uczestnika";
+    const params = {
+      id_uczestnika: id,
+      id_wydarzenia: warsztat.id,
+    };
+    console.log(params);
+    await axios.delete(url, params);
+    setWystawyChanged(true);
+  };
+
   return (
     <div className="wystawa">
-      <h2>{warsztat ? warsztat.temat : ""}</h2>
+      <div>
+        <h2>{warsztat ? warsztat.temat : ""}</h2>
+        {uczestnik ? (
+          wystawyOfParticipant.findIndex((wys) => wys.id === warsztat.id) ===
+          -1 ? (
+            <div className="buttons-wystawa">
+              <button
+                className="popup_submit classic_button_style"
+                onClick={sign}
+              >
+                Zapisz się
+              </button>
+            </div>
+          ) : (
+            <div className="buttons-wystawa">
+              <button
+                className="popup_submit classic_button_style red"
+                onClick={unsign}
+              >
+                Wypisz się
+              </button>
+            </div>
+          )
+        ) : (
+          <></>
+        )}
+      </div>
       <div>
         <h5>
           {warsztat

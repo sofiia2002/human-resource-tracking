@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { GeneralData } from "../Context";
 import moment from "moment";
@@ -7,10 +7,25 @@ import "../styles/MyProfile.css";
 
 function OrganizatorProfile() {
   const { userData, setUserData } = useContext(GeneralData);
+
   return (
     <div className="wrapper">
       <div className="header">
         <h1>Zalogowany jako: {userData.stanowisko}</h1>
+      </div>
+      <div className="dashboard-wrapper">
+        <div className="personal-data">
+          <h3>Twoje dane:</h3>
+          <Pracownik pracownik={userData} />
+        </div>
+        <div className="dashboard">
+          <h3>Panel sterowania:</h3>
+          <div className="change-event">
+            <Link to="/participants">
+              <h5>Organizowywane przeze mnie wydarzenia</h5>
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 //import { GeneralData } from "../Context";
 import axios from "axios";
 import "../styles/Events.css";
+import "../styles/Exhibitions.css";
 
 function Events() {
   //const { userData } = useContext(GeneralData);

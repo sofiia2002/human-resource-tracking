@@ -31,11 +31,13 @@ function Participants() {
     const all = [...wystawyR, ...warsztatyR];
     const { data: organizatorzy } = await axios("/api/organizacja_wydarzen");
     const or = {};
+
     let organizatorWydarzenia = all.map((el, index) => {
       return organizatorzy.filter((ev) => {
         return ev.id_wydarzenia === el.id;
       });
     });
+
     organizatorWydarzenia.map((org) => {
       if (org.length === 0) {
         return;
@@ -58,12 +60,14 @@ function Participants() {
         });
       }
     });
-    // console.log(or);
+
+    console.log(or);
+
     await Promise.all(
       wydarzeniaR.map(async (event) => {
         let organizatorzy = [];
         for (const key in or) {
-          if (event.id === key) {
+          if (event.id === parseInt(key)) {
             organizatorzy = or[key];
           }
         }
@@ -77,9 +81,9 @@ function Participants() {
         // console.log(final);
         res[event.typ].push(final);
       })
-    );
+    )
     if (userData.stanowisko === "Organizator") {
-      console.log(userData.id);
+      // console.log(userData.id);
       Object.entries(res).map(([key, vals]) => {
         // console.log({ vals });
         const filtred = vals.filter((el) => {
@@ -120,12 +124,17 @@ function Participants() {
     <div className="box">
       <div className="wrapper">
         <h2>Uczestnicy wydarzen:</h2>
-        <button
-          className="classic_button_style"
-          onClick={() => setHandleAdding(true)}
-        >
-          Dodaj wydarzenie
-        </button>
+        {userData.stanowisko === "Developer" ||
+        userData.stanowisko === "Administrator" ? (
+          <button
+            className="classic_button_style"
+            onClick={() => setHandleAdding(true)}
+          >
+            Dodaj wydarzenie
+          </button>
+        ) : (
+          <></>
+        )}
         {handleAdding && (
           <AddEvent handleActive={() => setHandleAdding(false)} />
         )}
@@ -136,7 +145,7 @@ function Participants() {
                 <h4>{`Rodzaj: ${key}`} </h4>
                 <ul>
                   {events.map((event, i) => {
-                    return <Wydarzanie_card event={event} key={event.id} />;
+                    return <WydarzanieCard event={event} key={event.id} />;
                   })}
                 </ul>
               </div>
@@ -179,15 +188,15 @@ const change = (e, setter) => {
   }
 };
 
-function Wydarzanie_card({ event }) {
+function WydarzanieCard({ event }) {
   const serveUrl = () => {
     switch (event.typ) {
       case "wystawa":
         return `/api/wystawy?id=${event.id}`;
       case "warsztat":
-        return `/api/warsztaty?id=${event.id}`;
-      default: 
-        return "";  
+        return `/api/warsztaty?id=${event.id}`;  
+      default:
+        return "";
     }
   };
   const [open, setOpen] = useState(false);

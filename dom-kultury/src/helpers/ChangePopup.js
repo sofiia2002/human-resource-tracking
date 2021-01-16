@@ -9,6 +9,7 @@ function ChangePopup({ data, popupHandler, typ, url }) {
   const [rooms, setRooms] = useState([]);
   const [workerInfo, setWorkerInfo] = useState(data);
   const { refetch, setRefetch } = useContext(Refetch);
+  
   useEffect(() => {
     async function fetch() {
       switch (typ) {
@@ -21,7 +22,8 @@ function ChangePopup({ data, popupHandler, typ, url }) {
           const res = await axios("/api/sale");
           setRooms(res.data);
           break;
-        default: break;  
+        default:
+          break;
       }
     }
     fetch();
@@ -88,7 +90,7 @@ function ChangePopup({ data, popupHandler, typ, url }) {
           </select>
         );
       case "stanowisko":
-        return (
+        return typ !== "uczestnik" ? (
           <select
             name={key}
             value={workerInfo[key]}
@@ -109,7 +111,7 @@ function ChangePopup({ data, popupHandler, typ, url }) {
               );
             })}
           </select>
-        );
+        ) : (<></>);
       case "data_urodzenia":
       case "data":
         if (typ === "pracownik") {
@@ -144,7 +146,12 @@ function ChangePopup({ data, popupHandler, typ, url }) {
       case "id_poczty":
       case "id_sali":
         return (
-          <input type="text" disabled name={key} value={workerInfo[key] || ""} />
+          <input
+            type="text"
+            disabled
+            name={key}
+            value={workerInfo[key] || ""}
+          />
         );
       case "haslo":
         return (
@@ -176,12 +183,12 @@ function ChangePopup({ data, popupHandler, typ, url }) {
         // case "id_adresu":
         return <div></div>;
       default:
-        return (
+        return ((typ !== "uczestnik")||(key!=="stanowisko"))&&(key!=="id") ? (
           <div className="change_group" key={i}>
             {handleChangeInput(key)}
             <label htmlFor={key}>{key}</label>
           </div>
-        );
+        ) : (<></>);
     }
   };
   const employeesHandleChange = async (e) => {
@@ -233,7 +240,17 @@ function ChangePopup({ data, popupHandler, typ, url }) {
           id_sali: workerInfo.id_sali,
         };
         break;
-      default: break;  
+      case "uczestnik":
+        params = {
+          imie: workerInfo.imie,
+          nazwisko: workerInfo.nazwisko,
+          telefon: workerInfo.telefon,
+          email: workerInfo.email,
+          haslo: workerInfo.haslo
+        };
+        break; 
+      default:
+        break;
     }
     await axios.put(url, params);
     setRefetch(!refetch);
@@ -247,7 +264,7 @@ function ChangePopup({ data, popupHandler, typ, url }) {
           className="close_popup las la-times"
           onClick={popupHandler}
         ></button>
-        <h2>Zmień dane {data.imie + " " + data.nazwisko}</h2>
+        <h2>Zmień dane {(data.imie || "") + " " + (data.nazwisko || "")}</h2>
 
         <div className="change_wrapper">
           {Object.entries(data).map(([key, value], i) =>

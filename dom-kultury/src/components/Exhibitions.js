@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from "react";
-//import { GeneralData } from "../Context";
+import React, { useState, useEffect, useContext } from "react";
+import { GeneralData } from "../Context";
 import axios from "axios";
 import "../styles/Events.css";
 import "../styles/Exhibitions.css";
 
 function Exhibitions() {
-  //const { userData } = useContext(GeneralData);
+  const { userData } = useContext(GeneralData);
   const [selectedDomKultury, setSelectedDomKultury] = useState(1);
   const [domyKultury, setDomyKultury] = useState([]);
   const [wystawy, setWystawy] = useState([]);
+  const [isWystawyChanged, setWystawyChanged] = useState(false);
+  const [wystawyOfParticipant, setWystawyOfParticipant] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -17,6 +19,17 @@ function Exhibitions() {
     }
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if ((userData.stanowisko === "Uczestnik")&&(isWystawyChanged)) {
+      async function fetchData() {
+        const result = await axios("/api/wydarzenia_uczestnika/" + userData.id);
+        setWystawyOfParticipant(result.data);
+      }
+      fetchData();
+      setWystawyChanged(false);
+    }
+  }, [isWystawyChanged]);
 
   useEffect(() => {
     async function fetchData() {
@@ -28,6 +41,7 @@ function Exhibitions() {
         (wydarzenie) => wydarzenie.id
       );
       const resultWystawy = await axios("/api/wystawy");
+      console.log(resultWystawy.data);
       result = [
         ...resultWystawy.data.filter(
           (wystawa) => resultWydarzenia.indexOf(wystawa.id) !== -1
@@ -60,7 +74,15 @@ function Exhibitions() {
           <div className="wystawy">
             {wystawy.length !== 0 ? (
               wystawy.map((element, index) => (
-                <Wystawa key={index} index={index} wystawa={element} />
+                <Wystawa
+                  uczestnik={userData.stanowisko === "Uczestnik"}
+                  id = {userData.id}
+                  key={index}
+                  index={index}
+                  wystawa={element}
+                  setWystawyChanged={setWystawyChanged}
+                  wystawyOfParticipant = {wystawyOfParticipant}
+                />
               ))
             ) : (
               <h4>Niestety nie znalezlismy zadnych wystaw</h4>
@@ -89,11 +111,57 @@ function DomKultury({ domKultury }) {
   );
 }
 
-function Wystawa({ wystawa }) {
+function Wystawa({ wystawa, uczestnik, id, wystawyOfParticipant, setWystawyChanged}) {
   const [open, setOpen] = useState(false);
+
+  const sign = async () => {
+    console.log("sign");
+    const url = "/api/wydarzenia_uczestnika"
+    const params = { id_uczestnika: parseInt(id), id_wydarzenia: parseInt(wystawa.id) };
+    console.log(params);
+    await axios.post(url, params);
+    setWystawyChanged(true);
+  }
+
+  const unsign = async () => {
+    console.log("unsign");
+    const url = "/api/wydarzenia_uczestnika"
+    const params = { 
+      id_uczestnika: id, 
+      id_wydarzenia: wystawa.id
+    }
+    console.log(params);
+    await axios.delete(url, params);
+    setWystawyChanged(true);
+  }
+
   return (
     <div className="wystawa">
-      <h2>{wystawa ? wystawa.temat : ""}</h2>
+      <div>
+        <h2>{wystawa ? wystawa.temat : ""}</h2>
+        {uczestnik ? 
+          ((wystawyOfParticipant.findIndex(wys => wys.id === wystawa.id))===-1) ?
+          <div className="buttons-wystawa">
+            <button
+              className="popup_submit classic_button_style"
+              onClick={sign}
+            >
+              Zapisz się
+            </button>
+          </div>
+            :
+            <div className="buttons-wystawa">
+            <button
+              className="popup_submit classic_button_style red"
+              onClick={unsign}
+            >
+              Wypisz się
+            </button>
+            </div>
+        : (
+          <></>
+        )}
+      </div>
       <div>
         <h5>Wystawa {wystawa ? wystawa.typ_wystawy : ""}</h5>
         <h5>

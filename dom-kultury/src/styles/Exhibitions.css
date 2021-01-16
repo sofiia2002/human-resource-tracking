@@ -16,8 +16,26 @@
   box-shadow: 0.2rem 0.2rem 0.5rem #0000004e;
 }
 
-.wystawa > h2 {
+.wystawa .classic_button_style{
+  margin: 0;
+  width: 100%;
+}
+
+.buttons-wystawa{
+  width: 12rem;
+}
+
+.wystawa h2 {
   margin-bottom: 0.75rem;
+  padding: 0;
+  width: 100%;
+}
+
+.wystawa > :nth-child(1){
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 4rem;
   width: 100%;
 }
 

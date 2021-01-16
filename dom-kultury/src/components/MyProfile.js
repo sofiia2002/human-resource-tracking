@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { GeneralData } from "../Context";
 import DeveloperProfile from "./DeveloperProfile";
 import OrganizatorProfile from "./OrganizatorProfile";
+import ParticipantProfile from "./ParticipantProfile";
 import AdminProfile from "./AdminProfile";
 
 import "../styles/MyProfile.css";
@@ -21,7 +22,7 @@ function MyProfile() {
         return <AdminProfile />;
 
       case "Uczestnik":
-        return <h1>UOUGHH STINKYYY</h1>;
+        return <ParticipantProfile />;
 
       default:
         return <h1>Essa, nie ma hakowanka XD </h1>;

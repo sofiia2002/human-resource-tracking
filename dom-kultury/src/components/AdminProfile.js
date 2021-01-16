@@ -9,16 +9,21 @@ function AdminProfile() {
   const { userData, setUserData } = useContext(GeneralData);
   return (
     <div className="wrapper">
-      <div className="personal-data">
-        <h3>Twoje dane:</h3>
-        <Pracownik pracownik={userData} />
+      <div className="header">
+        <h1>Zalogowany jako: {userData.stanowisko}</h1>
       </div>
-      <div className="dashboard">
-        <h3>Panel sterowania:</h3>
-        <div className="change-event">
-          <Link to="/participants">
-            <h5>Zmiana danych / utworzenie wydarzenia</h5>
-          </Link>
+      <div className="dashboard-wrapper">
+        <div className="personal-data">
+          <h3>Twoje dane:</h3>
+          <Pracownik pracownik={userData} />
+        </div>
+        <div className="dashboard">
+          <h3>Panel sterowania:</h3>
+          <div className="change-event">
+            <Link to="/participants">
+              <h5>Zmiana danych / utworzenie wydarzenia / uczestnikow</h5>
+            </Link>
+          </div>
         </div>
       </div>
     </div>
