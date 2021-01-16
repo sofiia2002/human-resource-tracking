@@ -1,14 +1,20 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { GeneralData } from "../Context";
 import DeveloperProfile from "./DeveloperProfile";
 import OrganizatorProfile from "./OrganizatorProfile";
 import ParticipantProfile from "./ParticipantProfile";
 import AdminProfile from "./AdminProfile";
-
 import "../styles/MyProfile.css";
+
 function MyProfile() {
   const { userData, setUserData } = useContext(GeneralData);
-  const userType = userData.stanowisko;
+  const [userType, setUserType] = useState('');
+
+  useEffect(()=>{
+    if (userData.stanowisko){
+      setUserType(userData.stanowisko);
+    }
+  }, [userData]);
 
   const serveMyProfile = (usertype) => {
     switch (usertype) {

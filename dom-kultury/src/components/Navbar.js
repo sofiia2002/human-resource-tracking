@@ -1,14 +1,23 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GeneralData } from "../Context";
 import { Link, useHistory } from "react-router-dom";
 import "../styles/Navbar.css";
 
 function Navbar() {
   const { userData, setUserData } = useContext(GeneralData);
+  const [userType, setUserType] = useState(null);
+  const [isLoggedOut, setLoggedOut] = useState(false);
   const history = useHistory();
   const logout = () => {
     setUserData({});
+    setLoggedOut(true);
   };
+
+    useEffect(()=>{
+    if ((userData.stanowisko)||(isLoggedOut)){
+      setUserType(userData.stanowisko);
+    }
+  }, [userData]);
 
   return (
     <nav className="nav">
@@ -26,21 +35,21 @@ function Navbar() {
         {/* <Link to="/events">Wydarzenia</Link> */}
         <Link to="/exhibitions">Wystawy</Link>
         <Link to="/lessons">Warsztaty</Link>
-        {userData.stanowisko === "Developer" ||
-        userData.stanowisko === "Organizator" ? (
+        {userType === "Developer" ||
+        userType === "Organizator" ? (
           <Link to="/participants">Uczestnicy</Link>
         ) : (
-          ""
+          <></>
         )}
-        {userData.stanowisko === "Developer" ? (
+        {userType === "Developer" ? (
           <Link to="/employees">Pracownicy</Link>
         ) : (
-          ""
+          <></>
         )}
-        {userData.stanowisko || userData.stanowisko === "uczestnik" ? (
+        {userType? (
           <Link to="/myprofile">Moj profil</Link>
         ) : (
-          ""
+          <></>
         )}
       </div>
       <div className="user">
@@ -49,7 +58,7 @@ function Navbar() {
             Zaloguj się
           </Link>
         ) : (
-          ""
+          <></>
         )}
 
         {userData.imie ? (
@@ -57,14 +66,14 @@ function Navbar() {
             Witaj, {userData.imie}!
           </span>
         ) : (
-          ""
+          <></>
         )}
         {userData.imie ? (
           <Link to="/">
             <span onClick={logout}>Exit</span>
           </Link>
         ) : (
-          ""
+          <></>
         )}
       </div>
     </nav>

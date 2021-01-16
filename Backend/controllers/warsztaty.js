@@ -5,6 +5,7 @@ async function get(req, res, next){
         const context = {};
         context.id = parseInt(req.query.id, 10);
         context.dom_kultury = parseInt(req.query.dom_kultury, 10);
+        context.id_uczestnika = parseInt(req.query.id_uczestnika, 10);
         const rows = await warsztaty.find(context);
         if (req.query.id) {
             if (rows.length === 1){

@@ -41,12 +41,16 @@ function Lessons() {
         (wydarzenie) => wydarzenie.id
       );
       const resultWarsztaty = await axios("/api/warsztaty");
-      result = [
-        ...resultWarsztaty.data.filter(
-          (warsztat) => resultWydarzenia.indexOf(warsztat.id) !== -1
-        ),
-      ];
-      setWarsztaty(result);
+      Promise.all([resultWarsztaty]).then(()=>{
+        let newResultWarsztaty = resultWarsztaty.data.filter(
+          (wystawa) => resultWydarzenia.indexOf(wystawa.id) !== -1
+        );
+        console.log(newResultWarsztaty);
+        newResultWarsztaty.forEach((obj) => {
+          if (result.map((o) => o.id ).indexOf(obj.id)===-1) result.push(obj);
+        });
+        setWarsztaty(result);
+      })
     }
     fetchData();
   }, [selectedDomKultury]);

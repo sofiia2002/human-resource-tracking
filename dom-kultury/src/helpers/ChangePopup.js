@@ -1,10 +1,12 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
+import { GeneralData } from "../Context";
 import { Refetch } from "../Context";
 import moment from "moment";
 import "../styles/Popup.css";
 
 function ChangePopup({ data, popupHandler, typ, url }) {
+  const { userData, setUserData } = useContext(GeneralData);
   const [positions, setPositions] = useState([]);
   const [rooms, setRooms] = useState([]);
   const [workerInfo, setWorkerInfo] = useState(data);
@@ -252,8 +254,13 @@ function ChangePopup({ data, popupHandler, typ, url }) {
       default:
         break;
     }
-    await axios.put(url, params);
-    setRefetch(!refetch);
+    await axios.put(url, params).then(async() =>
+      {
+        if (((typ === "pracownik")||(typ === "uczestnik"))&&(userData.id=== workerInfo.id)){
+          setUserData(Object.assign({ id: userData.id}, workerInfo));
+        }
+        setRefetch(!refetch)
+      });
     popupHandler();
   };
 

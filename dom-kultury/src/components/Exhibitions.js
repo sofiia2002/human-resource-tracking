@@ -9,7 +9,7 @@ function Exhibitions() {
   const [selectedDomKultury, setSelectedDomKultury] = useState(1);
   const [domyKultury, setDomyKultury] = useState([]);
   const [wystawy, setWystawy] = useState([]);
-  const [isWystawyChanged, setWystawyChanged] = useState(false);
+  const [isWystawyChanged, setWystawyChanged] = useState(true);
   const [wystawyOfParticipant, setWystawyOfParticipant] = useState([]);
 
   useEffect(() => {
@@ -25,6 +25,7 @@ function Exhibitions() {
       async function fetchData() {
         const result = await axios("/api/wydarzenia_uczestnika/" + userData.id);
         setWystawyOfParticipant(result.data);
+        console.log(result.data);
       }
       fetchData();
       setWystawyChanged(false);
@@ -41,13 +42,16 @@ function Exhibitions() {
         (wydarzenie) => wydarzenie.id
       );
       const resultWystawy = await axios("/api/wystawy");
-      console.log(resultWystawy.data);
-      result = [
-        ...resultWystawy.data.filter(
+      Promise.all([resultWystawy]).then(()=>{
+        let newResultWystawy = resultWystawy.data.filter(
           (wystawa) => resultWydarzenia.indexOf(wystawa.id) !== -1
-        ),
-      ];
-      setWystawy(result);
+        );
+        console.log(newResultWystawy);
+        newResultWystawy.forEach((obj) => {
+          if (result.map((o) => o.id ).indexOf(obj.id)===-1) result.push(obj);
+        });
+        setWystawy(result);
+      })
     }
     fetchData();
   }, [selectedDomKultury]);
@@ -81,6 +85,7 @@ function Exhibitions() {
                   index={index}
                   wystawa={element}
                   setWystawyChanged={setWystawyChanged}
+                  isWystawyChanged={isWystawyChanged}
                   wystawyOfParticipant = {wystawyOfParticipant}
                 />
               ))
@@ -111,28 +116,35 @@ function DomKultury({ domKultury }) {
   );
 }
 
-function Wystawa({ wystawa, uczestnik, id, wystawyOfParticipant, setWystawyChanged}) {
+function Wystawa({ wystawa, uczestnik, id, wystawyOfParticipant, setWystawyChanged, isWystawyChanged}) {
   const [open, setOpen] = useState(false);
 
   const sign = async () => {
-    console.log("sign");
     const url = "/api/wydarzenia_uczestnika"
-    const params = { id_uczestnika: parseInt(id), id_wydarzenia: parseInt(wystawa.id) };
-    console.log(params);
-    await axios.post(url, params);
-    setWystawyChanged(true);
+    const params = { 
+      id_uczestnika: parseInt(id), 
+      id_wydarzenia: parseInt(wystawa.id)
+    };
+    try {
+      await axios.post(url, params);
+      setWystawyChanged(true);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   const unsign = async () => {
-    console.log("unsign");
     const url = "/api/wydarzenia_uczestnika"
     const params = { 
-      id_uczestnika: id, 
-      id_wydarzenia: wystawa.id
+      id_uczestnika: parseInt(id), 
+      id_wydarzenia: parseInt(wystawa.id)
+    };
+    try {
+      await axios.delete(url, { data: Object.assign({}, params), headers: {"Content-Type": "application/json"} });
+      setWystawyChanged(true);
+    } catch (error) {
+      console.log(error);
     }
-    console.log(params);
-    await axios.delete(url, params);
-    setWystawyChanged(true);
   }
 
   return (

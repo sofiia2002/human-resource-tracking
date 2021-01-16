@@ -19,6 +19,8 @@ const baseQuery =
         on wydarzenia.id_wydarzenia=warsztaty.id_wydarzenia
     join sale 
         on sale.id_sali=wydarzenia.id_sali
+    join wydarzenia_uczestnicy
+        on wydarzenia_uczestnicy.id_wydarzenia=warsztaty.id_wydarzenia
     where 1 = 1    
     `
 
@@ -37,6 +39,10 @@ async function find(context) {
         query+= `\nand warsztaty.id_wydarzenia = :id_wydarzenia`;
     }
 
+    if(context.id_uczestnika){
+      binds.id_uczestnika = context.id_uczestnika;
+      query+= `\nand wydarzenia_uczestnicy.id_uczestnika = :id_uczestnika`;
+    }
 
     const result = await database.simpleExecute(query, binds);
 

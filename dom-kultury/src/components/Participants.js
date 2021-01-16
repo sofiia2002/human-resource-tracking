@@ -14,7 +14,7 @@ moment.updateLocale("pl", localization);
 function Participants() {
   const { userData } = useContext(GeneralData);
   const { refetch, setRefetch } = useContext(Refetch);
-  const [selectedDomKultury, setSelectedDomKultury] = useState(1);
+  // const [selectedDomKultury, setSelectedDomKultury] = useState(1);
   const [domyKultury, setDomyKultury] = useState([]);
   const [dataLoaded, setDataLoaded] = useState(false);
   const [allInfo, setAllInfo] = useState({});
@@ -145,7 +145,7 @@ function Participants() {
                 <h4>{`Rodzaj: ${key}`} </h4>
                 <ul>
                   {events.map((event, i) => {
-                    return <WydarzanieCard event={event} key={event.id} />;
+                    return <WydarzanieCard event={event} key={event.id} userData={userData} />;
                   })}
                 </ul>
               </div>
@@ -161,7 +161,23 @@ function Participants() {
   );
 }
 
-function Uczestnik({ uczestnik }) {
+function Uczestnik({ uczestnik, id, userData }) {
+  const { refetch, setRefetch } = useContext(Refetch);
+  const deleteParticipant = async () =>{
+    const url = "/api/wydarzenia_uczestnika"
+    const params = { 
+      id_uczestnika: uczestnik.id, 
+      id_wydarzenia: id
+    }
+    console.log(params);
+    try {
+      await axios.delete(url, { data: Object.assign({}, params), headers: {"Content-Type": "application/json"} });
+      setRefetch(!refetch);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <div className="participant">
       <p>
@@ -170,6 +186,10 @@ function Uczestnik({ uczestnik }) {
       </p>
       <p>{uczestnik ? "Tel: " + uczestnik.telefon : ""}</p>
       <p>{uczestnik ? "Email: " + uczestnik.email : ""}</p>
+      { (userData.stanowisko === "Developer")||(userData.stanowisko === "Administrator") ?
+        <i className="las la-trash" style={{'color': 'red'}} onClick={deleteParticipant}></i>
+        : <></>
+      }
     </div>
   );
 }
@@ -188,7 +208,7 @@ const change = (e, setter) => {
   }
 };
 
-function WydarzanieCard({ event }) {
+function WydarzanieCard({ event, userData }) {
   const serveUrl = () => {
     switch (event.typ) {
       case "wystawa":
@@ -236,7 +256,7 @@ function WydarzanieCard({ event }) {
           ? haveP
             ? event.uczestnicyLista.map((element) => {
                 console.log(element);
-                return <Uczestnik uczestnik={element} />;
+                return <Uczestnik uczestnik={element} id={event.id} userData={userData} />;
               })
             : "nie jeszcze ma uczestników"
           : ""}
