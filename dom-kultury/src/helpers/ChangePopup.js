@@ -9,8 +9,16 @@ function ChangePopup({ data, popupHandler, typ, url }) {
   const { userData, setUserData } = useContext(GeneralData);
   const [positions, setPositions] = useState([]);
   const [rooms, setRooms] = useState([]);
+  const [domyKultury, setDomyKultury] = useState([]);
   const [workerInfo, setWorkerInfo] = useState(data);
   const { refetch, setRefetch } = useContext(Refetch);
+  const typyWystawy = [
+    "malarska",
+    "fotograficzna",
+    "interaktywna",
+    "muzyczna",
+    "filmowa"
+  ]
   
   useEffect(() => {
     async function fetch() {
@@ -22,7 +30,11 @@ function ChangePopup({ data, popupHandler, typ, url }) {
         case "wystawa":
         case "warsztat":
           const res = await axios("/api/sale");
-          setRooms(res.data);
+          const resDom = await axios("/api/domy_kultury");
+          Promise.all([res, resDom]).then(()=>{
+            setDomyKultury(resDom.data);
+            setRooms(res.data);
+          })
           break;
         default:
           break;
@@ -91,6 +103,52 @@ function ChangePopup({ data, popupHandler, typ, url }) {
             })}
           </select>
         );
+        case "typ_wystawy":
+          return (
+            <select
+              name={key}
+              value={workerInfo[key]}
+              onChange={(e) => {
+                change(e, setWorkerInfo);
+  
+                setWorkerInfo((prevState) => ({
+                  ...prevState,
+                  typ_wystawy: infoAboutPosition(e.target.value, typyWystawy),
+                }));
+              }}
+            >
+              {typyWystawy.map((typ, i) => {
+                return (
+                  <option key={i} value={typ}>
+                    {typ}
+                  </option>
+                );
+              })}
+            </select>
+          );  
+        case "id_domu_kultury":
+          return (
+            <select
+              name={key}
+              value={workerInfo[key]}
+              onChange={(e) => {
+                change(e, setWorkerInfo);
+  
+                setWorkerInfo((prevState) => ({
+                  ...prevState,
+                  id_domu_kultury: parseInt(e.target.value),
+                }));
+              }}
+            >
+              {domyKultury.map((dom, i) => {
+                return (
+                  <option key={i} value={dom.id}>
+                    {dom.id}
+                  </option>
+                );
+              })}
+            </select>
+          );  
       case "stanowisko":
         return typ !== "uczestnik" ? (
           <select
@@ -146,6 +204,8 @@ function ChangePopup({ data, popupHandler, typ, url }) {
       case "id":
       case "id_adresu":
       case "id_poczty":
+      case "organizatorzy": 
+        return (<></>);
       case "id_sali":
         return (
           <input
@@ -161,6 +221,15 @@ function ChangePopup({ data, popupHandler, typ, url }) {
             type="password"
             name={key}
             value={workerInfo[key]}
+            onChange={(e) => change(e, setWorkerInfo)}
+          />
+        );
+      case "czas_trwania":
+        return (
+          <input
+            type="number"
+            name={key}
+            value={workerInfo[key] || ""}
             onChange={(e) => change(e, setWorkerInfo)}
           />
         );
@@ -181,9 +250,14 @@ function ChangePopup({ data, popupHandler, typ, url }) {
       case "id_stanowiska":
       case "id_sali":
       case "uczestnicyLista":
-        // case "id_poczty":
-        // case "id_adresu":
-        return <div></div>;
+      case "organizatorzy": 
+        return (<></>);  
+      case "typ": 
+        return (<></>);  
+      case "id_poczty":
+        return (<></>);  
+      case "id_adresu":
+        return (<></>);  
       default:
         return ((typ !== "uczestnik")||(key!=="stanowisko"))&&(key!=="id") ? (
           <div className="change_group" key={i}>
@@ -254,13 +328,18 @@ function ChangePopup({ data, popupHandler, typ, url }) {
       default:
         break;
     }
-    await axios.put(url, params).then(async() =>
+    try{
+      await axios.put(url, params).then(async() =>
       {
         if (((typ === "pracownik")||(typ === "uczestnik"))&&(userData.id=== workerInfo.id)){
           setUserData(Object.assign({ id: userData.id}, workerInfo));
         }
         setRefetch(!refetch)
       });
+    } catch (error) {
+      window.alert("Something went wrong! Check entered information and try again!");
+      console.log(error);
+    }
     popupHandler();
   };
 

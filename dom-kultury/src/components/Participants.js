@@ -221,7 +221,7 @@ function WydarzanieCard({ event, userData }) {
   };
   const [open, setOpen] = useState(false);
   let data = moment.utc(event.data).local("pl").format("LL");
-  let godzina = moment.utc(event.data).format("LTS");
+  let godzina = moment.utc(event.data).format("HH:mm");
 
   const [haveP, setHaveP] = useState(event.uczestnicyLista.length !== 0);
   const [tooglePopup, setTooglePopup] = useState(false);
@@ -241,7 +241,7 @@ function WydarzanieCard({ event, userData }) {
 
         <div className="date">
           <p>{data}</p>
-          <p>{godzina}</p>
+          <p>{godzina+" - "+((parseInt(godzina.toString().substring(0,2))+event.czas_trwania)>23 ? (parseInt(godzina.toString().substring(0,2))+event.czas_trwania) - 24 : (parseInt(godzina.toString().substring(0,2))+event.czas_trwania) )+godzina.toString().substring(2,5)}</p>
           <button
             onClick={() => setTooglePopup(true)}
             className="classic_button_style"

@@ -57,14 +57,20 @@ const createSql =
     :telefon,
     :email,
     :haslo
-  )`;
+  ) returning id_uczestnika
+  into :id_uczestnika`;
  
 async function create(data) {
-  const dodanyUczestnik = Object.assign({}, data);
+  const dodanyUczestnik = Object.assign({}, data); 
+  
+  dodanyUczestnik.id_uczestnika = {
+    dir: oracledb.BIND_OUT,
+    type: oracledb.NUMBER
+  }
 
   const result = await database.simpleExecute(createSql, dodanyUczestnik);
  
-  return dodanyUczestnik;
+  return Object.assign( {id: result.outBinds.id_uczestnika[0]}, dodanyUczestnik);
 }
 
 const deleteSql =

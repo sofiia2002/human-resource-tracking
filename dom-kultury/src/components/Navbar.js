@@ -37,7 +37,7 @@ function Navbar() {
         <Link to="/lessons">Warsztaty</Link>
         {userType === "Developer" ||
         userType === "Organizator" ? (
-          <Link to="/participants">Uczestnicy</Link>
+          <Link to="/participants">Zarządzanie</Link>
         ) : (
           <></>
         )}

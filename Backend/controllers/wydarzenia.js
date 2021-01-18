@@ -4,7 +4,6 @@ async function get(req, res, next){
     try{
         const context = {};
         context.id = parseInt(req.query.id, 10);
-        context.dom_kultury = parseInt(req.query.dom_kultury, 10);
         context.typ_wydarzenia = req.query.typ;
         const rows = await wydarzenia.find(context);
         if (req.query.id) {

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { GeneralData } from "../Context";
 import axios from "axios";
+import moment from "moment";
 import "../styles/Events.css";
 import "../styles/Exhibitions.css";
 
@@ -21,10 +22,11 @@ function Lessons() {
   }, []);
 
   useEffect(() => {
-    if (userData.stanowisko === "Uczestnik" && isWarsztatyChanged) {
+    if ((userData.stanowisko === "Uczestnik") && (isWarsztatyChanged)) {
       async function fetchData() {
         const result = await axios("/api/wydarzenia_uczestnika/" + userData.id);
         setWarsztatyOfParticipant(result.data);
+        console.log(result.data);
       }
       fetchData();
       setWarsztatyChanged(false);
@@ -82,8 +84,8 @@ function Lessons() {
                   id={userData.id}
                   key={index}
                   index={index}
-                  setWystawyChanged={setWarsztatyChanged}
-                  wystawyOfParticipant={warsztatyOfParticipant}
+                  setWarsztatyChanged={setWarsztatyChanged}
+                  warsztatyOfParticipant={warsztatyOfParticipant}
                   warsztat={element}
                 />
               ))
@@ -118,9 +120,12 @@ function Warsztat({
   warsztat,
   uczestnik,
   id,
-  wystawyOfParticipant,
-  setWystawyChanged,
+  warsztatyOfParticipant,
+  setWarsztatyChanged,
 }) {
+  let data = moment.utc(warsztat.data).local("pl").format("LL");
+  let godzina = moment.utc(warsztat.data).format("HH:mm");
+
   const sign = async () => {
     console.log("sign");
     const url = "/api/wydarzenia_uczestnika";
@@ -130,7 +135,7 @@ function Warsztat({
     };
     console.log(params);
     await axios.post(url, params);
-    setWystawyChanged(true);
+    setWarsztatyChanged(true);
   };
 
   const unsign = async () => {
@@ -141,8 +146,8 @@ function Warsztat({
       id_wydarzenia: warsztat.id,
     };
     console.log(params);
-    await axios.delete(url, params);
-    setWystawyChanged(true);
+    await axios.delete(url, { data: Object.assign({}, params), headers: {"Content-Type": "application/json"} });
+    setWarsztatyChanged(true);
   };
 
   return (
@@ -150,7 +155,7 @@ function Warsztat({
       <div>
         <h2>{warsztat ? warsztat.temat : ""}</h2>
         {uczestnik ? (
-          wystawyOfParticipant.findIndex((wys) => wys.id === warsztat.id) ===
+          warsztatyOfParticipant.findIndex((wys) => wys.id === warsztat.id) ===
           -1 ? (
             <div className="buttons-wystawa">
               <button
@@ -183,6 +188,11 @@ function Warsztat({
               warsztat.nazwisko_wykladowcy
             : ""}
         </h5>
+        <p className="sala">{`Numer sali: ${warsztat.numer_sali}`}</p>
+        <div className="date">
+          <p>{data ? data : ""}</p>
+          <p>{godzina ? godzina+" - "+((parseInt(godzina.toString().substring(0,2))+warsztat.czas_trwania)>23 ? (parseInt(godzina.toString().substring(0,2))+warsztat.czas_trwania) - 24 : (parseInt(godzina.toString().substring(0,2))+warsztat.czas_trwania) )+godzina.toString().substring(2,5) : ""}</p>
+        </div>
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { GeneralData } from "../Context";
 import axios from "axios";
+import moment from "moment";
 import "../styles/Events.css";
 import "../styles/Exhibitions.css";
 
@@ -25,7 +26,6 @@ function Exhibitions() {
       async function fetchData() {
         const result = await axios("/api/wydarzenia_uczestnika/" + userData.id);
         setWystawyOfParticipant(result.data);
-        console.log(result.data);
       }
       fetchData();
       setWystawyChanged(false);
@@ -118,6 +118,8 @@ function DomKultury({ domKultury }) {
 
 function Wystawa({ wystawa, uczestnik, id, wystawyOfParticipant, setWystawyChanged, isWystawyChanged}) {
   const [open, setOpen] = useState(false);
+  let data = moment.utc(wystawa.data).local("pl").format("LL");
+  let godzina = moment.utc(wystawa.data).format("HH:mm");
 
   const sign = async () => {
     const url = "/api/wydarzenia_uczestnika"
@@ -183,6 +185,11 @@ function Wystawa({ wystawa, uczestnik, id, wystawyOfParticipant, setWystawyChang
               wystawa.nazwisko_wystawiajacego
             : ""}
         </h5>
+        <p className="sala">{`Numer sali: ${wystawa.numer_sali}`}</p>
+        <div className="date">
+          <p>{data}</p>
+          <p>{godzina+" - "+((parseInt(godzina.toString().substring(0,2))+wystawa.czas_trwania)>23 ? (parseInt(godzina.toString().substring(0,2))+wystawa.czas_trwania) - 24 : (parseInt(godzina.toString().substring(0,2))+wystawa.czas_trwania) )+godzina.toString().substring(2,5)}</p>
+        </div>
       </div>
       {open ? (
         <div>

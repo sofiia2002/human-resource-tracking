@@ -31,8 +31,16 @@ function AddEvent({ handleActive }) {
   const { refetch, setRefetch } = useContext(Refetch);
   const [warsztatyInputs, setWarsztatyInputs] = useState(initWarsztaty);
   const [wystawyInputs, setWystawyInputs] = useState(initWystawy);
+  const [domyKultury, setDomyKultury] = useState([]);
   const [rooms, setRooms] = useState([]);
-  const [eventType, setEventType] = useState("");
+  const [eventType, setEventType] = useState(""); 
+  const typyWystawy = [
+    "malarska",
+    "fotograficzna",
+    "interaktywna",
+    "muzyczna",
+    "filmowa"
+  ]
   const change = (e, setter) => {
     let { name, value } = e.target;
     if (name === "data_urodzenia" || name === "data") {
@@ -50,13 +58,18 @@ function AddEvent({ handleActive }) {
   useEffect(() => {
     async function fetchData() {
       const res = await axios("/api/sale");
+      const resDom = await axios("/api/domy_kultury");
+      Promise.all([res, resDom]).then(()=>{
+        setDomyKultury(resDom.data);
+        setRooms(res.data);
+      })
       setRooms(res.data);
     }
     fetchData();
   }, []);
   const infoAboutPosition = (position, arr) => {
     const res = arr.filter((el) => {
-      return el.numer_sali == position;
+      return el.numer_sali === position;
     });
     return res[0];
   };
@@ -68,7 +81,7 @@ function AddEvent({ handleActive }) {
           sala = warsztatyInputs[key];
         } else if (eventType === "wystawa") {
           sala = wystawyInputs[key];
-        }
+        } 
         return (
           <select
             name={key}
@@ -91,6 +104,59 @@ function AddEvent({ handleActive }) {
             })}
           </select>
         );
+        case "typ_wystawy":
+          let typ = wystawyInputs[key] || "malarska";
+          return (
+            <select
+              name={key}
+              value={typ}
+              onChange={(e) => {
+                change(e, setter);
+  
+                setter((prevState) => ({
+                  ...prevState,
+                  typ_wystawy: e.target.value,
+                }));
+              }}
+            >
+              {typyWystawy.map((typ, i) => {
+                return (
+                  <option key={i} value={typ}>
+                    {typ}
+                  </option>
+                );
+              })}
+            </select>
+          ); 
+      case "id_domu_kultury":
+        let dom;
+        if (eventType === "warsztat") {
+          dom = warsztatyInputs[key] || 1;
+        } else if (eventType === "wystawa") {
+          dom = wystawyInputs[key] || 1;
+        }
+        return (
+          <select
+            name={key}
+            value={dom}
+            onChange={(e) => {
+              change(e, setter);
+
+              setter((prevState) => ({
+                ...prevState,
+                id_domu_kultury: parseInt(e.target.value) || 1,
+              }));
+            }}
+          >
+            {domyKultury.map((dom, i) => {
+              return (
+                <option key={i} value={dom.id}>
+                  {dom.id}
+                </option>
+              );
+            })}
+          </select>
+        );
       case "data":
         let data;
         if (eventType === "warsztat") {
@@ -108,7 +174,11 @@ function AddEvent({ handleActive }) {
               console.log(e.target.value);
             }}
           />
-        );
+        ); 
+      case "czas_trwania":
+        return (
+          <input type="number" name={key} onChange={(e) => change(e, setter)} />
+        );  
       case "opis":
         return (
           <textarea
@@ -128,7 +198,7 @@ function AddEvent({ handleActive }) {
   const renderFormGroup = (key, setter) => {
     switch (key) {
       case "id_sali":
-        return;
+        return <></>;
       default:
         return (
           <div className="change_group">
@@ -151,9 +221,16 @@ function AddEvent({ handleActive }) {
         id_domu_kultury: wystawyInputs.id_domu_kultury,
         id_sali: wystawyInputs.id_sali,
       };
-
-      const res = await axios.post("/api/wystawy", params);
-      console.log(res);
+      console.log(params);
+      try {
+        const res = await axios.post("/api/wystawy", params);
+        console.log(res);
+      } catch (error) {
+        window.alert(
+          "Something went wrong! Check entered information and try again!"
+        );
+        console.log(error);
+      }
     } else if (eventType === "warsztat") {
       const params = {
         imie_wykladowcy: warsztatyInputs.imie_wykladowcy,
@@ -167,8 +244,15 @@ function AddEvent({ handleActive }) {
         id_sali: warsztatyInputs.id_sali,
       };
       console.log(params);
-      const res = await axios.post("/api/warsztaty", params);
-      console.log(res);
+      try {
+        const res = await axios.post("/api/warsztaty", params);
+        console.log(res);
+      } catch (error) {
+        window.alert(
+          "Something went wrong! Check entered information and try again!"
+        );
+        console.log(error);
+      }
     }
 
     setRefetch(!refetch);
