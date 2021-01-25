@@ -3,9 +3,10 @@ const sale = require('../db_apis/sale.js');
 async function get(req, res, next){
     try{
         const context = {};
-        context.id = parseInt(req.params.id, 10);
+        context.id = parseInt(req.query.id, 10);
+        context.dom_kultury = parseInt(req.query.dom_kultury, 10);
         const rows = await sale.find(context);
-        if (req.params.id) {
+        if (req.query.id) {
             if (rows.length === 1){
                 res.status(200).json(rows[0]);
             } else {

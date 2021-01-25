@@ -1,0 +1,33 @@
+.dashboard-wrapper{
+    display: flex;
+    justify-content: space-between;
+}
+
+.personal-data{
+    width: 650px;
+    max-width: 80%;
+}
+
+.change-worker, .change-event{
+    width: 300px;
+}
+
+.change-worker>*, .change-event>*{
+    text-decoration: none;
+}
+
+.change-worker h5, .change-event h5{
+    font-weight: 400;
+}
+
+.change-worker h5:hover, .change-event h5:hover{
+    font-weight: 600;
+}
+
+.change-worker>a:active, .change-event>a:active{
+    color: rgb(0, 0, 149);
+}
+
+.change-worker>a:visited, .change-event>a:visited{
+    color: black;
+}

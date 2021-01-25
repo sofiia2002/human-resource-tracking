@@ -1,16 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { GeneralData } from "./Context";
+import { Refetch } from "./Context";
 import BasicPage from "./components/BasicPage.js";
 import Navbar from "./components/Navbar.js";
-import Login from "./components/Login.js";
 
 function App() {
-  const [userData, setUserData] = useState({
-    isLoggedIn: false,
-    userType: "",
-    name: ""
-  });
+  const [userData, setUserData] = useState({});
+  const [refetch, setRefetch] = useState(false);
 
   return (
     <GeneralData.Provider
@@ -19,11 +16,17 @@ function App() {
         setUserData,
       }}
     >
-      <Router hashType="noslash">
-        {!userData.isLoggedIn ? <Login /> : ""}
-        <Navbar />
-        <BasicPage />
-      </Router>
+      <Refetch.Provider
+        value={{
+          refetch,
+          setRefetch,
+        }}
+      >
+        <Router hashType="noslash">
+          <Navbar />
+          <BasicPage />
+        </Router>
+      </Refetch.Provider>
     </GeneralData.Provider>
   );
 }

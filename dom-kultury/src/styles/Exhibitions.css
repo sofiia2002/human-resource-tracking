@@ -1,35 +1,65 @@
-.wystawy{
-    display: flex;
-    flex-direction: column;
+.wystawy {
+  display: flex;
+  flex-direction: column;
 }
 
-.wystawa{
-    width: 90%;
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    padding: 1rem 2rem;
-    margin-bottom: 1rem;
-    border-radius: .5rem;
-    background-color: white;
-    box-shadow: .2rem .2rem .5rem #0000004e;
+.wystawa {
+  width: 90%;
+  align-items: flex-start;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 2rem;
+  margin-bottom: 1rem;
+  border-radius: 0.5rem;
+  background-color: white;
+  box-shadow: 0.2rem 0.2rem 0.5rem #0000004e;
 }
 
-.wystawa > h2{
-    margin-bottom: .75rem;
-    width: 100%;
+.wystawa .classic_button_style{
+  margin: 0;
+  width: 100%;
 }
 
-.wystawa > :nth-child(2){
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 1rem;
+.buttons-wystawa{
+  width: 12rem;
 }
 
-.wystawa > .las{
-    font-size: 1.5rem;
-    cursor: pointer;
-    margin: 0 auto;
-    width: 3rem;
+.wystawa h2 {
+  margin-bottom: 0.75rem;
+  padding: 0;
+  width: 100%;
+}
+
+.wystawa > :nth-child(1){
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 4rem;
+  width: 100%;
+}
+
+.wystawa > :nth-child(2) {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.wystawa > :nth-child(3) > h5 {
+  font-size: 1rem;
+  margin: 0 0 0.5rem 0;
+}
+.wystawa > :nth-child(3) > p {
+  font-size: 0.85rem;
+  line-height: 1.2rem;
+}
+
+.wystawa > .las {
+  font-size: 1.5rem;
+  cursor: pointer;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
