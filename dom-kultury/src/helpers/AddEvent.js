@@ -13,19 +13,19 @@ function AddEvent({ handleActive }) {
     data: "",
     czas_trwania: null,
     sala: "",
-    id_domu_kultury: null,
-    id_sali: null,
+    id_domu_kultury: 1,
+    id_sali: 101,
   };
   let initWystawy = {
     imie_wystawiajacego: "",
     nazwisko_wystawiajacego: "",
     temat: "",
-    typ_wystawy: "",
+    typ_wystawy: "malarska",
     data: "",
     czas_trwania: null,
     sala: "",
-    id_domu_kultury: null,
-    id_sali: null,
+    id_domu_kultury: 1,
+    id_sali: 101,
     opis: "",
   };
   const { refetch, setRefetch } = useContext(Refetch);
