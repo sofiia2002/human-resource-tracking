@@ -6,7 +6,7 @@ import ChangePopup from "../helpers/ChangePopup";
 import "../styles/MyProfile.css";
 
 function AdminProfile() {
-  const { userData, setUserData } = useContext(GeneralData);
+  const { userData } = useContext(GeneralData);
   return (
     <div className="wrapper">
       <div className="header">

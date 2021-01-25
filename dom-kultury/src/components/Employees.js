@@ -11,7 +11,7 @@ function Employees() {
   const [selectedDomKultury, setSelectedDomKultury] = useState(1);
   const [domyKultury, setDomyKultury] = useState([]);
   const [pracownicy, setPracownicy] = useState([]);
-  const { refetch, setRefetch } = useContext(Refetch);
+  const { refetch } = useContext(Refetch);
 
   useEffect(() => {
     async function fetchData() {

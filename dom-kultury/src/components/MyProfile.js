@@ -7,7 +7,7 @@ import AdminProfile from "./AdminProfile";
 import "../styles/MyProfile.css";
 
 function MyProfile() {
-  const { userData, setUserData } = useContext(GeneralData);
+  const { userData } = useContext(GeneralData);
   const [userType, setUserType] = useState('');
 
   useEffect(()=>{

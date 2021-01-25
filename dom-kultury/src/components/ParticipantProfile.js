@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
 import { GeneralData } from "../Context";
-import { Refetch } from "../Context";
 import ChangePopup from "../helpers/ChangePopup";
 import "../styles/MyProfile.css";
 import Loader from "react-loader-spinner";
@@ -9,7 +8,6 @@ import moment from "moment";
 
 function ParticipantProfile() {
   const { userData } = useContext(GeneralData);
-  const { refetch, setRefetch } = useContext(Refetch);
   const [dataLoaded, setDataLoaded] = useState(false);
   const [eventChanged, setEventChanged] = useState(false);
   const [allInfo, setAllInfo] = useState({});
@@ -28,7 +26,8 @@ function ParticipantProfile() {
     }
     serve();
     console.log("fetching for new data");
-  }, [refetch, eventChanged]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [eventChanged]);
 
   const serveParticipants = async () => {
     let res = {

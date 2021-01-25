@@ -2,12 +2,12 @@ import React, { useContext, useEffect } from "react";
 import LoginInput from "../helpers/LoginInput";
 import axios from "axios";
 import { GeneralData } from "../Context";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useState } from "react";
 
 function Register() {
   const history = useHistory();
-  const { userData, setUserData } = useContext(GeneralData);
+  const { setUserData } = useContext(GeneralData);
   const [registerInfo, setRegisterInfo] = useState({});
   const [userInfo, setUserInfo] = useState({});
 
@@ -16,6 +16,7 @@ function Register() {
     if (Object.keys(userInfo).length!==0){
       history.push("/");
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userInfo]);
 
   const login = async (e) => {

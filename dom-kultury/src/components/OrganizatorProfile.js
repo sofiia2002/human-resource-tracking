@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { GeneralData } from "../Context";
 import moment from "moment";
@@ -6,7 +6,7 @@ import ChangePopup from "../helpers/ChangePopup";
 import "../styles/MyProfile.css";
 
 function OrganizatorProfile() {
-  const { userData, setUserData } = useContext(GeneralData);
+  const { userData } = useContext(GeneralData);
 
   return (
     <div className="wrapper">

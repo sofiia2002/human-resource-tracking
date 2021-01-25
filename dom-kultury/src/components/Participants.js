@@ -13,8 +13,8 @@ moment.updateLocale("pl", localization);
 
 function Participants() {
   const { userData } = useContext(GeneralData);
-  const { refetch, setRefetch } = useContext(Refetch);
-  // const [selectedDomKultury, setSelectedDomKultury] = useState(1);
+  const { refetch } = useContext(Refetch);
+  // eslint-disable-next-line no-unused-vars
   const [domyKultury, setDomyKultury] = useState([]);
   const [dataLoaded, setDataLoaded] = useState(false);
   const [allInfo, setAllInfo] = useState({});
@@ -38,10 +38,10 @@ function Participants() {
       });
     });
 
+    // eslint-disable-next-line array-callback-return
     organizatorWydarzenia.map((org) => {
-      if (org.length === 0) {
-        return;
-      } else {
+      if (org.length !== 0) {
+        // eslint-disable-next-line array-callback-return
         org.map((el) => {
           let {
             czas_trwania,
@@ -84,15 +84,15 @@ function Participants() {
     )
     if (userData.stanowisko === "Organizator") {
       // console.log(userData.id);
+      // eslint-disable-next-line array-callback-return
       Object.entries(res).map(([key, vals]) => {
         // console.log({ vals });
+        // eslint-disable-next-line array-callback-return
         const filtred = vals.filter((el) => {
           if (el.organizatorzy.length !== 0) {
             return el.organizatorzy.filter((org) => {
               return org.id_pracownika === userData.id;
             });
-          } else {
-            return;
           }
         });
         console.log(key, filtred);
@@ -108,6 +108,7 @@ function Participants() {
       setDomyKultury(result.data);
     }
     fetchData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -118,6 +119,7 @@ function Participants() {
     }
     serve();
     console.log("fetching for new data");
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refetch]);
 
   return (
@@ -193,6 +195,7 @@ function Uczestnik({ uczestnik, id, userData }) {
     </div>
   );
 }
+// eslint-disable-next-line no-unused-vars
 const change = (e, setter) => {
   let { name, value } = e.target;
   if (name === "data_urodzenia" || name === "data") {
@@ -223,7 +226,7 @@ function WydarzanieCard({ event, userData }) {
   let data = moment.utc(event.data).local("pl").format("LL");
   let godzina = moment.utc(event.data).format("HH:mm");
 
-  const [haveP, setHaveP] = useState(event.uczestnicyLista.length !== 0);
+  const [haveP] = useState(event.uczestnicyLista.length !== 0);
   const [tooglePopup, setTooglePopup] = useState(false);
   return (
     <div className="event">
@@ -268,6 +271,7 @@ function WydarzanieCard({ event, userData }) {
       )}
       {tooglePopup && (
         <ChangePopup
+          index={event.id}
           data={event}
           popupHandler={() => setTooglePopup(false)}
           url={serveUrl()}

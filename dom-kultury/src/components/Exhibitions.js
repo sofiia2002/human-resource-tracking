@@ -30,6 +30,7 @@ function Exhibitions() {
       fetchData();
       setWystawyChanged(false);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isWystawyChanged]);
 
   useEffect(() => {
@@ -46,7 +47,7 @@ function Exhibitions() {
         let newResultWystawy = resultWystawy.data.filter(
           (wystawa) => resultWydarzenia.indexOf(wystawa.id) !== -1
         );
-        console.log(newResultWystawy);
+        //console.log(newResultWystawy);
         newResultWystawy.forEach((obj) => {
           if (result.map((o) => o.id ).indexOf(obj.id)===-1) result.push(obj);
         });
@@ -68,7 +69,7 @@ function Exhibitions() {
             }
           >
             {domyKultury.map((element, index) => (
-              <option value={element.id}>Dom Kultury numer {element.id}</option>
+              <option key={index} value={element.id}>Dom Kultury numer {element.id}</option>
             ))}
           </select>
           <DomKultury domKultury={domyKultury[selectedDomKultury - 1]} />
@@ -81,11 +82,10 @@ function Exhibitions() {
                 <Wystawa
                   uczestnik={userData.stanowisko === "Uczestnik"}
                   id = {userData.id}
-                  key={index}
                   index={index}
+                  key={index}
                   wystawa={element}
                   setWystawyChanged={setWystawyChanged}
-                  isWystawyChanged={isWystawyChanged}
                   wystawyOfParticipant = {wystawyOfParticipant}
                 />
               ))
@@ -116,7 +116,7 @@ function DomKultury({ domKultury }) {
   );
 }
 
-function Wystawa({ wystawa, uczestnik, id, wystawyOfParticipant, setWystawyChanged, isWystawyChanged}) {
+function Wystawa({ wystawa, uczestnik, id, wystawyOfParticipant, setWystawyChanged, index}) {
   const [open, setOpen] = useState(false);
   let data = moment.utc(wystawa.data).local("pl").format("LL");
   let godzina = moment.utc(wystawa.data).format("HH:mm");
@@ -150,7 +150,7 @@ function Wystawa({ wystawa, uczestnik, id, wystawyOfParticipant, setWystawyChang
   }
 
   return (
-    <div className="wystawa">
+    <div className="wystawa" key={index}>
       <div>
         <h2>{wystawa ? wystawa.temat : ""}</h2>
         {uczestnik ? 

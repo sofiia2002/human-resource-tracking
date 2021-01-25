@@ -17,7 +17,7 @@ function Navbar() {
     if ((userData.stanowisko)||(isLoggedOut)){
       setUserType(userData.stanowisko);
     }
-  }, [userData]);
+  }, [isLoggedOut, userData]);
 
   return (
     <nav className="nav">
@@ -36,6 +36,7 @@ function Navbar() {
         <Link to="/exhibitions">Wystawy</Link>
         <Link to="/lessons">Warsztaty</Link>
         {userType === "Developer" ||
+        userType === "Administrator" ||
         userType === "Organizator" ? (
           <Link to="/participants">Zarządzanie</Link>
         ) : (

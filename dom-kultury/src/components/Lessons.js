@@ -26,11 +26,12 @@ function Lessons() {
       async function fetchData() {
         const result = await axios("/api/wydarzenia_uczestnika/" + userData.id);
         setWarsztatyOfParticipant(result.data);
-        console.log(result.data);
+        // console.log(result.data);
       }
       fetchData();
       setWarsztatyChanged(false);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isWarsztatyChanged]);
 
   useEffect(() => {
@@ -47,7 +48,7 @@ function Lessons() {
         let newResultWarsztaty = resultWarsztaty.data.filter(
           (wystawa) => resultWydarzenia.indexOf(wystawa.id) !== -1
         );
-        console.log(newResultWarsztaty);
+        // console.log(newResultWarsztaty);
         newResultWarsztaty.forEach((obj) => {
           if (result.map((o) => o.id ).indexOf(obj.id)===-1) result.push(obj);
         });
@@ -69,7 +70,7 @@ function Lessons() {
             }
           >
             {domyKultury.map((element, index) => (
-              <option value={element.id}>Dom Kultury numer {element.id}</option>
+              <option key={index} value={element.id}>Dom Kultury numer {element.id}</option>
             ))}
           </select>
           <DomKultury domKultury={domyKultury[selectedDomKultury - 1]} />
@@ -82,8 +83,8 @@ function Lessons() {
                 <Warsztat
                   uczestnik={userData.stanowisko === "Uczestnik"}
                   id={userData.id}
-                  key={index}
                   index={index}
+                  key={index}
                   setWarsztatyChanged={setWarsztatyChanged}
                   warsztatyOfParticipant={warsztatyOfParticipant}
                   warsztat={element}
@@ -120,6 +121,7 @@ function Warsztat({
   warsztat,
   uczestnik,
   id,
+  index,
   warsztatyOfParticipant,
   setWarsztatyChanged,
 }) {
@@ -127,31 +129,27 @@ function Warsztat({
   let godzina = moment.utc(warsztat.data).format("HH:mm");
 
   const sign = async () => {
-    console.log("sign");
     const url = "/api/wydarzenia_uczestnika";
     const params = {
       id_uczestnika: parseInt(id),
       id_wydarzenia: parseInt(warsztat.id),
     };
-    console.log(params);
     await axios.post(url, params);
     setWarsztatyChanged(true);
   };
 
   const unsign = async () => {
-    console.log("unsign");
     const url = "/api/wydarzenia_uczestnika";
     const params = {
       id_uczestnika: id,
       id_wydarzenia: warsztat.id,
     };
-    console.log(params);
     await axios.delete(url, { data: Object.assign({}, params), headers: {"Content-Type": "application/json"} });
     setWarsztatyChanged(true);
   };
 
   return (
-    <div className="wystawa">
+    <div className="wystawa" key={index}>
       <div>
         <h2>{warsztat ? warsztat.temat : ""}</h2>
         {uczestnik ? (

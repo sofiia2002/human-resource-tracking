@@ -11,9 +11,10 @@ function Login() {
 
   //form states
   const [userType, setUserType] = useState("");
+  // eslint-disable-next-line no-unused-vars
   const [employeeForm, setEmployeeForm] = useState({});
+  // eslint-disable-next-line no-unused-vars
   const [participantForm, setParticipantForm] = useState({});
-  const [errorHere, setErrorHere] = useState(true);
 
   const [userInfo, setUserInfo] = useState({});
 
@@ -22,15 +23,16 @@ function Login() {
     if (Object.keys(userInfo).length!==0){
       history.push("/");
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userInfo]);
 
   const login = async (e) => {
     e.preventDefault();
     // axios i endpoint z logowaniem
     const o = {
-      imie: "Sofiia",
-      nazwisko: "Levchenko",
-      haslo: "hardpass36",
+      imie: "Jakub",
+      nazwisko: "Matysiak",
+      haslo: "hardpass39",
     };
     const o2 = {
       email: "kzyn@email.com",
@@ -39,9 +41,8 @@ function Login() {
     if (!userType) return;
     if (userType === "pracownik") {
       try {
-        const res = await axios.post("/api/login_pracownicy", o);
+        const res = await axios.post("/api/login_pracownicy", employeeForm);
         setUserInfo(res.data[0]);
-        setErrorHere(false);
       } catch (error) {
         console.log(error);
         window.alert('Nieprawidłowe dane! Spróbuj ponownie!');
@@ -49,9 +50,8 @@ function Login() {
     }
     if (userType === "uczestnik") {
       try {
-        const res = await axios.post("/api/login_uczestnicy", o2);
+        const res = await axios.post("/api/login_uczestnicy", participantForm);
         setUserInfo({ ...res.data[0], stanowisko: "Uczestnik" });
-        setErrorHere(false);
       } catch (error) {
         console.log(error);
         window.alert('Nieprawidłowe dane! Spróbuj ponownie!')

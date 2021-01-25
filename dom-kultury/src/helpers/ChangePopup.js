@@ -5,7 +5,7 @@ import { Refetch } from "../Context";
 import moment from "moment";
 import "../styles/Popup.css";
 
-function ChangePopup({ data, popupHandler, typ, url }) {
+function ChangePopup({ data, popupHandler, typ, url, index }) {
   const { userData, setUserData } = useContext(GeneralData);
   const [positions, setPositions] = useState([]);
   const [rooms, setRooms] = useState([]);
@@ -23,12 +23,12 @@ function ChangePopup({ data, popupHandler, typ, url }) {
   useEffect(() => {
     async function fetch() {
       switch (typ) {
-        case "pracownik":
+        case "pracownik": {
           const positions = await axios("/api/stanowiska");
           setPositions(positions.data);
           break;
-        case "wystawa":
-        case "warsztat":
+        }
+        case "wystawa":{
           const res = await axios("/api/sale");
           const resDom = await axios("/api/domy_kultury");
           Promise.all([res, resDom]).then(()=>{
@@ -36,11 +36,22 @@ function ChangePopup({ data, popupHandler, typ, url }) {
             setRooms(res.data);
           })
           break;
+        }
+        case "warsztat":{
+          const res = await axios("/api/sale");
+          const resDom = await axios("/api/domy_kultury");
+          Promise.all([res, resDom]).then(()=>{
+            setDomyKultury(resDom.data);
+            setRooms(res.data);
+          })
+          break;
+        }
         default:
           break;
       }
     }
     fetch();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const infoAboutPosition = (position, arr) => {
@@ -176,8 +187,7 @@ function ChangePopup({ data, popupHandler, typ, url }) {
       case "data":
         if (typ === "pracownik") {
           const dataUr = moment.utc(workerInfo[key]).format("YYYY-MM-DD");
-
-          console.log(dataUr);
+          //console.log(dataUr);
           return (
             <input
               type="date"
@@ -195,7 +205,7 @@ function ChangePopup({ data, popupHandler, typ, url }) {
               value={data || ""}
               onChange={(e) => {
                 change(e, setWorkerInfo);
-                console.log(e.target.value);
+                //console.log(e.target.value);
               }}
             />
           );
@@ -344,7 +354,7 @@ function ChangePopup({ data, popupHandler, typ, url }) {
   };
 
   return (
-    <div className="popup">
+    <div className="popup" key={index}>
       <div className="popup_wrapper">
         <button
           className="close_popup las la-times"

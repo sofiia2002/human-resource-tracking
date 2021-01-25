@@ -6,7 +6,7 @@ import moment from "moment";
 import "../styles/MyProfile.css";
 
 function DeveloperProfile() {
-  const { userData, setUserData } = useContext(GeneralData);
+  const { userData } = useContext(GeneralData);
 
   return (
     <div className="wrapper">
