@@ -30,7 +30,6 @@ function Exhibitions() {
       fetchData();
       setWystawyChanged(false);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isWystawyChanged]);
 
   useEffect(() => {
@@ -42,12 +41,12 @@ function Exhibitions() {
       resultWydarzenia = resultWydarzenia.data.map(
         (wydarzenie) => wydarzenie.id
       );
+      console.log(resultWydarzenia);
       const resultWystawy = await axios("/api/wystawy");
       Promise.all([resultWystawy]).then(()=>{
         let newResultWystawy = resultWystawy.data.filter(
           (wystawa) => resultWydarzenia.indexOf(wystawa.id) !== -1
         );
-        //console.log(newResultWystawy);
         newResultWystawy.forEach((obj) => {
           if (result.map((o) => o.id ).indexOf(obj.id)===-1) result.push(obj);
         });
@@ -64,7 +63,7 @@ function Exhibitions() {
           <h2>Wybierz Dom Kultury:</h2>
           <select
             name="domKultury"
-            onChange={(event) =>
+            onChange={(event) => 
               setSelectedDomKultury(parseInt(event.target.value))
             }
           >
