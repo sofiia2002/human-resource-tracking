@@ -14,7 +14,7 @@ Założenia co do wymagań funkcjonalnych obsługiwanych przez system:
 - Informacja dotycząca sali w której prowadzone są zajęcia
 - Informacja o pracownikach organizujących wydarzenia
 
-Zdefiniowanie każdej z oferowantch funkcjonalności można znależć w pliku db_report.pdf, a założenia dotyczące realizacji w postaci software'owej w Frontend_Backend_report.pdf.
+Zdefiniowanie każdej z oferowantch funkcjonalności można znależć w pliku DB_report.pdf, a założenia dotyczące realizacji w postaci software'owej w Frontend_Backend_report.pdf.
 
 ## Model relacyjny wykorzystywane bazy danych
 
